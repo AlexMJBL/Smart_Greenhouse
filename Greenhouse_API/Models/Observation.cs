@@ -7,7 +7,7 @@ public partial class Observation
 {
     public int Id { get; set; }
 
-    public int? PlantId { get; set; }
+    public int PlantId { get; set; }
 
     public string? Rating { get; set; }
 
