@@ -20,12 +20,12 @@ namespace Greenhouse_API.Services
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Sensor>> GetAllWithFilter(Func<Task, bool>? filter = null)
+        public Task<IEnumerable<Sensor>> GetAllWithFilter(Func<Sensor, bool>? filter = null)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Sensor> GetByIdAsync(int id)
+        public Task<Sensor?> GetByIdAsync(int id)
         {
             throw new NotImplementedException();
         }

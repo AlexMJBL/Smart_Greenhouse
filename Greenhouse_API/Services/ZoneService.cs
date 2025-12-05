@@ -1,5 +1,6 @@
 ﻿using Greenhouse_API.Interfaces;
 using Greenhouse_API.Models;
+using System.Linq.Expressions;
 
 namespace Greenhouse_API.Services
 {
@@ -28,12 +29,12 @@ namespace Greenhouse_API.Services
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Zone>> GetAllWithFilter(Func<Task, bool>? filter = null)
+        public Task<IEnumerable<Zone>> GetAllWithFilter(Expression<Func<Zone, bool>>? filter = null)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Zone> GetByIdAsync(int id)
+        public Task<Zone?> GetByIdAsync(int id)
         {
             throw new NotImplementedException();
         }
