@@ -1,5 +1,6 @@
 ﻿using Greenhouse_API.Interfaces;
 using Greenhouse_API.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace Greenhouse_API.Services
@@ -8,33 +9,73 @@ namespace Greenhouse_API.Services
     {
         private SerreContext _context;
         private readonly ILogger<SpecimenService> _logger;
-        public Task<IEnumerable<Specimen>> GetAllAsync()
+        private readonly IRepository<SoilHumidityCategory, int> _soilHumidityCategoryService;
+        
+        public SpecimenService(SerreContext context, ILogger<SpecimenService> logger, IRepository<SoilHumidityCategory, int> soilHumidityCategoryService)
         {
-            throw new NotImplementedException();
+            _context = context;
+            _logger = logger;
+            _soilHumidityCategoryService = soilHumidityCategoryService;
         }
 
-        public Task<IEnumerable<Specimen>> GetAllWithFilter(Expression<Func<Specimen, bool>>? filter = null)
+        public async Task<IEnumerable<Specimen>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Specimens.ToListAsync();
         }
 
-        public Task<Specimen?> GetByIdAsync(int id)
+        public async Task<IEnumerable<Specimen>> GetAllWithFilter(Expression<Func<Specimen, bool>>? filter = null)
         {
-            throw new NotImplementedException();
+            IQueryable<Specimen> query = _context.Specimens;
+
+            if (filter != null)
+                query = query.Where(filter);
+
+            return await query.ToListAsync();
         }
 
-        public Task<Specimen> AddAsync(Specimen t)
+        public async Task<Specimen?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
-        }
-        public Task<Specimen> UpdateAsync(int id, Specimen u)
-        {
-            throw new NotImplementedException();
+            return await _context.Specimens.FindAsync(id);
         }
 
-        public Task<bool> DeleteAsync(int id)
+        public async Task<Specimen> AddAsync(Specimen specimen)
         {
-            throw new NotImplementedException();
+            var soilHumidityCategory = await _soilHumidityCategoryService.GetByIdAsync(specimen.SoilHumidityCatId);
+            if (soilHumidityCategory == null)
+            {
+                throw new ArgumentException($"SoilHumidityCategory with ID {specimen.SoilHumidityCatId} does not exist.");
+            }
+
+            _context.Specimens.Add(specimen);
+            await _context.SaveChangesAsync();
+            _logger.LogInformation($"Specimen with ID {specimen.Id} added successfully.");
+            return specimen;
+        }
+        public async Task<Specimen> UpdateAsync(int id, Specimen specimen)
+        {
+            
+
+            if (id != specimen.Id)
+            {
+                throw new ArgumentException("ID mismatch between route and body.");
+            }
+            _context.Specimens.Update(specimen);
+            await _context.SaveChangesAsync();
+            _logger.LogInformation($"Specimen with ID {specimen.Id} updated successfully.");
+            return specimen;
+        }
+
+        public async Task<bool> DeleteAsync(int id)
+        {
+            var specimen = await _context.Specimens.FindAsync(id);
+            if (specimen == null)
+            {
+                return false;
+            }
+            _context.Specimens.Remove(specimen);
+            await _context.SaveChangesAsync();
+            _logger.LogInformation($"Specimen with ID {id} deleted successfully.");
+            return true;
         }
     }
 }
