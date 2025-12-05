@@ -69,7 +69,6 @@ namespace Greenhouse_API.Services
                 }
             }
 
-            plant.CreatedAt = DateTime.Now;
             _context.Plants.Add(plant);
             await _context.SaveChangesAsync();
             _logger.LogInformation("Added new Plant with ID {Id}", plant.Id);

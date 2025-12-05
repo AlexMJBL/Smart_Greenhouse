@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace Greenhouse_API.Services
 {
-    public class ZoneService : IRepository<Zone>
+    public class ZoneService : IRepository<Zone, int>
     {
         private SerreContext _context;
         private readonly ILogger<ZoneService> _logger;

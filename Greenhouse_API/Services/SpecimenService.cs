@@ -4,20 +4,10 @@ using System.Linq.Expressions;
 
 namespace Greenhouse_API.Services
 {
-    public class SpecimenService : IRepository<Specimen>
+    public class SpecimenService : IRepository<Specimen, int>
     {
         private SerreContext _context;
         private readonly ILogger<SpecimenService> _logger;
-        public Task<Specimen> AddAsync(Specimen t)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> DeleteAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public Task<IEnumerable<Specimen>> GetAllAsync()
         {
             throw new NotImplementedException();
@@ -33,7 +23,16 @@ namespace Greenhouse_API.Services
             throw new NotImplementedException();
         }
 
+        public Task<Specimen> AddAsync(Specimen t)
+        {
+            throw new NotImplementedException();
+        }
         public Task<Specimen> UpdateAsync(int id, Specimen u)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> DeleteAsync(int id)
         {
             throw new NotImplementedException();
         }
