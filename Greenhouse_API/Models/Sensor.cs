@@ -13,7 +13,7 @@ public partial class Sensor
 
     public bool? LastSeen { get; set; }
 
-    public int? ZoneId { get; set; }
+    public int ZoneId { get; set; }
 
     public bool IsActive { get; set; }
 

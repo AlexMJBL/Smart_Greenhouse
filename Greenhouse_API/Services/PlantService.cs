@@ -5,17 +5,20 @@ using System.Linq.Expressions;
 
 namespace Greenhouse_API.Services
 {
-    public class PlantService : IRepository<Plant>
+    public class PlantService : IRepository<Plant, int>
     {
         private SerreContext _context;
         private readonly ILogger<PlantService> _logger;
-        private readonly IRepository<Specimen> _specimenService;
-        private readonly IRepository<Zone> _zoneService;
+        private readonly IRepository<SpecimenService, int> _specimenService;
+        private readonly IRepository<ZoneService, int> _zoneService;
 
-        public PlantService(SerreContext context, ILogger<PlantService> logger)
+        public PlantService(SerreContext context, ILogger<PlantService> logger,
+            IRepository<SpecimenService,int> repository,IRepository<ZoneService,int> zoneService)
         {
             _context = context;
             _logger = logger;
+            _zoneService = zoneService;
+            _specimenService = repository;
         }
 
 
@@ -112,7 +115,7 @@ namespace Greenhouse_API.Services
 
         public async Task<bool> DeleteAsync(int id)
         {
-            var plant = _context.Plants.Find(id);
+            var plant = await GetByIdAsync(id);
             if (plant == null)
                 return false;
             
@@ -121,5 +124,7 @@ namespace Greenhouse_API.Services
             _logger.LogInformation("Deleted Plant with ID {Id}", id);
             return true;
         }
+
+       
     }
 }
