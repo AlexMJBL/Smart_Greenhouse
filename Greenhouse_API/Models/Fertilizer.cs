@@ -9,7 +9,7 @@ public partial class Fertilizer
 
     public string Type { get; set; } = null!;
 
-    public int? PlantId { get; set; }
+    public int PlantId { get; set; }
 
     public DateTime CreatedAt { get; set; }
 
