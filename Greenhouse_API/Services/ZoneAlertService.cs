@@ -19,7 +19,6 @@ namespace Greenhouse_API.Services
             _zoneService = zoneService;   
         }
 
-
         public async Task<IEnumerable<ZoneAlert>> GetAllAsync()
         {
            return await _context.ZoneAlerts.ToListAsync();

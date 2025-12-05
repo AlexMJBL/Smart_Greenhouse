@@ -10,6 +10,7 @@ namespace Greenhouse_API.Services
         private SerreContext _context;
         private readonly ILogger<PlantAlertService> _logger;
         private readonly IRepository<Plant, int> _plantService;
+        
         public PlantAlertService(SerreContext context, ILogger<PlantAlertService> logger, IRepository<Plant, int> plantService)
         {
             _context = context;
