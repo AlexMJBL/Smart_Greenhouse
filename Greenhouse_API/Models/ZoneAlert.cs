@@ -11,6 +11,8 @@ public partial class ZoneAlert
 
     public string Reason { get; set; } = null!;
 
+    public string Message { get; set; } = null!;
+
     public DateTime CreatedAt { get; set; }
 
     public virtual Zone Zone { get; set; } = null!;

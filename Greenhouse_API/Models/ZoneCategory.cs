@@ -21,6 +21,10 @@ public partial class ZoneCategory
 
     public float TemperatureMaxC { get; set; }
 
+    public float PressureMinPa { get; set; }
+
+    public float PressureMaxPa { get; set; }
+
     public DateTime CreatedAt { get; set; }
 
     public virtual ICollection<Zone> Zones { get; set; } = new List<Zone>();
