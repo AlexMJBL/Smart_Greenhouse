@@ -25,7 +25,7 @@ namespace Greenhouse_API.Extensions
             services.AddScoped<ISpecimenService, SpecimenService>();
 
             services.AddScoped<IPlantService, PlantService>();
-            services.AddScoped<IPlantAlertService, PlantAlertService>();
+            services.AddScoped<IPlantSensorAlertService, PlantAlertService>();
             services.AddScoped<IPlantHumidityRecordService, PlantHumidityRecordService>();
             services.AddScoped<IWateringService, WateringService>();
 

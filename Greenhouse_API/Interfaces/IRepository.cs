@@ -17,5 +17,6 @@ namespace Greenhouse_API.Interfaces
         Task<T> UpdateAsync(int id, T u);
         Task<bool> DeleteAsync(int id);
         Task<IEnumerable<T>> GetAllWithFilter(Expression<Func<T, bool>>? filter = null);
+        Task SaveAsync();
     }
 }

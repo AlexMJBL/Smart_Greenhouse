@@ -87,5 +87,14 @@ namespace Greenhouse_API.Data
 
             return true;
         }
+
+        // ======================
+        // SAVE CHANGES
+        // ======================
+
+        public async Task SaveAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
     }
 }

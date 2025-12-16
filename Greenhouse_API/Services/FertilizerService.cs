@@ -9,88 +9,121 @@ namespace Greenhouse_API.Services
 {
     public class FertilizerService : IFertilizerService
     {
-        private GreenHouseDbContext _context;
+        private readonly IRepository<Fertilizer> _repository;
         private readonly ILogger<FertilizerService> _logger;
-        private readonly IPlantService<Plant> _plantService;
-        public FertilizerService(GreenHouseDbContext context, ILogger<FertilizerService> logger, IPlantService<Plant> plantService)
+        private readonly IPlantService _plantService;
+        public FertilizerService(IRepository<Fertilizer> repository, ILogger<FertilizerService> logger, IPlantService plantService)
         {
-            _context = context;
+            _repository = repository;
             _logger = logger;
             _plantService = plantService;
         }
 
-
-        public async Task<IEnumerable<FertilizerDto>> GetAllAsync()
+        public async Task<FertilizerDto> CreateAsync(FertilizerWriteDto dto)
         {
-           return await _context.Fertilizers.ToListAsync();
-        }
-
-        public async Task<IEnumerable<FertilizerDto>> GetAllWithFilter(Expression<Func<Fertilizer, bool>>? filter = null)
-        {
-            IQueryable<Fertilizer> query = _context.Fertilizers;
-
-            if (filter != null)
-                query = query.Where(filter);
-
-            return await query.ToListAsync();
-        }
-
-        public async Task<Fertilizer?> GetByIdAsync(int id)
-        {
-            return await _context.Fertilizers.FindAsync(id);
-        }
-
-        
-        public async Task<Fertilizer> AddAsync(FertilizerWriteDto fertilizerDto)
-        {
-            var plant = await _plantService.GetByIdAsync(fertilizerDto.PlantId);
-            if (plant == null)
+            var plant = await _plantService.GetByIdAsync(dto.PlantId);
+            if(plant == null)
             {
-                throw new ArgumentException($"Plant with ID {fertilizerDto.PlantId} does not exist.");
+                _logger.LogWarning("Plant with ID: {PlantId} not found for fertilizer creation", dto.PlantId);
+                throw new KeyNotFoundException("Plant not found");
             }
 
-            Fertilizer fertilizer = new Fertilizer
+            var fertilizer = new Fertilizer
             {
-                Type = fertilizerDto.Type,
-                PlantId = fertilizerDto.PlantId,
+                Type = dto.Type,
+                PlantId = dto.PlantId,
                 CreatedAt = DateTime.UtcNow
             };
 
-            _context.Fertilizers.Add(fertilizer);
-            await _context.SaveChangesAsync();
-            _logger.LogInformation("Added new Fertilizer with ID {Id}", fertilizer.Id);
-            return fertilizer;
+            await _repository.AddAsync(fertilizer);
+            _logger.LogInformation("Fertilizer created with ID: {FertilizerId}", fertilizer.Id);
+
+            return new FertilizerDto
+            {
+                Id = fertilizer.Id,
+                Type = fertilizer.Type,
+                PlantId = fertilizer.PlantId,
+                CreatedAt = fertilizer.CreatedAt
+            };
         }
-        public async Task<Fertilizer> UpdateAsync(int id, Fertilizer fertilizer)
+
+        public async Task DeleteAsync(int id)
         {
-            var plant = await _plantService.GetByIdAsync(fertilizer.PlantId);
+            var deleted = await _repository.DeleteAsync(id);
+
+            if (!deleted)
+            {
+                _logger.LogWarning(
+                    "Fertilizer with ID {FertilizerId} not found for deletion", id);
+                throw new KeyNotFoundException("Fertilizer not found");
+            }
+
+            _logger.LogInformation("Fertilizer with ID {FertilizerId} deleted", id);
+        }
+
+        public async Task<IEnumerable<FertilizerDto>> GetAllAsync()
+        {
+            _logger.LogInformation("Fetching all fertilizers");
+            var fertilizers = await _repository.GetAllAsync();
+
+            return fertilizers.Select(f => new FertilizerDto
+            {
+                Id = f.Id,
+                Type = f.Type,
+                PlantId = f.PlantId,
+                CreatedAt = f.CreatedAt
+            });
+        }
+
+        public async Task<FertilizerDto?> GetByIdAsync(int id)
+        {
+            var fertilizer = await _repository.GetByIdAsync(id);
+            if (fertilizer == null)
+            {
+                _logger.LogWarning("Fertilizer with ID: {FertilizerId} not found", id);
+                return null;
+            }
+
+            _logger.LogInformation("Fertilizer with ID: {FertilizerId} retrieved", id);
+            return new FertilizerDto
+            {
+                Id = fertilizer.Id,
+                Type = fertilizer.Type,
+                PlantId = fertilizer.PlantId,
+                CreatedAt = fertilizer.CreatedAt
+            };
+        }
+
+        public async Task<FertilizerDto> UpdateAsync(int id, FertilizerWriteDto dto)
+        {
+            var fertilizer = await _repository.GetByIdAsync(id);
+            if (fertilizer == null)
+            {
+                _logger.LogWarning("Fertilizer with ID: {FertilizerId} not found for update", id);
+                throw new KeyNotFoundException("Fertilizer not found");
+            }
+
+            var plant = await _plantService.GetByIdAsync(dto.PlantId);
             if (plant == null)
             {
-                throw new ArgumentException($"Plant with ID {fertilizer.PlantId} does not exist.");
+                _logger.LogWarning(
+                    "Plant with ID {PlantId} not found for fertilizer update", dto.PlantId);
+                throw new KeyNotFoundException("Plant not found");
             }
 
-            if (id != fertilizer.Id)
+            fertilizer.Type = dto.Type;
+            fertilizer.PlantId = dto.PlantId;
+
+            await _repository.SaveAsync();
+            _logger.LogInformation("Fertilizer with ID: {FertilizerId} updated", id);
+
+            return new FertilizerDto
             {
-                _logger.LogError("Fertilizer ID mismatch: {Id} != {FertilizerId}", id, fertilizer.Id);
-                throw new ArgumentException("Fertilizer ID mismatch.");
-            }
-
-            _context.Fertilizers.Update(fertilizer);
-            await _context.SaveChangesAsync();
-            _logger.LogInformation("Updated Fertilizer with ID {Id}", fertilizer.Id);
-            return fertilizer;
-        }
-
-        public async Task<bool> DeleteAsync(int id)
-        {
-            var fertilizer = await GetByIdAsync(id);
-            if (fertilizer == null)
-                return false;
-            
-            _context.Fertilizers.Remove(fertilizer);
-            await _context.SaveChangesAsync();
-            _logger.LogInformation("Deleted Fertilizer with ID {Id}", id);
-            return true;
+                Id = fertilizer.Id,
+                Type = fertilizer.Type,
+                PlantId = fertilizer.PlantId,
+                CreatedAt = fertilizer.CreatedAt
+            };
         }
     }
 }

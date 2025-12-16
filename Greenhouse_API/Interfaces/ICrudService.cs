@@ -6,6 +6,6 @@
         Task<TDto?> GetByIdAsync(int id);
         Task<TDto> CreateAsync(TWriteDto dto);
         Task<TDto> UpdateAsync(int id, TWriteDto dto);
-        Task<bool> DeleteAsync(int id);
+        Task DeleteAsync(int id);
     }
 }

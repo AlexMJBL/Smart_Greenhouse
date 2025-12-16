@@ -17,7 +17,7 @@ namespace Greenhouse_API.DTOs
         public DateTime CreatedAt { get; set; }
     }
 
-    public class WateringCreateDto
+    public class WateringWriteDto
     {
         [Required]
         [Range(0,100)]

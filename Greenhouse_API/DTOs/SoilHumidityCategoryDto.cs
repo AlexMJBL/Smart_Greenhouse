@@ -2,7 +2,7 @@
 
 namespace Greenhouse_API.DTOs
 {
-    public class SoilHumidityDto
+    public class SoilHumidityCategoryDto
     {
         public int Id { get; set; }
 
