@@ -43,9 +43,13 @@ namespace Greenhouse_API.Services
         {
            var zone = await _zoneService.GetByIdAsync(sensor.ZoneId);
             if (zone == null)
-              {
+            {
                 throw new ArgumentException($"Zone with ID ${sensor.ZoneId} does not exist.");
             }
+
+            sensor.CreatedAt = DateTime.UtcNow;
+            sensor.IsActive = true;
+            sensor.LastSeen = true;
 
             _context.Sensors.Add(sensor);
             await _context.SaveChangesAsync();

@@ -15,7 +15,7 @@ namespace Greenhouse_API.DTOs
         public DateTime CreatedAt { get; set; }
     }
 
-    public class PlantCreateDto
+    public class PlantWriteDto
     {
         [Required]
         public DateOnly AcquiredDate { get; set; }

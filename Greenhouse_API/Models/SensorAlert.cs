@@ -7,11 +7,11 @@ public partial class SensorAlert
 {
     public int Id { get; set; }
 
-    public string Reason { get; set; } = null!;
+    public string Reason { get; set; }
 
-    public string SensorId { get; set; } = null!;
+    public int SensorId { get; set; }
 
     public DateTime CreatedAt { get; set; }
 
-    public virtual Sensor Sensor { get; set; } = null!;
+    public virtual Sensor Sensor { get; set; } 
 }

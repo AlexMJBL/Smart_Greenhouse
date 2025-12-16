@@ -1,3 +1,5 @@
+using Greenhouse_API.Data;
+using Greenhouse_API.DTOs;
 using Greenhouse_API.Interfaces;
 using Greenhouse_API.Models;
 using Microsoft.EntityFrameworkCore;
@@ -5,12 +7,12 @@ using System.Linq.Expressions;
 
 namespace Greenhouse_API.Services
 {
-    public class FertilizerService : IRepository<Fertilizer, int>
+    public class FertilizerService : IFertilizerService
     {
-        private SerreContext _context;
+        private GreenHouseDbContext _context;
         private readonly ILogger<FertilizerService> _logger;
-        private readonly IRepository<Plant, int> _plantService;
-        public FertilizerService(SerreContext context, ILogger<FertilizerService> logger, IRepository<Plant, int> plantService)
+        private readonly IPlantService<Plant> _plantService;
+        public FertilizerService(GreenHouseDbContext context, ILogger<FertilizerService> logger, IPlantService<Plant> plantService)
         {
             _context = context;
             _logger = logger;
@@ -18,12 +20,12 @@ namespace Greenhouse_API.Services
         }
 
 
-        public async Task<IEnumerable<Fertilizer>> GetAllAsync()
+        public async Task<IEnumerable<FertilizerDto>> GetAllAsync()
         {
            return await _context.Fertilizers.ToListAsync();
         }
 
-        public async Task<IEnumerable<Fertilizer>> GetAllWithFilter(Expression<Func<Fertilizer, bool>>? filter = null)
+        public async Task<IEnumerable<FertilizerDto>> GetAllWithFilter(Expression<Func<Fertilizer, bool>>? filter = null)
         {
             IQueryable<Fertilizer> query = _context.Fertilizers;
 
@@ -39,13 +41,20 @@ namespace Greenhouse_API.Services
         }
 
         
-        public async Task<Fertilizer> AddAsync(Fertilizer fertilizer)
+        public async Task<Fertilizer> AddAsync(FertilizerWriteDto fertilizerDto)
         {
-            var plant = await _plantService.GetByIdAsync(fertilizer.PlantId);
+            var plant = await _plantService.GetByIdAsync(fertilizerDto.PlantId);
             if (plant == null)
             {
-                throw new ArgumentException($"Plant with ID {fertilizer.PlantId} does not exist.");
+                throw new ArgumentException($"Plant with ID {fertilizerDto.PlantId} does not exist.");
             }
+
+            Fertilizer fertilizer = new Fertilizer
+            {
+                Type = fertilizerDto.Type,
+                PlantId = fertilizerDto.PlantId,
+                CreatedAt = DateTime.UtcNow
+            };
 
             _context.Fertilizers.Add(fertilizer);
             await _context.SaveChangesAsync();

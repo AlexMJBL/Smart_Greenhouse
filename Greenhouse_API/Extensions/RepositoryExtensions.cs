@@ -1,4 +1,5 @@
-﻿using Greenhouse_API.Interfaces;
+﻿using Greenhouse_API.Data;
+using Greenhouse_API.Interfaces;
 using Greenhouse_API.Models;
 using Greenhouse_API.Services;
 
@@ -13,36 +14,32 @@ namespace Greenhouse_API.Extensions
 
     public static class RepositoryExtensions
     {
-        public static IServiceCollection AddRepositories(this IServiceCollection services)
+        public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
-            // Fertilizers
-            services.AddScoped<IRepository<Fertilizer, int>, FertilizerService>();
+            // Repository générique
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
-            // Observations / Specimens
-            services.AddScoped<IRepository<Observation, int>, ObservationService>();
-            services.AddScoped<IRepository<Specimen, int>, SpecimenService>();
+            // Services métier
+            services.AddScoped<IFertilizerService, FertilizerService>();
+            services.AddScoped<IObservationService, ObservationService>();
+            services.AddScoped<ISpecimenService, SpecimenService>();
 
-            // Plants
-            services.AddScoped<IRepository<Plant, int>, PlantService>();
-            services.AddScoped<IRepository<PlantAlert, int>, PlantAlertService>();
-            services.AddScoped<IRepository<PlantHumidityRecord, int>, PlantHumidityRecordService>();
-            services.AddScoped<IRepository<Watering, int>, WateringService>();
+            services.AddScoped<IPlantService, PlantService>();
+            services.AddScoped<IPlantAlertService, PlantAlertService>();
+            services.AddScoped<IPlantHumidityRecordService, PlantHumidityRecordService>();
+            services.AddScoped<IWateringService, WateringService>();
 
-            // Soil
-            services.AddScoped<IRepository<SoilHumidityCategory, int>, SoilHumidityCategoryService>();
+            services.AddScoped<ISoilHumidityCategoryService, SoilHumidityCategoryService>();
 
-            // Sensors
-            services.AddScoped<IRepository<Sensor, string>, SensorService>();
-            services.AddScoped<IRepository<SensorAlert, int>, SensorAlertService>();
+            services.AddScoped<ISensorService, SensorService>();
+            services.AddScoped<ISensorAlertService, SensorAlertService>();
 
-            // Zones
-            services.AddScoped<IRepository<Zone, int>, ZoneService>();
-            services.AddScoped<IRepository<ZoneRecord, int>, ZoneRecordService>();
-            services.AddScoped<IRepository<ZoneAlert, int>, ZoneAlertService>();
-            services.AddScoped<IRepository<ZoneCategory, int>, ZoneCategoryService>();
-            services.AddScoped<IRepository<ZonePressureRecord, int>, ZonePressureRecordService>();
+            services.AddScoped<IZoneService, ZoneService>();
+            services.AddScoped<IZoneRecordService, ZoneRecordService>();
+            services.AddScoped<IZoneAlertService, ZoneAlertService>();
+            services.AddScoped<IZoneCategoryService, ZoneCategoryService>();
+            services.AddScoped<IZonePressureRecordService, ZonePressureRecordService>();
 
             return services;
         }
     }
-}

@@ -1,17 +1,18 @@
-﻿using System;
+﻿using Greenhouse_API.Enums;
+using System;
 using System.Collections.Generic;
 
 namespace Greenhouse_API.Models;
 
 public partial class Sensor
 {
-    public string Id { get; set; } = null!;
-
+    public int Id { get; set; }
+    public string SensorCode { get; set; }
     public string? Description { get; set; }
 
-    public string Type { get; set; } = null!;
+    public SensorType Type { get; set; }
 
-    public bool? LastSeen { get; set; }
+    public bool LastSeen { get; set; }
 
     public int ZoneId { get; set; }
 

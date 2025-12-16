@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Greenhouse_API.Enums;
+using System;
 using System.Collections.Generic;
 
 namespace Greenhouse_API.Models;
@@ -9,7 +10,7 @@ public partial class Observation
 
     public int PlantId { get; set; }
 
-    public string? Rating { get; set; }
+    public ObservationRating Rating { get; set; }
 
     public string Comments { get; set; } = null!;
 
