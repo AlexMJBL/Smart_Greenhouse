@@ -29,7 +29,7 @@ namespace Greenhouse_API.Services
 
         public Task<PlantHumidityRecordDto> CreateAsync(PlantHumidityWriteDto dto)
         {
-            
+            throw new NotImplementedException();
         }
 
         public Task DeleteAsync(int id)

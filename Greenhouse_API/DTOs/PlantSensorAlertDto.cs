@@ -15,14 +15,13 @@ namespace Greenhouse_API.DTOs
         public DateTime CreatedAt { get; set; }
     }
 
-    public class PlantSensorAlertWriteDto
+    public class PlantSensorAlertPartial
     {
 
         [Required]
         [Range(1,int.MaxValue)]
         public int PlantId { get; set; }
         [Required]
-
         public AlertReason Reason { get; set; }
         [Required]
         public SensorType SensorType { get; set; }
