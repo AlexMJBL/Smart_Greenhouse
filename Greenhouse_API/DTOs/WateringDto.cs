@@ -2,7 +2,7 @@
 
 namespace Greenhouse_API.DTOs
 {
-    public class IWateringDto
+    public class WateringDto
     {
         public int Id { get; set; }
 

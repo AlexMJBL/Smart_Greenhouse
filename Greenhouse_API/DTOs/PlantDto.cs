@@ -5,7 +5,6 @@ namespace Greenhouse_API.DTOs
     public class PlantDto
     {
         public int Id { get; set; }
-        [Required]
         public DateOnly AcquiredDate { get; set; }
         public int SpecimenId { get; set; }
         public int ZoneId { get; set; }
@@ -22,7 +21,9 @@ namespace Greenhouse_API.DTOs
         [Required]
         [Range(1, int.MaxValue)]
         public int ZoneId { get; set; }
-        public int? SpecimenId { get; set; }
+        [Required]
+        [Range(1, int.MaxValue)]
+        public int SpecimenId { get; set; }
         public int? MomId { get; set; }
         [StringLength(500)]
         public string? Description { get; set; }

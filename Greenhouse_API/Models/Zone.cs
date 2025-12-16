@@ -17,7 +17,7 @@ public partial class Zone
 
     public virtual ICollection<Sensor> Sensors { get; set; } = new List<Sensor>();
 
-    public virtual ICollection<ZoneAlert> ZoneAlerts { get; set; } = new List<ZoneAlert>();
+    public virtual ICollection<ZoneSensorAlert> ZoneAlerts { get; set; } = new List<ZoneSensorAlert>();
 
     public virtual ZoneCategory ZoneCategory { get; set; } = null!;
 

@@ -11,7 +11,7 @@ public partial class ZonePressureRecord
 
     public int ZoneId { get; set; }
 
-    public string SensorId { get; set; } = null!;
+    public int SensorId { get; set; }
 
     public DateTime CreatedAt { get; set; }
 

@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace Greenhouse_API.Services
 {
-    public class ZoneAlertService : IRepository<ZoneAlert, int>
+    public class ZoneAlertService : IRepository<ZoneSensorAlert, int>
     {
         private SerreContext _context;
         private readonly ILogger<ZoneAlertService> _logger;
@@ -19,14 +19,14 @@ namespace Greenhouse_API.Services
             _zoneService = zoneService;   
         }
 
-        public async Task<IEnumerable<ZoneAlert>> GetAllAsync()
+        public async Task<IEnumerable<ZoneSensorAlert>> GetAllAsync()
         {
            return await _context.ZoneAlerts.ToListAsync();
         }
 
-        public async Task<IEnumerable<ZoneAlert>> GetAllWithFilter(Expression<Func<ZoneAlert, bool>>? filter = null)
+        public async Task<IEnumerable<ZoneSensorAlert>> GetAllWithFilter(Expression<Func<ZoneSensorAlert, bool>>? filter = null)
         {
-            IQueryable<ZoneAlert> query = _context.ZoneAlerts;
+            IQueryable<ZoneSensorAlert> query = _context.ZoneAlerts;
 
             if (filter != null)
                 query = query.Where(filter);
@@ -34,12 +34,12 @@ namespace Greenhouse_API.Services
             return await query.ToListAsync();
         }
 
-        public async Task<ZoneAlert?> GetByIdAsync(int id)
+        public async Task<ZoneSensorAlert?> GetByIdAsync(int id)
         {
             return await _context.ZoneAlerts.FindAsync(id);
         }
         
-        public async Task<ZoneAlert> AddAsync(ZoneAlert zoneAlert)
+        public async Task<ZoneSensorAlert> AddAsync(ZoneSensorAlert zoneAlert)
         {
             var zone = await _zoneService.GetByIdAsync(zoneAlert.ZoneId);
             if (zone == null)
@@ -53,7 +53,7 @@ namespace Greenhouse_API.Services
             return zoneAlert;
         }
        
-        public async Task<ZoneAlert> UpdateAsync(int id, ZoneAlert zoneAlert)
+        public async Task<ZoneSensorAlert> UpdateAsync(int id, ZoneSensorAlert zoneAlert)
         {
             var zone = await _zoneService.GetByIdAsync(zoneAlert.ZoneId);
             if (zone == null)

@@ -1,10 +1,11 @@
 ﻿using Greenhouse_API.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace Greenhouse_API.DTOs
 {
     public class SensorDto
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
         public string SensorCode { get; set; }
 
         public string? Description { get; set; }
@@ -22,11 +23,15 @@ namespace Greenhouse_API.DTOs
 
     public class SensorWriteDto
     {
+        [Required]
+        [MaxLength(50)]
         public string SensorCode { get; set; }
+        [MaxLength(500)]
         public string? Description { get; set; }
-
+        [Required]
         public SensorType Type { get; set; }
-
+        [Required]
+        [Range(1, int.MaxValue)]
         public int ZoneId { get; set; }
 
     }

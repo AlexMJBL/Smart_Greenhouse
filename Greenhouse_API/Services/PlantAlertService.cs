@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace Greenhouse_API.Services
 {
-    public class PlantAlertService : IRepository<PlantAlert, int>
+    public class PlantAlertService : IRepository<PlantSensorAlert, int>
     {
         private SerreContext _context;
         private readonly ILogger<PlantAlertService> _logger;
@@ -19,14 +19,14 @@ namespace Greenhouse_API.Services
         }
 
 
-        public async Task<IEnumerable<PlantAlert>> GetAllAsync()
+        public async Task<IEnumerable<PlantSensorAlert>> GetAllAsync()
         {
            return await _context.PlantAlerts.ToListAsync();
         }
 
-        public async Task<IEnumerable<PlantAlert>> GetAllWithFilter(Expression<Func<PlantAlert, bool>>? filter = null)
+        public async Task<IEnumerable<PlantSensorAlert>> GetAllWithFilter(Expression<Func<PlantSensorAlert, bool>>? filter = null)
         {
-            IQueryable<PlantAlert> query = _context.PlantAlerts;
+            IQueryable<PlantSensorAlert> query = _context.PlantAlerts;
 
             if (filter != null)
                 query = query.Where(filter);
@@ -34,13 +34,13 @@ namespace Greenhouse_API.Services
             return await query.ToListAsync();
         }
 
-        public async Task<PlantAlert?> GetByIdAsync(int id)
+        public async Task<PlantSensorAlert?> GetByIdAsync(int id)
         {
             return await _context.PlantAlerts.FindAsync(id);
         }
 
         
-        public async Task<PlantAlert> AddAsync(PlantAlert plantAlert)
+        public async Task<PlantSensorAlert> AddAsync(PlantSensorAlert plantAlert)
         {
             var plant = await _plantService.GetByIdAsync(plantAlert.PlantId);
             if (plant == null)
@@ -53,7 +53,7 @@ namespace Greenhouse_API.Services
             _logger.LogInformation("Added new PlantAlert with ID {Id}", plantAlert.Id);
             return plantAlert;
         }
-        public async Task<PlantAlert> UpdateAsync(int id, PlantAlert plantAlert)
+        public async Task<PlantSensorAlert> UpdateAsync(int id, PlantSensorAlert plantAlert)
         {
             var plant = await _plantService.GetByIdAsync(plantAlert.PlantId);
             if (plant == null)

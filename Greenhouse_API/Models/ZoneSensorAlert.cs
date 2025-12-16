@@ -1,17 +1,18 @@
-﻿using System;
+﻿using Greenhouse_API.Enums;
+using System;
 using System.Collections.Generic;
 
 namespace Greenhouse_API.Models;
 
-public partial class ZoneAlert
+public partial class ZoneSensorAlert
 {
     public int Id { get; set; }
 
     public int ZoneId { get; set; }
 
-    public string Reason { get; set; } = null!;
+    public AlertReason Reason { get; set; }
 
-    public string Message { get; set; } = null!;
+    public SensorType SensorType { get; set; }
 
     public DateTime CreatedAt { get; set; }
 

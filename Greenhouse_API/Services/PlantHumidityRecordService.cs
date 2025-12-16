@@ -11,7 +11,7 @@ namespace Greenhouse_API.Services
         private readonly ILogger<PlantHumidityRecordService> _logger;
 
         private readonly IRepository<Plant, int> _plantService;
-        private readonly IRepository<PlantAlert, int> _plantAlertService;
+        private readonly IRepository<PlantSensorAlert, int> _plantAlertService;
         private readonly IRepository<Specimen, int> _specimenService;
         private readonly IRepository<SoilHumidityCategory, int> _soilHumidityCategoryService;
 
@@ -19,7 +19,7 @@ namespace Greenhouse_API.Services
             SerreContext context,
             ILogger<PlantHumidityRecordService> logger,
             IRepository<Plant, int> plantService,
-            IRepository<PlantAlert, int> plantAlertService,
+            IRepository<PlantSensorAlert, int> plantAlertService,
             IRepository<Specimen, int> specimenService,
             IRepository<SoilHumidityCategory, int> soilHumidityCategoryService)
         {
@@ -120,7 +120,7 @@ namespace Greenhouse_API.Services
                     ? $"Humidity too low: {record.RecordPct}% (min: {soilCategory.MinHumidityPct}%)"
                     : $"Humidity too high: {record.RecordPct}% (max: {soilCategory.MaxHumidityPct}%)";
 
-                var alert = new PlantAlert
+                var alert = new PlantSensorAlert
                 {
                     PlantId = record.PlantId,
                     Reason = reason,

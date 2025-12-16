@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Greenhouse_API.Enums;
+using System;
 using System.Collections.Generic;
 
 namespace Greenhouse_API.Models;
@@ -13,9 +14,9 @@ public partial class ZoneRecord
 
     public int ZoneId { get; set; }
 
-    public string SensorId { get; set; } = null!;
+    public string SensorId { get; set; }
 
-    public string Type { get; set; } = null!;
+    public SensorType Type { get; set; }
 
     public DateTime CreatedAt { get; set; }
 

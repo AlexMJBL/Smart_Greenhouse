@@ -12,10 +12,10 @@ namespace Greenhouse_API.Services
         private readonly ILogger<ZoneRecordService> _logger;
         private readonly IRepository<ZoneCategory, int> _zoneCategoryService;
         private readonly IRepository<Zone, int> _zoneService;
-        private readonly IRepository<ZoneAlert, int> _zoneAlertService;
+        private readonly IRepository<ZoneSensorAlert, int> _zoneAlertService;
 
         public ZoneRecordService(SerreContext context, ILogger<ZoneRecordService> logger,
-         IRepository<ZoneCategory, int> zoneCategoryService, IRepository<Zone, int> zoneService, IRepository<ZoneAlert, int> zoneAlertService)
+         IRepository<ZoneCategory, int> zoneCategoryService, IRepository<Zone, int> zoneService, IRepository<ZoneSensorAlert, int> zoneAlertService)
         {
             _context = context;
             _logger = logger;
@@ -110,7 +110,7 @@ private async Task ValidateRecordAndGenerateAlertAsync(ZoneRecord zoneRecord)
 
     if (!inRange)
     {
-        var alert = new ZoneAlert
+        var alert = new ZoneSensorAlert
         {
             ZoneId = zoneRecord.ZoneId,
             Message = $"{zoneRecord.Type} out of range: {zoneRecord.Record}",

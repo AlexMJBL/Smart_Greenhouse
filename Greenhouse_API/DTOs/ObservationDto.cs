@@ -17,8 +17,9 @@ namespace Greenhouse_API.DTOs
         [Required]
         [Range(1, int.MaxValue)]
         public int PlantId { get; set; }
+        [Required]
         public ObservationRating Rating { get; set; }
-        [StringLength(500)]
+        [MaxLength(500)]
         public string Comments { get; set; } = null!;
     }
 

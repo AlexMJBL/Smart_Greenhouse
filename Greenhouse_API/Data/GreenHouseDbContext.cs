@@ -16,7 +16,7 @@ namespace Greenhouse_API.Data
 
         public virtual DbSet<Plant> Plants { get; set; }
 
-        public virtual DbSet<PlantAlert> PlantAlerts { get; set; }
+        public virtual DbSet<PlantSensorAlert> PlantAlerts { get; set; }
 
         public virtual DbSet<PlantHumidityRecord> PlantHumidityRecords { get; set; }
 
@@ -32,7 +32,7 @@ namespace Greenhouse_API.Data
 
         public virtual DbSet<Zone> Zones { get; set; }
 
-        public virtual DbSet<ZoneAlert> ZoneAlerts { get; set; }
+        public virtual DbSet<ZoneSensorAlert> ZoneAlerts { get; set; }
 
         public virtual DbSet<ZoneCategory> ZoneCategories { get; set; }
 

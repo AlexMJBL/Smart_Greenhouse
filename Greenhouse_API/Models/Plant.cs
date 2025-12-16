@@ -29,7 +29,7 @@ public partial class Plant
 
     public virtual ICollection<Observation> Observations { get; set; } = new List<Observation>();
 
-    public virtual ICollection<PlantAlert> PlantAlerts { get; set; } = new List<PlantAlert>();
+    public virtual ICollection<PlantSensorAlert> PlantAlerts { get; set; } = new List<PlantSensorAlert>();
 
     public virtual ICollection<PlantHumidityRecord> PlantHumidityRecords { get; set; } = new List<PlantHumidityRecord>();
 

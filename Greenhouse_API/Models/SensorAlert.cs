@@ -9,6 +9,7 @@ public partial class SensorAlert
     public int Id { get; set; }
 
     public AlertReason Reason { get; set; }
+    public string? Message { get; set; }
 
     public int SensorId { get; set; }
 
