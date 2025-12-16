@@ -1,129 +1,186 @@
-﻿using Greenhouse_API.Interfaces;
+﻿using Greenhouse_API.DTOs;
+using Greenhouse_API.Interfaces;
 using Greenhouse_API.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using System.Net.WebSockets;
 
 namespace Greenhouse_API.Services
 {
-    public class PlantService : IRepository<Plant, int>
+    public class PlantService : IPlantService
     {
-        private SerreContext _context;
+        private IRepository<Plant> _repository;
         private readonly ILogger<PlantService> _logger;
-        private readonly IRepository<SpecimenService, int> _specimenService;
-        private readonly IRepository<ZoneService, int> _zoneService;
+        private readonly ISpecimenService _specimenService;
+        private readonly IZoneService _zoneService;
 
-        public PlantService(SerreContext context, ILogger<PlantService> logger,
-            IRepository<SpecimenService,int> repository,IRepository<ZoneService,int> zoneService)
+        public PlantService(IRepository<Plant> repository, ILogger<PlantService> logger, IZoneService zoneService, ISpecimenService specimenService)
         {
-            _context = context;
+            _repository = repository;
             _logger = logger;
             _zoneService = zoneService;
-            _specimenService = repository;
+            _specimenService = specimenService;
         }
 
-
-        public async Task<IEnumerable<Plant>> GetAllAsync()
+        public async Task<IEnumerable<PlantDto>> GetAllAsync()
         {
-           return await _context.Plants.ToListAsync();
-        }
+            _logger.LogInformation("Fetching all plants from the database.");
+            var plants = await _repository.GetAllAsync();
 
-        public async Task<IEnumerable<Plant>> GetAllWithFilter(Expression<Func<Plant, bool>>? filter = null)
-        {
-            IQueryable<Plant> query = _context.Plants;
-
-            if (filter != null)
-                query.Where(filter);
-
-            return await query.ToListAsync();
-        }
-
-        public async Task<Plant?> GetByIdAsync(int id)
-        {
-            return await _context.Plants.FindAsync(id);
-        }
-
-        
-        public async Task<Plant> AddAsync(Plant plant)
-        {
-            //Specimen must exist
-            var specimen = await _specimenService.GetByIdAsync(plant.SpecimenId);
-            if(specimen == null)
+            return plants.Select(plant => new PlantDto
             {
-                throw new ArgumentException($"Specimen with ID {plant.SpecimenId} does not exist.");
+                Id = plant.Id,
+                AcquiredDate = plant.AcquiredDate,
+                SpecimenId = plant.SpecimenId,
+                ZoneId = plant.ZoneId,
+                MomId = plant.MomId,
+                Description = plant.Description,
+                IsActive = plant.IsActive,
+                CreatedAt = plant.CreatedAt
+            });
+        }
+
+        public async Task<PlantDto?> GetByIdAsync(int id)
+        {
+            var plant = await _repository.GetByIdAsync(id);
+            if(plant == null)
+            {
+                _logger.LogWarning("Plant with ID {PlantId} not found.", id);
+                return null;
             }
 
-            //Zone must exist
-            var zone = await _zoneService.GetByIdAsync(plant.ZoneId);
-            if(zone == null)
+            _logger.LogInformation("Plant with ID {PlantId} retrieved successfully.", id);
+            return new PlantDto
             {
-                throw new ArgumentException($"Zone with ID {plant.ZoneId} does not exist.");
-            }
-
-            //Mom Plant is optional but if provided, it must exist
-            if (plant.MomId.HasValue)
-            {
-                var momPlant = await GetByIdAsync(plant.MomId.Value);
-                if(momPlant == null)
-                {
-                    throw new ArgumentException($"Mom Plant with ID {plant.MomId.Value} does not exist.");
-                }
-            }
-
-            _context.Plants.Add(plant);
-            await _context.SaveChangesAsync();
-            _logger.LogInformation("Added new Plant with ID {Id}", plant.Id);
-            return plant;
+                Id = plant.Id,
+                AcquiredDate = plant.AcquiredDate,
+                SpecimenId = plant.SpecimenId,
+                ZoneId = plant.ZoneId,
+                MomId = plant.MomId,
+                Description = plant.Description,
+                IsActive = plant.IsActive,
+                CreatedAt = plant.CreatedAt
+            };
         }
-        public async Task<Plant> UpdateAsync(int id, Plant plant)
+
+        public async Task<PlantDto> CreateAsync(PlantWriteDto dto)
         {
-            //Specimen must exist
-            var specimen = await _specimenService.GetByIdAsync(plant.SpecimenId);
+            var specimen = await _specimenService.GetByIdAsync(dto.SpecimenId);
             if (specimen == null)
             {
-                throw new ArgumentException($"Specimen with ID {plant.SpecimenId} does not exist.");
+                _logger.LogError("Specimen with ID {SpecimenId} not found. Cannot create plant.", dto.SpecimenId);
+                throw new ArgumentException($"Specimen with ID {dto.SpecimenId} does not exist.");
             }
 
-            //Zone must exist
-            var zone = await _zoneService.GetByIdAsync(plant.ZoneId);
+            var zone = await _zoneService.GetByIdAsync(dto.ZoneId);
             if (zone == null)
             {
-                throw new ArgumentException($"Zone with ID {plant.ZoneId} does not exist.");
+                _logger.LogError("Zone with ID {ZoneId} not found. Cannot create plant.", dto.ZoneId);
+                throw new ArgumentException($"Zone with ID {dto.ZoneId} does not exist.");
             }
 
-            //Mom Plant is optional but if provided, it must exist
-            if (plant.MomId.HasValue)
+            if(dto.MomId.HasValue)
             {
-                var momPlant = await GetByIdAsync(plant.MomId.Value);
+                var momPlant = await GetByIdAsync(dto.MomId.Value);
                 if (momPlant == null)
                 {
-                    throw new ArgumentException($"Mom Plant with ID {plant.MomId.Value} does not exist.");
+                    _logger.LogError("Mom Plant with ID {MomId} not found. Cannot create plant.", dto.MomId.Value);
+                    throw new ArgumentException($"Mom Plant with ID {dto.MomId.Value} does not exist.");
                 }
             }
 
-            if (id != plant.Id)
+            var plant = new Plant
             {
-                _logger.LogError("Plant ID mismatch: {Id} != {PlantId}", id, plant.Id);
-                throw new ArgumentException("Plant ID mismatch.");
-            }
-            _context.Plants.Update(plant);
-            await _context.SaveChangesAsync();
-            _logger.LogInformation("Updated Plant with ID {Id}", plant.Id);
+                AcquiredDate = dto.AcquiredDate,
+                SpecimenId = dto.SpecimenId,
+                ZoneId = dto.ZoneId,
+                MomId = dto.MomId,
+                Description = dto.Description,
+                IsActive = true,
+                CreatedAt = DateTime.UtcNow
+            };
 
-            return plant;
+            await _repository.AddAsync(plant);
+            _logger.LogInformation("New plant created with ID {PlantId}.", plant.Id);
+
+            return new PlantDto
+            {
+                Id = plant.Id,
+                AcquiredDate = plant.AcquiredDate,
+                SpecimenId = plant.SpecimenId,
+                ZoneId = plant.ZoneId,
+                MomId = plant.MomId,
+                Description = plant.Description,
+                IsActive = plant.IsActive,
+                CreatedAt = plant.CreatedAt
+            };
         }
 
-        public async Task<bool> DeleteAsync(int id)
+        public async Task<PlantDto> UpdateAsync(int id, PlantWriteDto dto)
         {
-            var plant = await GetByIdAsync(id);
+            var plant = await _repository.GetByIdAsync(id);
             if (plant == null)
-                return false;
-            
-            _context.Plants.Remove(plant);
-            await _context.SaveChangesAsync();
-            _logger.LogInformation("Deleted Plant with ID {Id}", id);
-            return true;
+            {
+                _logger.LogError("Plant with ID {PlantId} not found. Cannot update.", id);
+                throw new ArgumentException($"Plant with ID {id} does not exist.");
+            }
+
+            var specimen = await _specimenService.GetByIdAsync(dto.SpecimenId);
+            if (specimen == null)
+            {
+                _logger.LogError("Specimen with ID {SpecimenId} not found. Cannot update plant.", dto.SpecimenId);
+                throw new ArgumentException($"Specimen with ID {dto.SpecimenId} does not exist.");
+            }
+
+            var zone = await _zoneService.GetByIdAsync(dto.ZoneId);
+            if (zone == null)
+            {
+                _logger.LogError("Zone with ID {ZoneId} not found. Cannot update plant.", dto.ZoneId);
+                throw new ArgumentException($"Zone with ID {dto.ZoneId} does not exist.");
+            }
+
+            if(dto.MomId.HasValue)
+            {
+                var momPlant = await GetByIdAsync(dto.MomId.Value); 
+                if (momPlant == null)
+                {
+                    _logger.LogError("Mom Plant with ID {MomId} not found. Cannot update plant.", dto.MomId.Value);
+                    throw new ArgumentException($"Mom Plant with ID {dto.MomId.Value} does not exist.");
+                }
+            }
+
+            plant.AcquiredDate = dto.AcquiredDate;
+            plant.SpecimenId = dto.SpecimenId;
+            plant.ZoneId = dto.ZoneId;
+            plant.MomId = dto.MomId;
+            plant.Description = dto.Description;
+
+            await _repository.SaveAsync();
+            _logger.LogInformation("Plant with ID {PlantId} updated successfully.", id);
+
+            return new PlantDto
+            {
+                Id = plant.Id,
+                AcquiredDate = plant.AcquiredDate,
+                SpecimenId = plant.SpecimenId,
+                ZoneId = plant.ZoneId,
+                MomId = plant.MomId,
+                Description = plant.Description,
+                IsActive = plant.IsActive,
+                CreatedAt = plant.CreatedAt
+            };
         }
 
-       
+        public async Task DeleteAsync(int id)
+        {
+            var deleted = await _repository.DeleteAsync(id);
+            if (!deleted)
+            {
+                _logger.LogError("Plant with ID {PlantId} not found. Cannot delete.", id);
+                throw new KeyNotFoundException($"Plant with ID {id} not found.");
+            }
+
+            _logger.LogInformation("Plant with ID {PlantId} deleted successfully.", id);
+        }
     }
 }
