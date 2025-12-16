@@ -6,34 +6,36 @@ using System.Linq.Expressions;
 
 namespace Greenhouse_API.Services
 {
-    public class SensorAlertService : ISensorAlertService
+    public class ZoneSensorAlertService : IZoneSensorAlertService
     {
         private SerreContext _context;
-        private readonly ILogger<SensorAlertService> _logger;
-        private readonly IRepository<Sensor, string> _sensorService;
-        public SensorAlertService(SerreContext context, ILogger<SensorAlertService> logger, IRepository<Sensor, string> sensorService)
+        private readonly ILogger<ZoneSensorAlertService> _logger;
+
+        private readonly IRepository<Zone, int> _zoneService;
+
+        public ZoneSensorAlertService(SerreContext context, ILogger<ZoneSensorAlertService> logger, IRepository<Zone, int> zoneService)
         {
             _context = context;
             _logger = logger;
-            _sensorService = sensorService;
+            _zoneService = zoneService;   
         }
 
-        public Task<IEnumerable<SensorAlertDto>> GetAllAsync()
+        public Task<IEnumerable<ZoneSensorAlertDto>> GetAllAsync()
         {
             throw new NotImplementedException();
         }
 
-        public Task<SensorAlertDto?> GetByIdAsync(int id)
+        public Task<ZoneSensorAlertDto?> GetByIdAsync(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<SensorAlertDto> CreateAsync(SensorAlertDto dto)
+        public Task<ZoneSensorAlertDto> CreateAsync(ZoneSensorAlertWriteDto dto)
         {
             throw new NotImplementedException();
         }
 
-        public Task<SensorAlertDto> UpdateAsync(int id, SensorAlertDto dto)
+        public Task<ZoneSensorAlertDto> UpdateAsync(int id, ZoneSensorAlertWriteDto dto)
         {
             throw new NotImplementedException();
         }

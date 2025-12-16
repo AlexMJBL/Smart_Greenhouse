@@ -3,10 +3,11 @@ using Greenhouse_API.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using Greenhouse_API.Services;
+using Greenhouse_API.DTOs;
 
 namespace Greenhouse_API.Services
 {
-    public class ZonePressureRecordService : IRepository<ZonePressureRecord, int>
+    public class ZonePressureRecordService : IZonePressureRecordService
     {
         private SerreContext _context;
         private readonly ILogger<ZonePressureRecordService> _logger;
@@ -16,62 +17,29 @@ namespace Greenhouse_API.Services
             _logger = logger;
         }
 
-        public async Task<IEnumerable<ZonePressureRecord>> GetAllAsync()
+        public Task<IEnumerable<ZonePressureRecordDto>> GetAllAsync()
         {
-            return await _context.ZonePressureRecords.ToListAsync();
+            throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<ZonePressureRecord>> GetAllWithFilter(Expression<Func<ZonePressureRecord, bool>>? filter = null)
+        public Task<ZonePressureRecordDto?> GetByIdAsync(int id)
         {
-            IQueryable<ZonePressureRecord> query = _context.ZonePressureRecords;
-
-            if (filter != null)
-                query = query.Where(filter);
-
-            return await query.ToListAsync();
+            throw new NotImplementedException();
         }
 
-        public async Task<ZonePressureRecord?> GetByIdAsync(int id)
+        public Task<ZonePressureRecordDto> CreateAsync(ZonePressureRecordWriteDto dto)
         {
-            return await _context.ZonePressureRecords.FindAsync(id);
+            throw new NotImplementedException();
         }
 
-  public async Task<ZonePressureRecord> AddAsync(ZonePressureRecord zonePressureRecord)
-{
-
-
-    _context.ZonePressureRecords.Add(zonePressureRecord);
-    await _context.SaveChangesAsync();
-
-    _logger.LogInformation($"ZonePressureRecord with ID {zonePressureRecord.Id} added successfully.");
-    return zonePressureRecord;
-}
-
-    public async Task<ZonePressureRecord> UpdateAsync(int id, ZonePressureRecord zonePressureRecord)
-{
-    if (id != zonePressureRecord.Id)
-        throw new ArgumentException("ID mismatch between route and body.");
-
-    _context.ZonePressureRecords.Update(zonePressureRecord);
-    await _context.SaveChangesAsync();
-
-    _logger.LogInformation($"ZonePressureRecord with ID {zonePressureRecord.Id} updated successfully.");
-    return zonePressureRecord;
-}
-
-        public async Task<bool> DeleteAsync(int id)
+        public Task<ZonePressureRecordDto> UpdateAsync(int id, ZonePressureRecordWriteDto dto)
         {
-            var zonePressureRecord = await _context.ZonePressureRecords.FindAsync(id);
-            if (zonePressureRecord == null)
-            {
-                return false;
-            }
-
-            _context.ZonePressureRecords.Remove(zonePressureRecord);
-            await _context.SaveChangesAsync();
-            _logger.LogInformation($"ZonePressureRecord with ID {id} deleted successfully.");
-            return true;
+            throw new NotImplementedException();
         }
-    
+
+        public Task DeleteAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

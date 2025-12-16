@@ -3,10 +3,11 @@ using Greenhouse_API.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using Greenhouse_API.Services;
+using Greenhouse_API.DTOs;
 
 namespace Greenhouse_API.Services
 {
-    public class ZoneRecordService : IRepository<ZoneRecord, int>
+    public class ZoneRecordService : IZoneRecordService
     {
         private SerreContext _context;
         private readonly ILogger<ZoneRecordService> _logger;
@@ -24,75 +25,6 @@ namespace Greenhouse_API.Services
             _zoneAlertService = zoneAlertService;
         }
 
-        public async Task<IEnumerable<ZoneRecord>> GetAllAsync()
-        {
-            return await _context.ZoneRecords.ToListAsync();
-        }
-
-        public async Task<IEnumerable<ZoneRecord>> GetAllWithFilter(Expression<Func<ZoneRecord, bool>>? filter = null)
-        {
-            IQueryable<ZoneRecord> query = _context.ZoneRecords;
-
-            if (filter != null)
-                query = query.Where(filter);
-
-            return await query.ToListAsync();
-        }
-
-        public async Task<ZoneRecord?> GetByIdAsync(int id)
-        {
-            return await _context.ZoneRecords.FindAsync(id);
-        }
-
-  public async Task<ZoneRecord> AddAsync(ZoneRecord zoneRecord)
-{
-    await ValidateRecordAndGenerateAlertAsync(zoneRecord);
-
-    _context.ZoneRecords.Add(zoneRecord);
-    await _context.SaveChangesAsync();
-
-    _logger.LogInformation($"ZoneRecord with ID {zoneRecord.Id} added successfully.");
-    return zoneRecord;
-}
-
-    public async Task<ZoneRecord> UpdateAsync(int id, ZoneRecord zoneRecord)
-{
-    if (id != zoneRecord.Id)
-        throw new ArgumentException("ID mismatch between route and body.");
-
-    await ValidateRecordAndGenerateAlertAsync(zoneRecord);
-
-    _context.ZoneRecords.Update(zoneRecord);
-    await _context.SaveChangesAsync();
-
-    _logger.LogInformation($"ZoneRecord with ID {zoneRecord.Id} updated successfully.");
-    return zoneRecord;
-}
-
-        public async Task<bool> DeleteAsync(int id)
-        {
-            var zoneRecord = await _context.ZoneRecords.FindAsync(id);
-            if (zoneRecord == null)
-            {
-                return false;
-            }
-
-            _context.ZoneRecords.Remove(zoneRecord);
-            await _context.SaveChangesAsync();
-            _logger.LogInformation($"ZoneRecord with ID {id} deleted successfully.");
-            return true;
-        }
-
-        private async Task<ZoneCategory> getZoneCategoryAsync(ZoneRecord record)
-{
-    var zone = await _zoneService.GetByIdAsync(record.ZoneId)
-        ?? throw new ArgumentException($"Zone with ID {record.ZoneId} does not exist.");
-
-    var zoneCategory = await _zoneCategoryService.GetByIdAsync(zone.ZoneCategoryId)
-        ?? throw new ArgumentException($"ZoneCategory with ID {zone.ZoneCategoryId} does not exist.");
-        
-    return zoneCategory;
-}
 
 private async Task ValidateRecordAndGenerateAlertAsync(ZoneRecord zoneRecord)
 {
@@ -121,6 +53,30 @@ private async Task ValidateRecordAndGenerateAlertAsync(ZoneRecord zoneRecord)
         _logger.LogWarning($"Generated alert for Zone ID {zoneRecord.ZoneId}: {alert.Message}");
     }
 }
-    
+
+        public Task<IEnumerable<ZoneRecordDto>> GetAllAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ZoneRecordDto?> GetByIdAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ZoneRecordDto> CreateAsync(ZoneRecordWriteDto dto)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ZoneRecordDto> UpdateAsync(int id, ZoneRecordWriteDto dto)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }   

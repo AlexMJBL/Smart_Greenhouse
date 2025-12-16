@@ -36,7 +36,7 @@ namespace Greenhouse_API.Extensions
 
             services.AddScoped<IZoneService, ZoneService>();
             services.AddScoped<IZoneRecordService, ZoneRecordService>();
-            services.AddScoped<IZoneAlertService, ZoneAlertService>();
+            services.AddScoped<IZoneAlertService, ZoneSensorAlertService>();
             services.AddScoped<IZoneCategoryService, ZoneCategoryService>();
             services.AddScoped<IZonePressureRecordService, ZonePressureRecordService>();
 

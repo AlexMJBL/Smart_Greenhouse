@@ -1,11 +1,12 @@
-﻿using Greenhouse_API.Interfaces;
+﻿using Greenhouse_API.DTOs;
+using Greenhouse_API.Interfaces;
 using Greenhouse_API.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace Greenhouse_API.Services
 {
-    public class SoilHumidityCategoryService : IRepository<SoilHumidityCategory, int>
+    public class SoilHumidityCategoryService : ISoilHumidityCategoryService
     {
         private SerreContext _context;
         private readonly ILogger<SoilHumidityCategoryService> _logger;
@@ -15,57 +16,29 @@ namespace Greenhouse_API.Services
             _logger = logger;
         }
 
-        public async Task<IEnumerable<SoilHumidityCategory>> GetAllAsync()
+        public Task<IEnumerable<SoilHumidityCategoryDto>> GetAllAsync()
         {
-            return await _context.SoilHumidityCategories.ToListAsync();
+            throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<SoilHumidityCategory>> GetAllWithFilter(Expression<Func<SoilHumidityCategory, bool>>? filter = null)
+        public Task<SoilHumidityCategoryDto?> GetByIdAsync(int id)
         {
-            IQueryable<SoilHumidityCategory> query = _context.SoilHumidityCategories;
-
-            if (filter != null)
-                query.Where(filter);
-
-            return await query.ToListAsync();
+            throw new NotImplementedException();
         }
 
-        public async Task<SoilHumidityCategory?> GetByIdAsync(int id)
+        public Task<SoilHumidityCategoryDto> CreateAsync(SoilHumidityCategoryWriteDto dto)
         {
-            return await _context.SoilHumidityCategories.FindAsync(id);
+            throw new NotImplementedException();
         }
 
-        public async Task<SoilHumidityCategory> AddAsync(SoilHumidityCategory soilHumidityCategory)
+        public Task<SoilHumidityCategoryDto> UpdateAsync(int id, SoilHumidityCategoryWriteDto dto)
         {
-            _context.SoilHumidityCategories.Add(soilHumidityCategory);
-            await _context.SaveChangesAsync();
-            _logger.LogInformation($"SoilHumidityCategory with ID {soilHumidityCategory.Id} added successfully.");
-            return soilHumidityCategory;
+            throw new NotImplementedException();
         }
-       
 
-        public async Task<SoilHumidityCategory> UpdateAsync(int id, SoilHumidityCategory soilHumidityCategory)
+        public Task DeleteAsync(int id)
         {
-            if(id != soilHumidityCategory.Id)
-            {
-                throw new ArgumentException("ID mismatch between route and body.");
-            }
-            _context.SoilHumidityCategories.Update(soilHumidityCategory);
-            await _context.SaveChangesAsync();
-            _logger.LogInformation($"SoilHumidityCategory with ID {soilHumidityCategory.Id} updated successfully.");
-            return soilHumidityCategory;
+            throw new NotImplementedException();
         }
-        public async Task<bool> DeleteAsync(int id)
-        {
-            var soilHumidityCategory = await GetByIdAsync(id);
-            if (soilHumidityCategory == null)
-                return false;
-            
-            _context.SoilHumidityCategories.Remove(soilHumidityCategory);
-            await _context.SaveChangesAsync();
-            _logger.LogInformation($"SoilHumidityCategory with ID {id} deleted successfully.");
-            return true;
-        }
-        
     }
 }

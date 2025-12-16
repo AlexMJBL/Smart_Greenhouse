@@ -1,3 +1,4 @@
+using Greenhouse_API.DTOs;
 using Greenhouse_API.Interfaces;
 using Greenhouse_API.Models;
 using Microsoft.EntityFrameworkCore;
@@ -5,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace Greenhouse_API.Services
 {
-    public class ZoneCategoryService : IRepository<ZoneCategory, int>
+    public class ZoneCategoryService : IZoneCategoryService
     {
         private SerreContext _context;
         private readonly ILogger<ZoneCategoryService> _logger;
@@ -15,56 +16,29 @@ namespace Greenhouse_API.Services
             _logger = logger;
         }
 
-        public async Task<IEnumerable<ZoneCategory>> GetAllAsync()
+        public Task<IEnumerable<ZoneCategoryDto>> GetAllAsync()
         {
-            return await _context.ZoneCategories.ToListAsync();
+            throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<ZoneCategory>> GetAllWithFilter(Expression<Func<ZoneCategory, bool>>? filter = null)
+        public Task<ZoneCategoryDto?> GetByIdAsync(int id)
         {
-            IQueryable<ZoneCategory> query = _context.ZoneCategories;
-            if (filter != null)
-                query = query.Where(filter);
-                
-            return await query.ToListAsync();
+            throw new NotImplementedException();
         }
 
-        public async Task<ZoneCategory?> GetByIdAsync(int id)
+        public Task<ZoneCategoryDto> CreateAsync(ZoneCategoryWriteDto dto)
         {
-            return await _context.ZoneCategories.FindAsync(id);
+            throw new NotImplementedException();
         }
 
-        public async Task<ZoneCategory> AddAsync(ZoneCategory zoneCategory)
+        public Task<ZoneCategoryDto> UpdateAsync(int id, ZoneCategoryWriteDto dto)
         {
-            _context.ZoneCategories.Add(zoneCategory);
-            await _context.SaveChangesAsync();
-            _logger.LogInformation($"ZoneCategory with ID {zoneCategory.Id} added successfully.");
-            return zoneCategory;
+            throw new NotImplementedException();
         }
 
-        public async Task<ZoneCategory> UpdateAsync(int id, ZoneCategory zoneCategory)
+        public Task DeleteAsync(int id)
         {
-            if (id != zoneCategory.Id)
-            {
-                throw new ArgumentException("ID mismatch between route and body.");
-            }
-
-            _context.ZoneCategories.Update(zoneCategory);
-            await _context.SaveChangesAsync();
-            _logger.LogInformation($"ZoneCategory with ID {zoneCategory.Id} updated successfully.");
-            return zoneCategory;
-        }
-
-        public async Task<bool> DeleteAsync(int id)
-        {
-            var zoneCategory = await _context.ZoneCategories.FindAsync(id);
-            if (zoneCategory == null)
-                return false;
-            
-            _context.ZoneCategories.Remove(zoneCategory);
-            await _context.SaveChangesAsync();
-            _logger.LogInformation($"ZoneCategory with ID {id} deleted successfully.");
-            return true;
+            throw new NotImplementedException();
         }
     }
 }

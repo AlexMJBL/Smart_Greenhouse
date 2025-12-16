@@ -1,11 +1,12 @@
-﻿using Greenhouse_API.Interfaces;
+﻿using Greenhouse_API.DTOs;
+using Greenhouse_API.Interfaces;
 using Greenhouse_API.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace Greenhouse_API.Services
 {
-    public class ZoneService : IRepository<Zone, int>
+    public class ZoneService : IZoneService
     {
         private SerreContext _context;
         private readonly ILogger<ZoneService> _logger;
@@ -18,71 +19,29 @@ namespace Greenhouse_API.Services
             _zoneCategoryService = zoneCategoryService;
         }
 
-        public async Task<IEnumerable<Zone>> GetAllAsync()
+        public Task<IEnumerable<ZoneDto>> GetAllAsync()
         {
-            return await _context.Zones.ToListAsync();
+            throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<Zone>> GetAllWithFilter(Expression<Func<Zone, bool>>? filter = null)
+        public Task<ZoneDto?> GetByIdAsync(int id)
         {
-            IQueryable<Zone> query = _context.Zones;
-
-            if (filter != null)
-                query = query.Where(filter);
-
-            return await query.ToListAsync();
+            throw new NotImplementedException();
         }
 
-        public async Task<Zone?> GetByIdAsync(int id)
+        public Task<ZoneDto> CreateAsync(ZoneWriteDto dto)
         {
-            return await _context.Zones.FindAsync(id);
+            throw new NotImplementedException();
         }
 
-        public async Task<Zone> AddAsync(Zone zone)
-        {   
-            var zoneCategory = await _zoneCategoryService.GetByIdAsync(zone.ZoneCategoryId);
-            if(zoneCategory == null)
-            {
-                throw new ArgumentException($"ZoneCategory with ID {zone.ZoneCategoryId} does not exist.");
-            }
-
-            _context.Zones.Add(zone);
-            await _context.SaveChangesAsync();
-            _logger.LogInformation($"Zone with ID {zone.Id} added successfully.");
-            return zone;
+        public Task<ZoneDto> UpdateAsync(int id, ZoneWriteDto dto)
+        {
+            throw new NotImplementedException();
         }
 
-        public async Task<Zone> UpdateAsync(int id, Zone zone)
+        public Task DeleteAsync(int id)
         {
-            var zoneCategory = await _zoneCategoryService.GetByIdAsync(zone.ZoneCategoryId);
-            if (zoneCategory == null)
-            {
-                throw new ArgumentException($"ZoneCategory with ID {zone.ZoneCategoryId} does not exist.");
-            }
-
-            if (id != zone.Id)
-            {
-                throw new ArgumentException("ID mismatch between route and body.");
-            }
-
-            _context.Zones.Update(zone);
-            await _context.SaveChangesAsync();
-            _logger.LogInformation($"Zone with ID {zone.Id} updated successfully.");
-            return zone;
-        }
-
-        public async Task<bool> DeleteAsync(int id)
-        {
-            var zone = await _context.Zones.FindAsync(id);
-            if (zone == null)
-            {
-                return false;
-            }
-
-            _context.Zones.Remove(zone);
-            await _context.SaveChangesAsync();
-            _logger.LogInformation($"Zone with ID {id} deleted successfully.");
-            return true;
+            throw new NotImplementedException();
         }
     }
 }
