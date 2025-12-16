@@ -20,8 +20,6 @@ namespace Greenhouse_API.DTOs
         [Range(0,100)]
         public float RecordPct { get; set; }
         [Required]
-        public bool InRange { get; set; }
-        [Required]
         [Range(1, int.MaxValue)]
         public int PlantId { get; set; }
     }

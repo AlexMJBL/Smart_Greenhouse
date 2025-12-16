@@ -3,7 +3,7 @@ using Greenhouse_API.Models;
 
 namespace Greenhouse_API.Interfaces
 {
-    public interface IPlantSensorAlertService : ICrudBasicService <PlantSensorAlertDto, PlantSensorAlertPartial>
+    public interface IPlantSensorAlertService : ICrdService <PlantSensorAlertDto, PlantSensorAlertPartial>
     {
     }
 }

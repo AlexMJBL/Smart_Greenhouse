@@ -1,4 +1,5 @@
 using Greenhouse_API.DTOs;
+using Greenhouse_API.Exceptions;
 using Greenhouse_API.Interfaces;
 using Greenhouse_API.Models;
 using Microsoft.EntityFrameworkCore;
@@ -26,7 +27,7 @@ namespace Greenhouse_API.Services
             if (plant == null)
             {
                 _logger.LogWarning("Attempted to create observation for non-existent plant with ID {PlantId}", dto.PlantId);
-                throw new ArgumentException($"Plant with ID {dto.PlantId} does not exist.");
+                throw new NotFoundException($"Plant with ID {dto.PlantId} does not exist.");
             }
 
             var observation = new Observation
@@ -57,7 +58,7 @@ namespace Greenhouse_API.Services
             if(!deleted)
             {
                 _logger.LogWarning("Attempted to delete non-existent observation with ID {ObservationId}", id);
-                throw new KeyNotFoundException($"Observation with ID {id} not found.");
+                throw new NotFoundException($"Observation with ID {id} not found.");
             }
 
             _logger.LogInformation("Deleted observation with ID {ObservationId}", id);
@@ -104,14 +105,14 @@ namespace Greenhouse_API.Services
             if (observation == null)
             {
                 _logger.LogWarning("Observation with ID {ObservationId} not found for update", id);
-                throw new KeyNotFoundException("Observation not found");
+                throw new NotFoundException("Observation not found");
             }
 
             var plant = await _plantService.GetByIdAsync(dto.PlantId);
             if (plant == null)
             {
                 _logger.LogWarning("Attempted to update observation for non-existent plant with ID {PlantId}", dto.PlantId);
-                throw new ArgumentException($"Plant with ID {dto.PlantId} does not exist.");
+                throw new NotFoundException($"Plant with ID {dto.PlantId} does not exist.");
             }
 
             observation.PlantId = dto.PlantId;

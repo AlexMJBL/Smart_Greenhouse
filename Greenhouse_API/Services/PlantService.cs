@@ -1,4 +1,5 @@
 ﻿using Greenhouse_API.DTOs;
+using Greenhouse_API.Exceptions;
 using Greenhouse_API.Interfaces;
 using Greenhouse_API.Models;
 using Microsoft.EntityFrameworkCore;
@@ -69,14 +70,14 @@ namespace Greenhouse_API.Services
             if (specimen == null)
             {
                 _logger.LogError("Specimen with ID {SpecimenId} not found. Cannot create plant.", dto.SpecimenId);
-                throw new ArgumentException($"Specimen with ID {dto.SpecimenId} does not exist.");
+                throw new NotFoundException($"Specimen with ID {dto.SpecimenId} does not exist.");
             }
 
             var zone = await _zoneService.GetByIdAsync(dto.ZoneId);
             if (zone == null)
             {
                 _logger.LogError("Zone with ID {ZoneId} not found. Cannot create plant.", dto.ZoneId);
-                throw new ArgumentException($"Zone with ID {dto.ZoneId} does not exist.");
+                throw new NotFoundException($"Zone with ID {dto.ZoneId} does not exist.");
             }
 
             if(dto.MomId.HasValue)
@@ -85,7 +86,7 @@ namespace Greenhouse_API.Services
                 if (momPlant == null)
                 {
                     _logger.LogError("Mom Plant with ID {MomId} not found. Cannot create plant.", dto.MomId.Value);
-                    throw new ArgumentException($"Mom Plant with ID {dto.MomId.Value} does not exist.");
+                    throw new NotFoundException($"Mom Plant with ID {dto.MomId.Value} does not exist.");
                 }
             }
 
@@ -122,21 +123,21 @@ namespace Greenhouse_API.Services
             if (plant == null)
             {
                 _logger.LogError("Plant with ID {PlantId} not found. Cannot update.", id);
-                throw new ArgumentException($"Plant with ID {id} does not exist.");
+                throw new NotFoundException($"Plant with ID {id} does not exist.");
             }
 
             var specimen = await _specimenService.GetByIdAsync(dto.SpecimenId);
             if (specimen == null)
             {
                 _logger.LogError("Specimen with ID {SpecimenId} not found. Cannot update plant.", dto.SpecimenId);
-                throw new ArgumentException($"Specimen with ID {dto.SpecimenId} does not exist.");
+                throw new NotFoundException($"Specimen with ID {dto.SpecimenId} does not exist.");
             }
 
             var zone = await _zoneService.GetByIdAsync(dto.ZoneId);
             if (zone == null)
             {
                 _logger.LogError("Zone with ID {ZoneId} not found. Cannot update plant.", dto.ZoneId);
-                throw new ArgumentException($"Zone with ID {dto.ZoneId} does not exist.");
+                throw new NotFoundException($"Zone with ID {dto.ZoneId} does not exist.");
             }
 
             if(dto.MomId.HasValue)
@@ -145,7 +146,7 @@ namespace Greenhouse_API.Services
                 if (momPlant == null)
                 {
                     _logger.LogError("Mom Plant with ID {MomId} not found. Cannot update plant.", dto.MomId.Value);
-                    throw new ArgumentException($"Mom Plant with ID {dto.MomId.Value} does not exist.");
+                    throw new NotFoundException($"Mom Plant with ID {dto.MomId.Value} does not exist.");
                 }
             }
 
@@ -177,7 +178,7 @@ namespace Greenhouse_API.Services
             if (!deleted)
             {
                 _logger.LogError("Plant with ID {PlantId} not found. Cannot delete.", id);
-                throw new KeyNotFoundException($"Plant with ID {id} not found.");
+                throw new NotFoundException($"Plant with ID {id} not found.");
             }
 
             _logger.LogInformation("Plant with ID {PlantId} deleted successfully.", id);

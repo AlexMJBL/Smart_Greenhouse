@@ -1,4 +1,5 @@
 using Greenhouse_API.DTOs;
+using Greenhouse_API.Exceptions;
 using Greenhouse_API.Interfaces;
 using Greenhouse_API.Models;
 using Microsoft.EntityFrameworkCore;
@@ -25,7 +26,7 @@ namespace Greenhouse_API.Services
             if (plante == null)
             {
                 _logger.LogWarning("Plant with ID: {PlantId} not found for sensor alert creation", alert.PlantId);
-                throw new KeyNotFoundException("Plant not found");
+                throw new NotFoundException("Plant not found");
             }
 
             var plantSensorAlert = new PlantSensorAlert
@@ -55,7 +56,7 @@ namespace Greenhouse_API.Services
             if(!deleted)
             {
                 _logger.LogWarning("PlantSensorAlert with ID {AlertId} not found for deletion", id);
-                throw new KeyNotFoundException("PlantSensorAlert not found");
+                throw new NotFoundException("PlantSensorAlert not found");
             }
 
             _logger.LogInformation("PlantSensorAlert with ID {AlertId} deleted", id);

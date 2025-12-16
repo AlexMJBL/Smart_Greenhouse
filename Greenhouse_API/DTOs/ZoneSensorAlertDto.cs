@@ -7,7 +7,7 @@ namespace Greenhouse_API.DTOs
     {
         public int Id { get; set; }
 
-        public int ZoneId { get; set; }
+        public int SensorId { get; set; }
 
         public AlertReason Reason { get; set; }
 
@@ -16,11 +16,11 @@ namespace Greenhouse_API.DTOs
         public DateTime CreatedAt { get; set; }
     }
 
-    public class ZoneSensorAlertWriteDto
+    public class ZoneSensorAlertPartial
     {
         [Required]
         [Range(1, int.MaxValue)]
-        public int ZoneId { get; set; }
+        public int SensorId { get; set; }
         [Required]
         public AlertReason Reason { get; set; }
         [Required]

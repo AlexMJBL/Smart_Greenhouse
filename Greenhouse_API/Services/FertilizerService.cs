@@ -1,5 +1,6 @@
 using Greenhouse_API.Data;
 using Greenhouse_API.DTOs;
+using Greenhouse_API.Exceptions;
 using Greenhouse_API.Interfaces;
 using Greenhouse_API.Models;
 using Microsoft.EntityFrameworkCore;
@@ -53,9 +54,8 @@ namespace Greenhouse_API.Services
 
             if (!deleted)
             {
-                _logger.LogWarning(
-                    "Fertilizer with ID {FertilizerId} not found for deletion", id);
-                throw new KeyNotFoundException("Fertilizer not found");
+                _logger.LogWarning("Fertilizer with ID {FertilizerId} not found for deletion", id);
+                throw new NotFoundException("Fertilizer not found");
             }
 
             _logger.LogInformation("Fertilizer with ID {FertilizerId} deleted", id);
@@ -100,7 +100,7 @@ namespace Greenhouse_API.Services
             if (fertilizer == null)
             {
                 _logger.LogWarning("Fertilizer with ID: {FertilizerId} not found for update", id);
-                throw new KeyNotFoundException("Fertilizer not found");
+                throw new NotFoundException("Fertilizer not found");
             }
 
             var plant = await _plantService.GetByIdAsync(dto.PlantId);
@@ -108,7 +108,7 @@ namespace Greenhouse_API.Services
             {
                 _logger.LogWarning(
                     "Plant with ID {PlantId} not found for fertilizer update", dto.PlantId);
-                throw new KeyNotFoundException("Plant not found");
+                throw new NotFoundException("Plant not found");
             }
 
             fertilizer.Type = dto.Type;

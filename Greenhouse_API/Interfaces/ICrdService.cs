@@ -1,6 +1,6 @@
 namespace Greenhouse_API.Interfaces
 {
-    public interface ICrudBasicService<TDto, TWriteDto>
+    public interface ICrdService<TDto, TWriteDto>
     {
         Task<IEnumerable<TDto>> GetAllAsync();
         Task<TDto?> GetByIdAsync(int id);
