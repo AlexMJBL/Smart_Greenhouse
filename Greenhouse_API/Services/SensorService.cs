@@ -1,4 +1,5 @@
 ﻿using Greenhouse_API.DTOs;
+using Greenhouse_API.Exceptions;
 using Greenhouse_API.Interfaces;
 using Greenhouse_API.Models;
 using Microsoft.EntityFrameworkCore;
@@ -8,40 +9,117 @@ namespace Greenhouse_API.Services
 {
     public class SensorService : ISensorService
     {
-        private SerreContext _context;
+        private IRepository<Sensor> _repository;
         private readonly ILogger<SensorService> _logger;
-        private readonly IRepository<Zone, int> _zoneService;
+        private readonly IZoneService _zoneService;
 
-        public SensorService(SerreContext context, ILogger<SensorService> logger, IRepository<Zone, int> zoneService)
+        public SensorService(IRepository<Sensor> repository, ILogger<SensorService> logger, IZoneService zoneService)
         {
-            _context = context;
+            _repository = repository;
             _logger = logger;
             _zoneService = zoneService;
         }
 
-        public Task<IEnumerable<SensorDto>> GetAllAsync()
+        public async Task<IEnumerable<SensorDto>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            _logger.LogInformation("Retrieving all sensors");
+            var sensors = await _repository.GetAllAsync();
+
+            return sensors.Select(sensor => new SensorDto
+            {
+                Id = sensor.Id,
+                Type = sensor.Type,
+                ZoneId = sensor.ZoneId,
+                CreatedAt = sensor.CreatedAt
+            });
         }
 
-        public Task<SensorDto?> GetByIdAsync(int id)
+        public async Task<SensorDto?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var sensor = await _repository.GetByIdAsync(id);
+            if (sensor == null)
+            {
+                _logger.LogWarning("Sensor with ID: {SensorId} not found", id);
+                return null;
+            }
+
+            _logger.LogInformation("Sensor with ID: {SensorId} retrieved", id);
+            return new SensorDto
+            {
+                Id = sensor.Id,
+                Type = sensor.Type,
+                ZoneId = sensor.ZoneId,
+                CreatedAt = sensor.CreatedAt
+            };
         }
 
-        public Task<SensorDto> CreateAsync(SensorWriteDto dto)
+        public async Task<SensorDto> CreateAsync(SensorWriteDto dto)
         {
-            throw new NotImplementedException();
+            var zone = await _zoneService.GetByIdAsync(dto.ZoneId);
+            if (zone == null)
+            {
+                _logger.LogWarning("Zone with ID: {ZoneId} not found for sensor creation", dto.ZoneId);
+                throw new NotFoundException("Zone not found");
+            }
+
+            var sensor = new Sensor
+            {
+                Type = dto.Type,
+                ZoneId = dto.ZoneId,
+                CreatedAt = DateTime.UtcNow
+            };
+
+            await _repository.AddAsync(sensor);
+            _logger.LogInformation("Sensor created with ID: {SensorId}", sensor.Id);
+
+            return new SensorDto
+            {
+                Id = sensor.Id,
+                Type = sensor.Type,
+                ZoneId = sensor.ZoneId,
+                CreatedAt = sensor.CreatedAt
+            };
         }
 
-        public Task<SensorDto> UpdateAsync(int id, SensorWriteDto dto)
+        public async Task<SensorDto> UpdateAsync(int id, SensorWriteDto dto)
         {
-            throw new NotImplementedException();
+            var sensor = await _repository.GetByIdAsync(id);
+            if (sensor == null)
+            {
+                _logger.LogWarning("Sensor with ID: {SensorId} not found for update", id);
+                throw new NotFoundException("Sensor not found");
+            }
+
+            var zone = await _zoneService.GetByIdAsync(dto.ZoneId);
+            if (zone == null)
+            {
+                _logger.LogWarning("Zone with ID {ZoneId} not found for sensor update", dto.ZoneId);
+                throw new NotFoundException("Zone not found");
+            }
+
+            sensor.Type = dto.Type;
+            sensor.ZoneId = dto.ZoneId;
+            await _repository.SaveAsync();
+
+            _logger.LogInformation("Sensor with ID {SensorId} updated", id);
+            return new SensorDto
+            {
+                Id = sensor.Id,
+                Type = sensor.Type,
+                ZoneId = sensor.ZoneId,
+                CreatedAt = sensor.CreatedAt
+            };
         }
 
-        public Task DeleteAsync(int id)
+        public async Task DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var deleted = await _repository.DeleteAsync(id);
+            if (!deleted)
+            {
+                _logger.LogWarning("Sensor with ID {SensorId} not found for deletion", id);
+                throw new NotFoundException("Sensor not found");
+            }
+            _logger.LogInformation("Sensor with ID {SensorId} deleted", id);
         }
     }
 }

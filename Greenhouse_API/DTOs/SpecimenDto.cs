@@ -9,9 +9,11 @@ namespace Greenhouse_API.DTOs
         public string Name { get; set; } = null!;
 
         public int SoilHumidityCatId { get; set; }
+
+        public DateTime CreatedAt { get; set; }
     }
 
-    public class SpecimenCreateDto
+    public class SpecimenWriteDto
     {
         [Required]
         public string Name { get; set; } = null!;

@@ -15,7 +15,7 @@ namespace Greenhouse_API.DTOs
         public DateTime CreatedAt { get; set; }
     }
 
-    public class SoilHumidityCreateDto
+    public class SoilHumidityCategoryWriteDto
     {
         [Required]
         public string Name { get; set; } = null!;

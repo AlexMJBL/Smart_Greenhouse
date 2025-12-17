@@ -1,4 +1,5 @@
 ﻿using Greenhouse_API.DTOs;
+using Greenhouse_API.Exceptions;
 using Greenhouse_API.Interfaces;
 using Greenhouse_API.Models;
 using Microsoft.EntityFrameworkCore;
@@ -8,40 +9,117 @@ namespace Greenhouse_API.Services
 {
     public class SpecimenService : ISpecimenService
     {
-        private SerreContext _context;
+        private IRepository<Specimen> _repository;
         private readonly ILogger<SpecimenService> _logger;
-        private readonly IRepository<SoilHumidityCategory, int> _soilHumidityCategoryService;
+        private readonly ISoilHumidityCategoryService _soilHumidityCategoryService;
         
-        public SpecimenService(SerreContext context, ILogger<SpecimenService> logger, IRepository<SoilHumidityCategory, int> soilHumidityCategoryService)
+        public SpecimenService(IRepository<Specimen> repository, ILogger<SpecimenService> logger, ISoilHumidityCategoryService soilHumidityCategoryService)
         {
-            _context = context;
+            _repository = repository;
             _logger = logger;
             _soilHumidityCategoryService = soilHumidityCategoryService;
         }
 
-        public Task<IEnumerable<SpecimenDto>> GetAllAsync()
+        public async Task<IEnumerable<SpecimenDto>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            _logger.LogInformation("Retrieving all specimens");
+            var specimens = await _repository.GetAllAsync();
+            return specimens.Select(specimen => new SpecimenDto
+            {
+                Id = specimen.Id,
+                Name = specimen.Name,
+                SoilHumidityCatId = specimen.SoilHumidityCatId,
+                CreatedAt = specimen.CreatedAt
+            });
         }
 
-        public Task<SpecimenDto?> GetByIdAsync(int id)
+        public async Task<SpecimenDto?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var specimen =  await _repository.GetByIdAsync(id);
+            if (specimen == null)
+            {
+                _logger.LogWarning("Specimen with ID: {SpecimenId} not found", id);
+                return null;
+            }
+
+            _logger.LogInformation("Retrieving specimen with ID: {SpecimenId}", id);
+            return new SpecimenDto
+            {
+                Id = specimen.Id,
+                Name = specimen.Name,
+                SoilHumidityCatId = specimen.SoilHumidityCatId,
+                CreatedAt = specimen.CreatedAt
+            };
         }
 
-        public Task<SpecimenDto> CreateAsync(SpecimenWriteDto dto)
+        public async Task<SpecimenDto> CreateAsync(SpecimenWriteDto dto)
         {
-            throw new NotImplementedException();
+            var SoilHumidityCategory = await _soilHumidityCategoryService.GetByIdAsync(dto.SoilHumidityCatId);
+            if (SoilHumidityCategory == null)
+            {
+                _logger.LogWarning("Soil Humidity Category with ID: {SoilHumidityCatId} not found for specimen creation", dto.SoilHumidityCatId);
+                throw new NotFoundException("Soil Humidity Category not found");
+            }
+
+            var specimen = new Specimen
+            {
+                Name = dto.Name,
+                SoilHumidityCatId = dto.SoilHumidityCatId,
+                CreatedAt = DateTime.UtcNow
+            };
+
+            await _repository.AddAsync(specimen);
+            _logger.LogInformation("Specimen created with ID: {SpecimenId}", specimen.Id);
+
+            return new SpecimenDto
+            {
+                Id = specimen.Id,
+                Name = specimen.Name,
+                SoilHumidityCatId = specimen.SoilHumidityCatId,
+                CreatedAt = specimen.CreatedAt
+            };
         }
 
-        public Task<SpecimenDto> UpdateAsync(int id, SpecimenWriteDto dto)
+        public async Task<SpecimenDto> UpdateAsync(int id, SpecimenWriteDto dto)
         {
-            throw new NotImplementedException();
+            var specimen = await _repository.GetByIdAsync(id);
+            if (specimen == null)
+            {
+                _logger.LogWarning("Specimen with ID: {SpecimenId} not found for update", id);
+                throw new NotFoundException("Specimen not found");
+            }
+
+            var SoilHumidityCategory = await _soilHumidityCategoryService.GetByIdAsync(dto.SoilHumidityCatId);
+            if (SoilHumidityCategory == null)
+            {
+                _logger.LogWarning("Soil Humidity Category with ID: {SoilHumidityCatId} not found for specimen update", dto.SoilHumidityCatId);
+                throw new NotFoundException("Soil Humidity Category not found");
+            }
+
+            specimen.Name = dto.Name;
+            specimen.SoilHumidityCatId = dto.SoilHumidityCatId;
+
+            await _repository.SaveAsync();
+            _logger.LogInformation("Specimen with ID: {SpecimenId} updated", id);
+
+            return new SpecimenDto
+            {
+                Id = specimen.Id,
+                Name = specimen.Name,
+                SoilHumidityCatId = specimen.SoilHumidityCatId,
+                CreatedAt = specimen.CreatedAt
+            };
         }
 
-        public Task DeleteAsync(int id)
+        public async Task DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var delete = await _repository.DeleteAsync(id);
+            if (!delete)
+            {
+                _logger.LogWarning("Specimen with ID: {SpecimenId} not found for deletion", id);
+                throw new NotFoundException("Specimen not found");
+            }
+            _logger.LogInformation("Specimen with ID: {SpecimenId} deleted", id);
         }
     }
 }
