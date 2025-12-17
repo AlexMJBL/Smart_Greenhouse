@@ -14,7 +14,7 @@ public partial class ZoneRecord
 
     public int ZoneId { get; set; }
 
-    public string SensorId { get; set; }
+    public int SensorId { get; set; }
 
     public SensorType Type { get; set; }
 

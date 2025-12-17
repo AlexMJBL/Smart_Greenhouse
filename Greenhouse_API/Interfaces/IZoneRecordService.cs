@@ -2,7 +2,7 @@
 
 namespace Greenhouse_API.Interfaces
 {
-    public interface IZoneRecordService : ICrudService<ZoneRecordDto, ZoneRecordWriteDto>
+    public interface IZoneRecordService : ICrdService<ZoneRecordDto, ZoneRecordWriteDto>
     {
     }
 }

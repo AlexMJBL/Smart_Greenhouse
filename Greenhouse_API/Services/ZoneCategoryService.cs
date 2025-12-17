@@ -1,4 +1,5 @@
 using Greenhouse_API.DTOs;
+using Greenhouse_API.Exceptions;
 using Greenhouse_API.Interfaces;
 using Greenhouse_API.Models;
 using Microsoft.EntityFrameworkCore;
@@ -103,7 +104,7 @@ namespace Greenhouse_API.Services
             if (categorie == null)
             {
                 _logger.LogWarning("Zone category with ID: {ZoneCategoryId} not found for update", id);
-                throw new KeyNotFoundException("Zone category not found");
+                throw new NotFoundException("Zone category not found");
             }
 
             categorie.Name = dto.Name;
@@ -141,7 +142,7 @@ namespace Greenhouse_API.Services
             if (!deleted)
             {
                 _logger.LogWarning("Zone category with ID {ZoneCategoryId} not found for deletion", id);
-                throw new KeyNotFoundException("Zone category not found");  
+                throw new NotFoundException("Zone category not found");  
             }
 
             _logger.LogInformation("Zone category with ID {ZoneCategoryId} deleted", id);

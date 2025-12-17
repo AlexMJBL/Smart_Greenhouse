@@ -13,7 +13,7 @@ namespace Greenhouse_API.DTOs
 
         public int ZoneId { get; set; }
 
-        public string SensorId { get; set; } 
+        public int SensorId { get; set; } 
 
         public SensorType Type { get; set; } 
 
@@ -31,7 +31,7 @@ namespace Greenhouse_API.DTOs
         public int ZoneId { get; set; }
         [Required]
         [Range(1, int.MaxValue)]
-        public string SensorId { get; set; }
+        public int SensorId { get; set; }
         [Required]
         public SensorType Type { get; set; }
     }
