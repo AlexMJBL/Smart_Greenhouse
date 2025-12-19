@@ -40,8 +40,7 @@ namespace Greenhouse_API.Controllers
 
         // POST: api/fertilizers
         [HttpPost]
-        public async Task<ActionResult<FertilizerDto>> Create(
-            [FromBody] FertilizerWriteDto dto)
+        public async Task<ActionResult<FertilizerDto>> Create([FromBody] FertilizerWriteDto dto)
         {
             try
             {
@@ -61,9 +60,7 @@ namespace Greenhouse_API.Controllers
 
         // PUT: api/fertilizers/5
         [HttpPut("{id:int}")]
-        public async Task<ActionResult<FertilizerDto>> Update(
-            int id,
-            [FromBody] FertilizerWriteDto dto)
+        public async Task<ActionResult<FertilizerDto>> Update(int id,[FromBody] FertilizerWriteDto dto)
         {
             try
             {
