@@ -26,7 +26,7 @@ namespace Greenhouse_API.Services
             if(plant == null)
             {
                 _logger.LogWarning("Plant with ID: {PlantId} not found for fertilizer creation", dto.PlantId);
-                throw new KeyNotFoundException("Plant not found");
+                throw new NotFoundException("Plant not found");
             }
 
             var fertilizer = new Fertilizer
