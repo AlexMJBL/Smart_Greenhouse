@@ -14,7 +14,7 @@ namespace Greenhouse_API.DTOs
 
         public DateTime CreatedAt { get; set; }
     }
-    public class PlantHumidityWriteDto
+    public class PlantHumidityRecordWriteDto
     {
         [Required]
         [Range(0,100)]

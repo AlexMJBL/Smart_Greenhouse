@@ -29,7 +29,7 @@ namespace Greenhouse_API.Services
             _soilHumidityCategoryService = soilHumidityCategoryService;
         }
 
-        public async Task<PlantHumidityRecordDto> CreateAsync(PlantHumidityWriteDto dto)
+        public async Task<PlantHumidityRecordDto> CreateAsync(PlantHumidityRecordWriteDto dto)
         {
             var plant = await _plantService.GetByIdAsync(dto.PlantId);
             if (plant == null)

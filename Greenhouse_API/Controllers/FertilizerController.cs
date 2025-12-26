@@ -30,10 +30,9 @@ namespace Greenhouse_API.Controllers
         public async Task<ActionResult<FertilizerDto>> GetById(int id)
         {
             var fertilizer = await _fertilizerService.GetByIdAsync(id);
+
             if (fertilizer == null)
-            {
                 return NotFound();
-            }
 
             return Ok(fertilizer);
         }
