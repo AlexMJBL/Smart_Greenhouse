@@ -12,7 +12,7 @@ public partial class Observation
 
     public ObservationRating Rating { get; set; }
 
-    public string Comments { get; set; } = null!;
+    public string Comments { get; set; }
 
     public DateTime CreatedAt { get; set; }
 
