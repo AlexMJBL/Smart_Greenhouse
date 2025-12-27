@@ -20,8 +20,6 @@ public partial class Sensor
 
     public DateTime CreatedAt { get; set; }
 
-    public virtual ICollection<SensorAlert> SensorAlerts { get; set; } = new List<SensorAlert>();
-
     public virtual Zone? Zone { get; set; }
 
     public virtual ICollection<ZonePressureRecord> ZonePressureRecords { get; set; } = new List<ZonePressureRecord>();

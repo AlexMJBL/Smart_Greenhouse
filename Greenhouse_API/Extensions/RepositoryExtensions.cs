@@ -25,21 +25,21 @@ namespace Greenhouse_API.Extensions
             services.AddScoped<ISpecimenService, SpecimenService>();
 
             services.AddScoped<IPlantService, PlantService>();
-            services.AddScoped<IPlantSensorAlertService, PlantAlertService>();
+            services.AddScoped<IPlantSensorAlertService, PlantSensorAlertService>();
             services.AddScoped<IPlantHumidityRecordService, PlantHumidityRecordService>();
             services.AddScoped<IWateringService, WateringService>();
 
             services.AddScoped<ISoilHumidityCategoryService, SoilHumidityCategoryService>();
 
             services.AddScoped<ISensorService, SensorService>();
-            services.AddScoped<ISensorAlertService, SensorAlertService>();
 
             services.AddScoped<IZoneService, ZoneService>();
             services.AddScoped<IZoneRecordService, ZoneRecordService>();
-            services.AddScoped<IZoneAlertService, ZoneSensorAlertService>();
+            services.AddScoped<IZoneSensorAlertService, ZoneSensorAlertService>();
             services.AddScoped<IZoneCategoryService, ZoneCategoryService>();
             services.AddScoped<IZonePressureRecordService, ZonePressureRecordService>();
 
             return services;
         }
     }
+}

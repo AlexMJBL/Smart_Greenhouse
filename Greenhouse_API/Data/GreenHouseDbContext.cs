@@ -22,8 +22,6 @@ namespace Greenhouse_API.Data
 
         public virtual DbSet<Sensor> Sensors { get; set; }
 
-        public virtual DbSet<SensorAlert> SensorAlerts { get; set; }
-
         public virtual DbSet<SoilHumidityCategory> SoilHumidityCategories { get; set; }
 
         public virtual DbSet<Specimen> Specimens { get; set; }
