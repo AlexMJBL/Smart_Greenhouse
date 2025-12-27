@@ -14,9 +14,9 @@ namespace Greenhouse_API.DTOs
         public int Id { get; set; }
 
         /// <summary>
-        /// Fertilizer type (ex: Organic, Chemical, NPK)
+        /// Fertilizer type
         /// </summary>
-        /// <example>Organic</example>
+        /// <example>20-20-20</example>
         public string Type { get; set; } = null!;
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Greenhouse_API.DTOs
         /// <summary>
         /// Fertilizer type
         /// </summary>
-        /// <example>Chemical</example>
+        /// <example>20-20-20</example>
         [Required]
         [StringLength(50)]
         public string Type { get; set; } = null!;

@@ -18,16 +18,29 @@ namespace Greenhouse_API.Controllers
             _zoneCategoryService = zoneCategoryService;
         }
 
-        // GET: api/zoneCategories
+        /// <summary>
+        /// Retrieves all zone categories
+        /// </summary>
+        /// <returns>List of zone categories</returns>
+        /// <response code="200">Returns the list of zone categories</response>
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<ZoneCategoryDto>>> GetAll()
         {
             var zoneCategories = await _zoneCategoryService.GetAllAsync();
             return Ok(zoneCategories);
         }
 
-        // GET: api/zoneCategories/5
+        /// <summary>
+        /// Retrieves a zone category by its ID
+        /// </summary>
+        /// <param name="id">Zone category identifier</param>
+        /// <returns>The zone category</returns>
+        /// <response code="200">Zone category found</response>
+        /// <response code="404">Zone category not found</response>
         [HttpGet("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<ZoneCategoryDto>> GetById(int id)
         {
             var zoneCategory = await _zoneCategoryService.GetByIdAsync(id);
@@ -38,8 +51,16 @@ namespace Greenhouse_API.Controllers
             return Ok(zoneCategory);
         }
 
-        // POST: api/zoneCategories
+        /// <summary>
+        /// Creates a new zone category
+        /// </summary>
+        /// <param name="dto">Zone category creation data</param>
+        /// <returns>The newly created zone category</returns>
+        /// <response code="201">Zone category created successfully</response>
+        /// <response code="400">Invalid input or related entity not found</response>
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<ZoneCategoryDto>> Create([FromBody] ZoneCategoryWriteDto dto)
         {
             try
@@ -58,8 +79,17 @@ namespace Greenhouse_API.Controllers
             }
         }
 
-        // PUT: api/zoneCategories/5
+        /// <summary>
+        /// Updates an existing zone category
+        /// </summary>
+        /// <param name="id">Zone category identifier</param>
+        /// <param name="dto">Updated zone category data</param>
+        /// <returns>The updated zone category</returns>
+        /// <response code="200">Zone category updated successfully</response>
+        /// <response code="404">Zone category not found</response>
         [HttpPut("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<ZoneCategoryDto>> Update(int id, [FromBody] ZoneCategoryWriteDto dto)
         {
             try
@@ -73,8 +103,15 @@ namespace Greenhouse_API.Controllers
             }
         }
 
-        // DELETE: api/zoneCategories/5
+        /// <summary>
+        /// Deletes a zone category
+        /// </summary>
+        /// <param name="id">Zone category identifier</param>
+        /// <response code="204">Zone category deleted successfully</response>
+        /// <response code="404">Zone category not found</response>
         [HttpDelete("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete(int id)
         {
             try

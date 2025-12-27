@@ -27,6 +27,7 @@ namespace Greenhouse_API.Controllers
         /// <response code="200">Returns the list of fertilizers</response>
         // GET: api/fertilizers
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<FertilizerDto>>> GetAll()
         {
             var fertilizers = await _fertilizerService.GetAllAsync();
@@ -42,6 +43,8 @@ namespace Greenhouse_API.Controllers
         /// <response code="404">Fertilizer not found</response>
         // GET: api/fertilizers/5
         [HttpGet("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<FertilizerDto>> GetById(int id)
         {
             var fertilizer = await _fertilizerService.GetByIdAsync(id);
@@ -62,6 +65,8 @@ namespace Greenhouse_API.Controllers
         /// <response code="400">Invalid input or related entity not found</response>
         // POST: api/fertilizers
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<FertilizerDto>> Create([FromBody] FertilizerWriteDto dto)
         {
             try
@@ -91,6 +96,8 @@ namespace Greenhouse_API.Controllers
         /// <response code="404">Fertilizer not found</response>
         // PUT: api/fertilizers/5
         [HttpPut("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<FertilizerDto>> Update(int id,[FromBody] FertilizerWriteDto dto)
         {
             try
@@ -112,6 +119,8 @@ namespace Greenhouse_API.Controllers
         /// <response code="404">Fertilizer not found</response>
         // DELETE: api/fertilizers/5
         [HttpDelete("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete(int id)
         {
             try
