@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Greenhouse_API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/plantHumidityRecords")]
     [ApiController]
     public class PlantHumidityRecordController : ControllerBase
     {
