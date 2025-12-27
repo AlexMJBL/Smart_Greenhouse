@@ -55,6 +55,7 @@ namespace Greenhouse_API.Services
         public async Task<SpecimenDto> CreateAsync(SpecimenWriteDto dto)
         {
             var SoilHumidityCategory = await _soilHumidityCategoryService.GetByIdAsync(dto.SoilHumidityCatId);
+
             if (SoilHumidityCategory == null)
             {
                 _logger.LogWarning("Soil Humidity Category with ID: {SoilHumidityCatId} not found for specimen creation", dto.SoilHumidityCatId);

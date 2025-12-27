@@ -58,7 +58,7 @@ namespace Greenhouse_API.Controllers
         }
 
         // DELETE: api/plantHumidityRecords
-        [HttpDelete("{int:id}")]
+        [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
             try

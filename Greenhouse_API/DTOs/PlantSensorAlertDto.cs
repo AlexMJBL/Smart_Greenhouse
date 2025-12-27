@@ -19,7 +19,7 @@ namespace Greenhouse_API.DTOs
     {
 
         [Required]
-        [Range(1,int.MaxValue)]
+        [Range(1, int.MaxValue)]
         public int PlantId { get; set; }
         [Required]
         public AlertReason Reason { get; set; }
