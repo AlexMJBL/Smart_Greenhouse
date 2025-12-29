@@ -18,5 +18,4 @@ namespace Greenhouse_Ressource_MVC.Dtos
             [Range(1, int.MaxValue)]
             public int PlantId { get; set; }
         }
-    }
 }

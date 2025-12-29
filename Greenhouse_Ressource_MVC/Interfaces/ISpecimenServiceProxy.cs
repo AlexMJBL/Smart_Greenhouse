@@ -2,7 +2,7 @@
 
 namespace Greenhouse_Ressource_MVC.Interfaces
 {
-    public interface ISpecimenServiceProxy : IServiceProxy<SpecimenDto>
+    public interface ISpecimenServiceProxy : IServiceProxy<SpecimenDto, SpecimenWriteDto>
     {
     }
 }

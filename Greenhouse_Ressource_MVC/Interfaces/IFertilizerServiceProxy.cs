@@ -2,7 +2,7 @@
 
 namespace Greenhouse_Ressource_MVC.Interfaces
 {
-    public interface IFertilizerServiceProxy : IServiceProxy<FertilizerDto>
+    public interface IFertilizerServiceProxy : IServiceProxy<FertilizerDto, FertilizerWriteDto>
     {
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Greenhouse_Ressource_MVC.Services
 {
-    public class ServiceProxy<T> : IServiceProxy<T> where T : class
+    public class ServiceProxy<T,U> : IServiceProxy<T, U> where T : class where U : class
     {
         protected readonly IHttpClientFactory _httpClientFactory;
         protected readonly string _baseUrl;
@@ -30,7 +30,7 @@ namespace Greenhouse_Ressource_MVC.Services
             return await client.GetFromJsonAsync<T>($"{_baseUrl}/{id}");
         }
 
-        public async Task<T> CreateAsync(T entity)
+        public async Task<T> CreateAsync(U entity)
         {
             var client = CreateClient();
             var response = await client.PostAsJsonAsync(_baseUrl, entity);
@@ -48,7 +48,7 @@ namespace Greenhouse_Ressource_MVC.Services
             response.EnsureSuccessStatusCode();
         }
 
-        public async Task<T> UpdateAsync(int id, T entity)
+        public async Task<T> UpdateAsync(int id, U entity)
         {
             var client = CreateClient();
             var response = await client.PutAsJsonAsync($"{_baseUrl}/{id}", entity);

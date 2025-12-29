@@ -2,7 +2,7 @@
 
 namespace Greenhouse_Ressource_MVC.Interfaces
 {
-    public interface IZoneCategoryDto : IServiceProxy<ZoneCategoryDto>
+    public interface IZoneCategoryServiceProxy : IServiceProxy<ZoneCategoryDto, ZoneCategoryWriteDto>
     {
     }
 }

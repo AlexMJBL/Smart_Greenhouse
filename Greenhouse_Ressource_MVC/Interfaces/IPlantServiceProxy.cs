@@ -2,7 +2,7 @@
 
 namespace Greenhouse_Ressource_MVC.Interfaces
 {
-    public interface IPlantServiceProxy : IServiceProxy<PlantDto>
+    public interface IPlantServiceProxy : IServiceProxy<PlantDto, PlantWriteDto>
     {
     }
 }

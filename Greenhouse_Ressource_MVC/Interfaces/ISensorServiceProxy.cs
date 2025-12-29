@@ -2,7 +2,7 @@
 
 namespace Greenhouse_Ressource_MVC.Interfaces
 {
-    public interface ISensorServiceProxy : IServiceProxy<SensorDto>
+    public interface ISensorServiceProxy : IServiceProxy<SensorDto, SensorWriteDto>
     {
     }
 }
