@@ -1,66 +1,50 @@
-﻿using Greenhouse_Ressource_MVC.Interfaces;
+﻿using System.Net.Http.Json;
 
 namespace Greenhouse_Ressource_MVC.Services
 {
-    public class ServiceProxy<T,U> : IServiceProxy<T, U> where T : class where U : class
+    public class ServiceProxy<T, TWrite>
+      where T : class
+      where TWrite : class
     {
-        protected readonly IHttpClientFactory _httpClientFactory;
-        protected readonly string _baseUrl;
+        protected readonly HttpClient _httpClient;
 
-        protected ServiceProxy(IHttpClientFactory httpClientFactory, string baseUrl)
+        public ServiceProxy(
+            IHttpClientFactory factory,
+            IConfiguration config,
+            string endpoint)
         {
-            _httpClientFactory = httpClientFactory;
-            _baseUrl = baseUrl;
+            _httpClient = factory.CreateClient();
+            _httpClient.BaseAddress =
+                new Uri(config["ApiSettings:BaseUrl"] + "/" + endpoint);
         }
 
-        protected HttpClient CreateClient()
-        {
-            return _httpClientFactory.CreateClient("GreenhouseAPI");
-        }
-
-        public async Task<IEnumerable<T>> GetAllAsync()
-        {
-            var client = CreateClient();
-            return await client.GetFromJsonAsync<IEnumerable<T>>(_baseUrl) ?? Enumerable.Empty<T>();
-        }
+        public async Task<List<T>> GetAllAsync()
+            => await _httpClient.GetFromJsonAsync<List<T>>("");
 
         public async Task<T?> GetByIdAsync(int id)
-        {
-            var client = CreateClient();
-            return await client.GetFromJsonAsync<T>($"{_baseUrl}/{id}");
-        }
+            => await _httpClient.GetFromJsonAsync<T>($"{id}");
 
-        public async Task<T> CreateAsync(U entity)
+        public async Task<T?> CreateAsync(TWrite dto)
         {
-            var client = CreateClient();
-            var response = await client.PostAsJsonAsync(_baseUrl, entity);
-
+            var response = await _httpClient.PostAsJsonAsync("", dto);
             response.EnsureSuccessStatusCode();
 
-            return await response.Content.ReadFromJsonAsync<T>() ?? throw new Exception("Error while creating the entity");
+            return await response.Content.ReadFromJsonAsync<T>();
+        }
+
+        public async Task<T?> UpdateAsync(int id, TWrite dto)
+        {
+            var response = await _httpClient.PutAsJsonAsync($"{id}", dto);
+            response.EnsureSuccessStatusCode();
+
+            return await response.Content.ReadFromJsonAsync<T>();
         }
 
         public async Task DeleteAsync(int id)
         {
-            var client = CreateClient();
-            var response = await client.DeleteAsync($"{_baseUrl}/{id}");
-
+            var response = await _httpClient.DeleteAsync($"{id}");
             response.EnsureSuccessStatusCode();
-        }
-
-        public async Task<T> UpdateAsync(int id, U entity)
-        {
-            var client = CreateClient();
-            var response = await client.PutAsJsonAsync($"{_baseUrl}/{id}", entity);
-
-            response.EnsureSuccessStatusCode();
-
-
-            if (response.Content.Headers.ContentLength == 0)
-                throw new Exception("API returned no content after update");
-
-            return await response.Content.ReadFromJsonAsync<T>() ?? throw new Exception("Error while updating the entity");
         }
     }
+
 }
- 

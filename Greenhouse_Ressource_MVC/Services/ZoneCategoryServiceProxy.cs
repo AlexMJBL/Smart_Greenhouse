@@ -5,8 +5,8 @@ namespace Greenhouse_Ressource_MVC.Services
 {
     public class ZoneCategoryServiceProxy : ServiceProxy<ZoneCategoryDto, ZoneCategoryWriteDto> , IZoneCategoryServiceProxy
     {
-        public ZoneCategoryServiceProxy(IHttpClientFactory httpClientFactory)
-        : base(httpClientFactory, "api/zoneCategories")
+        public ZoneCategoryServiceProxy(IHttpClientFactory httpClientFactory, IConfiguration config)
+        : base(httpClientFactory, config, "zoneCategories")
         {
         }
     }

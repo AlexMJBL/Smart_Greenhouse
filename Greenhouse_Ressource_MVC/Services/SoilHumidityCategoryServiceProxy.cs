@@ -5,8 +5,8 @@ namespace Greenhouse_Ressource_MVC.Services
 {
     public class SoilHumidityCategoryServiceProxy : ServiceProxy<SoilHumidityCategoryDto, SoilHumidityCategoryWriteDto>, ISoilHumidityCategoryServiceProxy
     {
-        public SoilHumidityCategoryServiceProxy(IHttpClientFactory httpClientFactory)
-        : base(httpClientFactory, "api/soilHumidityCategories")
+        public SoilHumidityCategoryServiceProxy(IHttpClientFactory httpClientFactory, IConfiguration config)
+        : base(httpClientFactory, config, "soilHumidityCategories")
         {
         }
     }

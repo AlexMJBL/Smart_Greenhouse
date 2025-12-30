@@ -5,8 +5,8 @@ namespace Greenhouse_Data_MVC.Services
 {
     public class PlantSensorAlertServiceProxy : ServiceProxy<PlantSensorAlertDto> , IPlantSensorAlertServiceProxy
     {
-        public PlantSensorAlertServiceProxy(IHttpClientFactory httpClientFactory)
-        : base (httpClientFactory, "api/plantSensorAlerts")
+        public PlantSensorAlertServiceProxy(IHttpClientFactory httpClientFactory, IConfiguration config)
+        : base (httpClientFactory, config, "plantSensorAlerts")
         { 
         }
     }

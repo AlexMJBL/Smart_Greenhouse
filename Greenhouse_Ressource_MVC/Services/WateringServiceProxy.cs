@@ -5,8 +5,8 @@ namespace Greenhouse_Ressource_MVC.Services
 {
     public class WateringServiceProxy : ServiceProxy<WateringDto, WateringWriteDto>, IWateringServiceProxy
     {
-        public WateringServiceProxy(IHttpClientFactory httpClientFactory)
-        :base(httpClientFactory, "api/waterings")
+        public WateringServiceProxy(IHttpClientFactory httpClientFactory, IConfiguration config)
+        :base(httpClientFactory, config, "waterings")
         { }
     }
 }

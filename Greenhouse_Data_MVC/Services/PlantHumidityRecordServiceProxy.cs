@@ -5,8 +5,8 @@ namespace Greenhouse_Data_MVC.Services
 {
     public class PlantHumidityRecordServiceProxy : ServiceProxy<PlantHumidityRecordDto> , IPlantHumidityRecordServiceProxy
     {
-        public PlantHumidityRecordServiceProxy(IHttpClientFactory httpClientFactory)
-        : base (httpClientFactory, "api/plantHumidityRecords")
+        public PlantHumidityRecordServiceProxy(IHttpClientFactory httpClientFactory, IConfiguration config)
+        : base (httpClientFactory, config, "plantHumidityRecords")
         { 
         }
     }

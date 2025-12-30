@@ -1,11 +1,11 @@
 ﻿namespace Greenhouse_Ressource_MVC.Interfaces
 {
-    public interface IServiceProxy<T,U>
+    public interface IServiceProxy<T,TWrite>
     {
-        Task<IEnumerable<T>> GetAllAsync();
+        Task<List<T>> GetAllAsync();
         Task<T?> GetByIdAsync(int id);
-        Task<T> CreateAsync(U entity);
-        Task<T> UpdateAsync(int id, U entity);
+        Task<T?> CreateAsync(TWrite entity);
+        Task<T?> UpdateAsync(int id, TWrite entity);
         Task DeleteAsync(int id);
     }
 }

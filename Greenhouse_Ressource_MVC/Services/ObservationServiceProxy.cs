@@ -5,8 +5,8 @@ namespace Greenhouse_Ressource_MVC.Services
 {
     public class ObservationServiceProxy : ServiceProxy<ObservationDto, ObservationWriteDto> , IObservationServiceProxy
     {
-        public ObservationServiceProxy(IHttpClientFactory httpClientFactory)
-        : base (httpClientFactory, "api/observations")
+        public ObservationServiceProxy(IHttpClientFactory httpClientFactory, IConfiguration config)
+        : base (httpClientFactory, config, "observations")
         { 
         }
     }

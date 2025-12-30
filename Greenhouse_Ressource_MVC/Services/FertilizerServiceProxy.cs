@@ -5,8 +5,8 @@ namespace Greenhouse_Ressource_MVC.Services
 {
     public class FertilizerServiceProxy : ServiceProxy<FertilizerDto,FertilizerWriteDto> , IFertilizerServiceProxy
     {
-        public FertilizerServiceProxy(IHttpClientFactory httpClientFactory)
-        : base(httpClientFactory, "api/fertilizers")
+        public FertilizerServiceProxy(IHttpClientFactory httpClientFactory, IConfiguration config)
+        : base(httpClientFactory, config, "fertilizers")
         {
         }
     }
