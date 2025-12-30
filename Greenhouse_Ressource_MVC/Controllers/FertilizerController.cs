@@ -1,83 +1,162 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Greenhouse_Ressource_MVC.Dtos;
+using Greenhouse_Ressource_MVC.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace Greenhouse_Ressource_MVC.Controllers
 {
     public class FertilizerController : Controller
     {
-        // GET: FertilizerController
-        public ActionResult Index()
+        private readonly IFertilizerServiceProxy _fertilizerServiceProxy;
+        private readonly IPlantServiceProxy _plantServiceProxy;
+        private readonly ILogger<FertilizerController> _logger;
+
+        public FertilizerController(IFertilizerServiceProxy fertilizerServiceProxy,IPlantServiceProxy plantServiceProxy ,ILogger<FertilizerController> logger)
         {
-            return View();
+            _fertilizerServiceProxy = fertilizerServiceProxy;
+            _plantServiceProxy = plantServiceProxy;
+            _logger = logger;
+        }
+
+        // GET: FertilizerController
+        public async Task<IActionResult> Index()
+        {
+            _logger.LogInformation("User requested fertilizer list");
+            var fertilizers = await _fertilizerServiceProxy.GetAllAsync();
+            return View(fertilizers);
         }
 
         // GET: FertilizerController/Details/5
-        public ActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            return View();
+            var fertilizer = await _fertilizerServiceProxy.GetByIdAsync(id);
+            if (fertilizer == null)
+            {
+                _logger.LogWarning("Unable to retrieve fertilizer with id {FertilizerId}", id);
+                return NotFound();
+            }
+            _logger.LogInformation("User requested fertilizer with id : {FertilizerId}", id);
+            return View(fertilizer);
         }
 
         // GET: FertilizerController/Create
-        public ActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            await LoadPlantsAsync();
             return View();
         }
 
         // POST: FertilizerController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> Create(FertilizerWriteDto dto)
         {
+            if (!ModelState.IsValid)
+            {
+                _logger.LogWarning("Invalid fertilizer creation attempt");
+                await LoadPlantsAsync();
+                return View(dto);
+            }
+
             try
             {
-                return RedirectToAction(nameof(Index));
+               await _fertilizerServiceProxy.CreateAsync(dto);
+                _logger.LogInformation("Fertilizer created successfully");
+                return RedirectToAction("Index");
             }
-            catch
+            catch (HttpRequestException ex)
             {
-                return View();
+                _logger.LogError(ex, "Error while creating fertilizer");
+
+                ModelState.AddModelError(string.Empty,"An error occurred while creating the fertilizer.");
+
+                await LoadPlantsAsync();
+                return View(dto);
             }
         }
 
         // GET: FertilizerController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            return View();
+            var fertilizer = await _fertilizerServiceProxy.GetByIdAsync(id);
+            
+            if (fertilizer == null)
+            {
+                _logger.LogWarning("Unable to retrieve fertilizer with id {FertilizerId}", id);
+                return NotFound();
+            }
+
+            await LoadPlantsAsync();
+            return View(fertilizer);
         }
 
         // POST: FertilizerController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> Edit(int id, FertilizerWriteDto dto)
         {
+            if (!ModelState.IsValid)
+            {
+                _logger.LogWarning("Invalid fertilizer modification attempt");
+                await LoadPlantsAsync();
+                return View(dto);
+            }
             try
             {
-                return RedirectToAction(nameof(Index));
+                await _fertilizerServiceProxy.UpdateAsync(id,dto);
+                _logger.LogInformation("Fertilizer updated successfully");
+                return RedirectToAction("Index");
             }
-            catch
+            catch (HttpRequestException ex)
             {
-                return View();
+                _logger.LogError(ex, "Error while updating fertilizer with id {FertilizerId}", id);
+
+                ModelState.AddModelError(string.Empty, "An error occurred while updating the fertilizer.");
+
+                await LoadPlantsAsync();
+                return View(dto);
             }
         }
 
         // GET: FertilizerController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            return View();
+            var fertilizer = await _fertilizerServiceProxy.GetByIdAsync(id);
+
+            if (fertilizer == null)
+            {
+                _logger.LogWarning("Unable to retrieve fertilizer with id {FertilizerId}",id);
+
+                return NotFound();
+            }
+
+            return View(fertilizer);
         }
 
         // POST: FertilizerController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                await _fertilizerServiceProxy.DeleteAsync(id);
+                _logger.LogInformation("Fertilizer with id {FertilizerId} deleted successfully", id);
+                return RedirectToAction("Index");
             }
-            catch
+            catch (HttpRequestException ex)
             {
-                return View();
+                _logger.LogError(ex, "Error while deleting fertilizer with id {FertilizerId}", id);
+                return Problem("An error occurred while deleting the fertilizer.");
             }
+
+        }
+
+        private async Task LoadPlantsAsync()
+        {
+            var plants = await _plantServiceProxy.GetAllAsync();
+            ViewBag.Plants = plants;
         }
     }
 }
