@@ -9,15 +9,15 @@ namespace Greenhouse_Ressource_MVC.Extensions
             this IServiceCollection services)
         {
 
-            services.AddHttpClient<IFertilizerServiceProxy, FertilizerServiceProxy>();
-            services.AddHttpClient<IObservationServiceProxy, ObservationServiceProxy>();
-            services.AddHttpClient<IPlantServiceProxy, PlantServiceProxy>();
-            services.AddHttpClient<ISpecimenServiceProxy, SpecimenServiceProxy>();
-            services.AddHttpClient<ISoilHumidityCategoryServiceProxy, SoilHumidityCategoryServiceProxy>();
-            services.AddHttpClient<ISensorServiceProxy, SensorServiceProxy>();
-            services.AddHttpClient<IWateringServiceProxy, WateringServiceProxy>();
-            services.AddHttpClient<IZoneServiceProxy, ZoneServiceProxy>();
-            services.AddHttpClient<IZoneCategoryServiceProxy, ZoneCategoryServiceProxy>();
+            services.AddScoped<IFertilizerServiceProxy, FertilizerServiceProxy>();
+            services.AddScoped<IObservationServiceProxy, ObservationServiceProxy>();
+            services.AddScoped<IPlantServiceProxy, PlantServiceProxy>();
+            services.AddScoped<ISpecimenServiceProxy, SpecimenServiceProxy>();
+            services.AddScoped<ISoilHumidityCategoryServiceProxy, SoilHumidityCategoryServiceProxy>();
+            services.AddScoped<ISensorServiceProxy, SensorServiceProxy>();
+            services.AddScoped<IWateringServiceProxy, WateringServiceProxy>();
+            services.AddScoped<IZoneServiceProxy, ZoneServiceProxy>();
+            services.AddScoped<IZoneCategoryServiceProxy, ZoneCategoryServiceProxy>();
 
             return services;
         }

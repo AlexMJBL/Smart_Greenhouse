@@ -1,4 +1,5 @@
-﻿using System.Net.Http.Json;
+﻿using System.Net;
+using System.Net.Http.Json;
 
 namespace Greenhouse_Ressource_MVC.Services
 {
@@ -14,15 +15,25 @@ namespace Greenhouse_Ressource_MVC.Services
             string endpoint)
         {
             _httpClient = factory.CreateClient();
-            _httpClient.BaseAddress =
-                new Uri(config["ApiSettings:BaseUrl"] + "/" + endpoint);
+            _httpClient.BaseAddress = new Uri(
+                $"{config["ApiSettings:BaseUrl"]}/api/{endpoint}/"
+            );
         }
 
         public async Task<List<T>> GetAllAsync()
             => await _httpClient.GetFromJsonAsync<List<T>>("");
 
         public async Task<T?> GetByIdAsync(int id)
-            => await _httpClient.GetFromJsonAsync<T>($"{id}");
+        {
+            var response = await _httpClient.GetAsync($"{id}");
+
+            if (response.StatusCode == HttpStatusCode.NotFound)
+                return null;
+
+            response.EnsureSuccessStatusCode();
+
+            return await response.Content.ReadFromJsonAsync<T>();
+        }
 
         public async Task<T?> CreateAsync(TWrite dto)
         {

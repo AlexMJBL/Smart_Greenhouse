@@ -9,15 +9,15 @@ namespace Greenhouse_Data_MVC.Extensions
             this IServiceCollection services)
         {
 
-            services.AddHttpClient<IPlantHumidityRecordServiceProxy, PlantHumidityRecordServiceProxy>();
-            services.AddHttpClient<IObservationServiceProxy, ObservationServiceProxy>();
-            services.AddHttpClient<IPlantServiceProxy, PlantServiceProxy>();
-            services.AddHttpClient<IPlantSensorAlertServiceProxy, PlantSensorAlertServiceProxy>();
-            services.AddHttpClient<IZonePressureRecordServiceProxy, ZonePressureRecordServiceProxy>();
-            services.AddHttpClient<ISensorServiceProxy, SensorServiceProxy>();
-            services.AddHttpClient<IZoneRecordServiceProxy, ZoneRecordServiceProxy>();
-            services.AddHttpClient<IZoneServiceProxy, ZoneServiceProxy>();
-            services.AddHttpClient<IZoneSensorAlertServiceProxy, ZoneSensorAlertServiceProxy>();
+            services.AddScoped<IPlantHumidityRecordServiceProxy, PlantHumidityRecordServiceProxy>();
+            services.AddScoped<IObservationServiceProxy, ObservationServiceProxy>();
+            services.AddScoped<IPlantServiceProxy, PlantServiceProxy>();
+            services.AddScoped<IPlantSensorAlertServiceProxy, PlantSensorAlertServiceProxy>();
+            services.AddScoped<IZonePressureRecordServiceProxy, ZonePressureRecordServiceProxy>();
+            services.AddScoped<ISensorServiceProxy, SensorServiceProxy>();
+            services.AddScoped<IZoneRecordServiceProxy, ZoneRecordServiceProxy>();
+            services.AddScoped<IZoneServiceProxy, ZoneServiceProxy>();
+            services.AddScoped<IZoneSensorAlertServiceProxy, ZoneSensorAlertServiceProxy>();
 
             return services;
         }

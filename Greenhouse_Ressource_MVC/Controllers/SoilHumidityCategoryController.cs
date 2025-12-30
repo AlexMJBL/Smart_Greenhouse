@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Greenhouse_Ressource_MVC.Controllers
 {
-    public class soilHumidityCategoryController : Controller
+    public class SoilHumidityCategoryController : Controller
     {
         private readonly ISoilHumidityCategoryServiceProxy _soilHumidityCategoryServiceProxy;
-        private readonly ILogger<soilHumidityCategoryController> _logger;
+        private readonly ILogger<SoilHumidityCategoryController> _logger;
 
-        public soilHumidityCategoryController(ISoilHumidityCategoryServiceProxy soilHumidityCategoryServiceProxy, ILogger<soilHumidityCategoryController> logger)
+        public SoilHumidityCategoryController(ISoilHumidityCategoryServiceProxy soilHumidityCategoryServiceProxy, ILogger<SoilHumidityCategoryController> logger)
         {
             _soilHumidityCategoryServiceProxy = soilHumidityCategoryServiceProxy;
             _logger = logger;
@@ -82,7 +82,14 @@ namespace Greenhouse_Ressource_MVC.Controllers
                 return NotFound();
             }
 
-            return View(soilHumidityCategory);
+            var writeDto = new SoilHumidityCategoryWriteDto
+            {
+                Name = soilHumidityCategory.Name,
+                MinHumidityPct = soilHumidityCategory.MinHumidityPct,
+                MaxHumidityPct = soilHumidityCategory.MaxHumidityPct
+            };
+
+            return View(writeDto);
         }
 
         // POST: SoilHumidityCategoryController/Edit/5
