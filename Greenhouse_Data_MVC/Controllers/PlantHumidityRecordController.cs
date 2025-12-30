@@ -1,5 +1,6 @@
 using Greenhouse_Data_MVC.Dtos;
 using Greenhouse_Data_MVC.Interfaces;
+using Greenhouse_Data_MVC.ViewModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -36,6 +37,20 @@ namespace Greenhouse_Data_MVC.Controllers
                 _logger.LogWarning("Unable to retrieve plantHumidityRecord with id {plantHumidityRecordId}", id);
                 return NotFound();
             }
+
+             var plant = await _plantServiceProxy.GetByIdAsync(plantHumidityRecord.PlantId);
+            if( plant == null)
+             {
+                _logger.LogWarning("Unable to retrieve plant with id {PlantId}", plantHumidityRecord.PlantId);
+                return NotFound();
+            }
+
+            var vm = new PlantHumidityRecordViewModel
+            {
+                PlantHumidityRecord = plantHumidityRecord,
+                Plant = plant
+            };
+            
             _logger.LogInformation("User requested plantHumidityRecord with id : {plantHumidityRecordId}", id);
             return View(plantHumidityRecord);
         }
@@ -71,7 +86,6 @@ namespace Greenhouse_Data_MVC.Controllers
                 _logger.LogError(ex, "Error while deleting plantHumidityRecord with id {plantHumidityRecordId}", id);
                 return Problem("An error occurred while deleting the fertilizer.");
             }
-
         }
     }
 }
