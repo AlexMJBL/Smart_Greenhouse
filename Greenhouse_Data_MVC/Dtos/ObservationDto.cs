@@ -1,7 +1,6 @@
 using Greenhouse_Data_MVC.Enums;
-using System.ComponentModel.DataAnnotations;
 
-namespace Greenhouse_Ressource_MVC.Dtos
+namespace Greenhouse_Data_MVC.Dtos
 {
     public class ObservationDto
     {

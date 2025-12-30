@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Greenhouse_Data_MVC.DTOs
+namespace Greenhouse_Data_MVC.Dtos
 {
     public class PlantHumidityRecordDto
     {
