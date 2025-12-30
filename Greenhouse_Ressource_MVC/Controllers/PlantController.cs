@@ -134,7 +134,7 @@ namespace Greenhouse_Ressource_MVC.Controllers
             return View(plant);
         }
 
-        // POST: FertilizerController/Delete/5
+        // POST: PlantController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
