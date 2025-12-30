@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using Greenhouse_Data_MVC.Enums;
 
-namespace Greenhouse_Data_MVC.dtos
+namespace Greenhouse_Data_MVC.Dtos
 {
     public class ZoneSensorAlertDto
     {
