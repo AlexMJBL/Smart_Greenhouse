@@ -148,7 +148,7 @@ namespace Greenhouse_Ressource_MVC.Controllers
             catch (HttpRequestException ex)
             {
                 _logger.LogError(ex, "Error while deleting zone with id {zoneId}", id);
-                return Problem("An error occurred while deleting the fertilizer.");
+                return Problem("An error occurred while deleting the zone.");
             }
 
         }

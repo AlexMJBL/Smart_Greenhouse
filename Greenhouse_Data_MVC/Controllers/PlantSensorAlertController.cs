@@ -84,7 +84,7 @@ namespace Greenhouse_Data_MVC.Controllers
             catch (HttpRequestException ex)
             {
                 _logger.LogError(ex, "Error while deleting plantSensorAlert with id {plantSensorAlertId}", id);
-                return Problem("An error occurred while deleting the fertilizer.");
+                return Problem("An error occurred while deleting the plantSensorAlert.");
             }
         }
     }

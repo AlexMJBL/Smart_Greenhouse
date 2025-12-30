@@ -84,7 +84,7 @@ namespace Greenhouse_Data_MVC.Controllers
             catch (HttpRequestException ex)
             {
                 _logger.LogError(ex, "Error while deleting plantHumidityRecord with id {plantHumidityRecordId}", id);
-                return Problem("An error occurred while deleting the fertilizer.");
+                return Problem("An error occurred while deleting the plantHumidityRecord.");
             }
         }
     }
