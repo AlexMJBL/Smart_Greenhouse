@@ -2,6 +2,7 @@ using Greenhouse_Ressource_MVC.Dtos;
 using Greenhouse_Ressource_MVC.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Threading.Tasks;
 
 namespace Greenhouse_Ressource_MVC.Controllers
@@ -87,8 +88,14 @@ namespace Greenhouse_Ressource_MVC.Controllers
                 return NotFound();
             }
 
+            var writeDto = new ZoneWriteDto
+            {
+                Description = zone.Description,
+                ZoneCategoryId = zone.ZoneCategoryId
+            };
+
             await LoadZoneCategorysAsync();
-            return View(zone);
+            return View(writeDto);
         }
 
         // POST: ZoneController/Edit/5
@@ -155,8 +162,14 @@ namespace Greenhouse_Ressource_MVC.Controllers
 
         private async Task LoadZoneCategorysAsync()
         {
-            var zoneCategorys = await _zoneCategoryServiceProxy.GetAllAsync();
-            ViewBag.zones = zoneCategorys;
+            var categories = await _zoneCategoryServiceProxy.GetAllAsync();
+
+            ViewBag.SoilHumidityCategories = categories.Select(c =>
+               new SelectListItem
+               {
+                   Value = c.Id.ToString(),
+                   Text = c.Name
+               });
         }
     }
 }
