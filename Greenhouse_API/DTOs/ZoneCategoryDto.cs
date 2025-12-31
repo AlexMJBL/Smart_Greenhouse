@@ -50,12 +50,12 @@ namespace Greenhouse_API.DTOs
         /// <summary>
         /// Minimum atmospheric pressure in pascals
         /// </summary>
-        public float PressureMinPa { get; set; }
+        public float? PressureMinPa { get; set; }
 
         /// <summary>
         /// Maximum atmospheric pressure in pascals
         /// </summary>
-        public float PressureMaxPa { get; set; }
+        public float? PressureMaxPa { get; set; }
 
         /// <summary>
         /// Date and time when the zone category was created
@@ -122,13 +122,13 @@ namespace Greenhouse_API.DTOs
         /// </summary>
         [Required]
         [Range(0, float.MaxValue)]
-        public float PressureMinPa { get; set; }
+        public float? PressureMinPa { get; set; }
 
         /// <summary>
         /// Maximum atmospheric pressure in pascals
         /// </summary>
         [Required]
         [Range(0, float.MaxValue)]
-        public float PressureMaxPa { get; set; }
+        public float? PressureMaxPa { get; set; }
     }
 }

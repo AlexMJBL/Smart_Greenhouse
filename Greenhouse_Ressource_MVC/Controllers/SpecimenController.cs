@@ -3,6 +3,7 @@ using Greenhouse_Ressource_MVC.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Greenhouse_Ressource_MVC.Controllers
 {
@@ -52,6 +53,7 @@ namespace Greenhouse_Ressource_MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(SpecimenWriteDto dto)
         {
+
             if (!ModelState.IsValid)
             {
                 _logger.LogWarning("Invalid specimen creation attempt");
@@ -87,8 +89,14 @@ namespace Greenhouse_Ressource_MVC.Controllers
                 return NotFound();
             }
 
+            var writeDto = new SpecimenWriteDto
+            {
+                Name = specimen.Name,
+                SoilHumidityCatId = specimen.SoilHumidityCatId,
+            };
+
             await LoadSoilHumidityCategorysAsync();
-            return View(specimen);
+            return View(writeDto);
         }
 
         // POST: SpecimenController/Edit/5
@@ -155,8 +163,14 @@ namespace Greenhouse_Ressource_MVC.Controllers
 
         private async Task LoadSoilHumidityCategorysAsync()
         {
-            var soilHumidityCategorys = await _soilHumidityCategoryServiceProxy.GetAllAsync();
-            ViewBag.specimens = soilHumidityCategorys;
+            var categories = await _soilHumidityCategoryServiceProxy.GetAllAsync();
+
+            ViewBag.SoilHumidityCategories = categories.Select(c =>
+                new SelectListItem
+                {
+                    Value = c.Id.ToString(),
+                    Text = c.Name
+                });
         }
     }
 }

@@ -311,10 +311,10 @@ namespace Greenhouse_API.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<float>("PressureMaxPa")
+                    b.Property<float?>("PressureMaxPa")
                         .HasColumnType("REAL");
 
-                    b.Property<float>("PressureMinPa")
+                    b.Property<float?>("PressureMinPa")
                         .HasColumnType("REAL");
 
                     b.Property<float>("TemperatureMaxC")

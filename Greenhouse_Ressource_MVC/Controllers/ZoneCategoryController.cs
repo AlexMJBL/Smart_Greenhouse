@@ -57,7 +57,12 @@ namespace Greenhouse_Ressource_MVC.Controllers
 
             try
             {
-               await _zoneCategoryServiceProxy.CreateAsync(dto);
+                if (dto.PressureMinPa == null)
+                    dto.PressureMinPa = 0;
+                if (dto.PressureMaxPa == null)
+                    dto.PressureMaxPa = 0;
+
+                    await _zoneCategoryServiceProxy.CreateAsync(dto);
                 _logger.LogInformation("ZoneCategory created successfully");
                 return RedirectToAction("Index");
             }
@@ -82,7 +87,20 @@ namespace Greenhouse_Ressource_MVC.Controllers
                 return NotFound();
             }
 
-            return View(zoneCategory);
+            var writeDto = new ZoneCategoryWriteDto
+            {
+                Name = zoneCategory.Name,
+                HumidityMinPct = zoneCategory.HumidityMinPct,
+                HumidityMaxPct = zoneCategory.HumidityMaxPct,
+                LuminosityMinLux = zoneCategory.LuminosityMinLux,
+                LuminosityMaxLux = zoneCategory.LuminosityMaxLux,
+                TemperatureMaxC = zoneCategory.TemperatureMaxC,
+                TemperatureMinC = zoneCategory.TemperatureMinC,
+                PressureMaxPa = zoneCategory.PressureMaxPa,
+                PressureMinPa = zoneCategory.PressureMinPa,
+            };
+
+            return View(writeDto);
         }
 
         // POST: ZoneCategoryController/Edit/5

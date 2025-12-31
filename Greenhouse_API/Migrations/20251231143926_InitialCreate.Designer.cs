@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Greenhouse_API.Migrations
 {
     [DbContext(typeof(GreenHouseDbContext))]
-    [Migration("20251227184904_InitialCreate")]
+    [Migration("20251231143926_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -314,10 +314,10 @@ namespace Greenhouse_API.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<float>("PressureMaxPa")
+                    b.Property<float?>("PressureMaxPa")
                         .HasColumnType("REAL");
 
-                    b.Property<float>("PressureMinPa")
+                    b.Property<float?>("PressureMinPa")
                         .HasColumnType("REAL");
 
                     b.Property<float>("TemperatureMaxC")

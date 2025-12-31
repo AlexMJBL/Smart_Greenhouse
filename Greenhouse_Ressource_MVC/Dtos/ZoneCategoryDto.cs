@@ -12,8 +12,8 @@ namespace Greenhouse_Ressource_MVC.Dtos
         public float LuminosityMaxLux { get; set; }
         public float TemperatureMinC { get; set; }
         public float TemperatureMaxC { get; set; }
-        public float PressureMinPa { get; set; }
-        public float PressureMaxPa { get; set; }
+        public float? PressureMinPa { get; set; }
+        public float? PressureMaxPa { get; set; }
         public DateTime CreatedAt { get; set; }
     }
 
@@ -40,11 +40,9 @@ namespace Greenhouse_Ressource_MVC.Dtos
         [Required]
         [Range(0, float.MaxValue)]
         public float TemperatureMaxC { get; set; }
-        [Required]
         [Range(0, float.MaxValue)]
-        public float PressureMinPa { get; set; }
-        [Required]
+        public float? PressureMinPa { get; set; }
         [Range(0, float.MaxValue)]
-        public float PressureMaxPa { get; set; }
+        public float? PressureMaxPa { get; set; }
     }
 }
