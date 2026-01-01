@@ -19,7 +19,11 @@
             </div>
             <div class="form-group">
                 <label asp-for="ZoneCategoryId" class="control-label"></label>
-                <input asp-for="ZoneCategoryId" class="form-control" />
+                <select asp-for="ZoneCategoryId"
+                        asp-items="ViewBag.SoilHumidityCategories"
+                        class="form-control">
+                    <option value="">-- Sélectionner une catégorie --</option>
+                </select>
                 <span asp-validation-for="ZoneCategoryId" class="text-danger"></span>
             </div>
             <div class="form-group">

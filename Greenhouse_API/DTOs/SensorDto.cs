@@ -59,7 +59,7 @@ namespace Greenhouse_API.DTOs
         /// </summary>
         [Required]
         [MaxLength(50)]
-        public string SensorCode { get; set; } = null!;
+        public string SensorCode { get; set; }
 
         /// <summary>
         /// Optional description or notes (max 500 characters)
@@ -80,5 +80,10 @@ namespace Greenhouse_API.DTOs
         [Required]
         [Range(1, int.MaxValue)]
         public int ZoneId { get; set; }
+
+        /// <summary>
+        /// Indicates whether the sensor is currently active
+        /// </summary>
+        public bool IsActive { get; set; }
     }
 }

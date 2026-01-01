@@ -28,8 +28,12 @@ namespace Greenhouse_API.Services
             return sensors.Select(sensor => new SensorDto
             {
                 Id = sensor.Id,
+                SensorCode = sensor.SensorCode,
+                Description = sensor.Description,
                 Type = sensor.Type,
                 ZoneId = sensor.ZoneId,
+                IsActive = sensor.IsActive,
+                LastSeen = sensor.LastSeen,
                 CreatedAt = sensor.CreatedAt
             });
         }
@@ -47,8 +51,12 @@ namespace Greenhouse_API.Services
             return new SensorDto
             {
                 Id = sensor.Id,
+                SensorCode = sensor.SensorCode,
+                Description = sensor.Description,
                 Type = sensor.Type,
                 ZoneId = sensor.ZoneId,
+                IsActive = sensor.IsActive,
+                LastSeen = sensor.LastSeen,
                 CreatedAt = sensor.CreatedAt
             };
         }
@@ -64,9 +72,13 @@ namespace Greenhouse_API.Services
 
             var sensor = new Sensor
             {
+                SensorCode = dto.SensorCode,
+                Description = dto.Description,
                 Type = dto.Type,
                 ZoneId = dto.ZoneId,
-                CreatedAt = DateTime.UtcNow
+                IsActive = dto.IsActive, 
+                CreatedAt = DateTime.UtcNow,
+                LastSeen = true
             };
 
             await _repository.AddAsync(sensor);
@@ -76,7 +88,11 @@ namespace Greenhouse_API.Services
             {
                 Id = sensor.Id,
                 Type = sensor.Type,
+                SensorCode = sensor.SensorCode,
+                Description = sensor.Description,
                 ZoneId = sensor.ZoneId,
+                IsActive = sensor.IsActive,
+                LastSeen = true,
                 CreatedAt = sensor.CreatedAt
             };
         }
@@ -99,6 +115,10 @@ namespace Greenhouse_API.Services
 
             sensor.Type = dto.Type;
             sensor.ZoneId = dto.ZoneId;
+            sensor.SensorCode = dto.SensorCode;
+            sensor.Description = dto.Description;
+            sensor.IsActive = dto.IsActive;
+
             await _repository.SaveAsync();
 
             _logger.LogInformation("Sensor with ID {SensorId} updated", id);
@@ -107,6 +127,10 @@ namespace Greenhouse_API.Services
                 Id = sensor.Id,
                 Type = sensor.Type,
                 ZoneId = sensor.ZoneId,
+                SensorCode = sensor.SensorCode,
+                Description = sensor.Description,
+                IsActive = sensor.IsActive,
+                LastSeen = true,
                 CreatedAt = sensor.CreatedAt
             };
         }

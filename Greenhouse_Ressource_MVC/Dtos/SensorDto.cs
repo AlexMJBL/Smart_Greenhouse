@@ -28,5 +28,7 @@ namespace Greenhouse_Ressource_MVC.Dtos
         [Required]
         [Range(1, int.MaxValue)]
         public int ZoneId { get; set; }
+        [Required]
+        public bool IsActive { get; set; }
     }
 }

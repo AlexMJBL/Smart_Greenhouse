@@ -80,9 +80,40 @@ namespace Greenhouse_API.Services
             };
         }
 
-        public Task<ZoneDto> UpdateAsync(int id, ZoneWriteDto dto)
+        public async Task<ZoneDto> UpdateAsync(int id, ZoneWriteDto dto)
         {
-            throw new NotImplementedException();
+
+            var zone = await _repository.GetByIdAsync(id);
+            if (zone == null)
+            {
+                _logger.LogError("Zone with ID {ZoneId} not found. Cannot update.", id);
+                throw new NotFoundException($"Zone with ID {id} does not exist.");
+            }
+
+            var zoneCategory = await _zoneCategoryService.GetByIdAsync(dto.ZoneCategoryId);
+            if (zoneCategory == null)
+            {
+                _logger.LogWarning("ZoneCategory with ID: {ZoneCategoryId} not found for zone creation", dto.ZoneCategoryId);
+                throw new NotFoundException("ZoneCategory not found");
+            }
+
+            var zoneDto = new Zone
+            {
+                Description = dto.Description,
+                ZoneCategoryId = dto.ZoneCategoryId,
+                CreatedAt = DateTime.UtcNow
+            };
+
+            await _repository.AddAsync(zoneDto);
+            _logger.LogInformation("Zone created with ID: {ZoneId}", zoneDto.Id);
+
+            return new ZoneDto
+            {
+                Id = zone.Id,
+                Description = zone.Description,
+                ZoneCategoryId = zone.ZoneCategoryId,
+                CreatedAt = zone.CreatedAt
+            };
         }
 
         public async Task DeleteAsync(int id)

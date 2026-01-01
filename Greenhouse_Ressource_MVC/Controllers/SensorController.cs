@@ -1,7 +1,9 @@
 using Greenhouse_Ressource_MVC.Dtos;
+using Greenhouse_Ressource_MVC.Enums;
 using Greenhouse_Ressource_MVC.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Threading.Tasks;
 
 namespace Greenhouse_Ressource_MVC.Controllers
@@ -44,6 +46,7 @@ namespace Greenhouse_Ressource_MVC.Controllers
         public async Task<IActionResult> Create()
         {
             await LoadZonesAsync();
+            await LoadSensorTypes();
             return View();
         }
 
@@ -56,6 +59,7 @@ namespace Greenhouse_Ressource_MVC.Controllers
             {
                 _logger.LogWarning("Invalid sensor creation attempt");
                 await LoadZonesAsync();
+                await LoadSensorTypes();
                 return View(dto);
             }
 
@@ -72,6 +76,7 @@ namespace Greenhouse_Ressource_MVC.Controllers
                 ModelState.AddModelError(string.Empty,"An error occurred while creating the sensor.");
 
                 await LoadZonesAsync();
+                await LoadSensorTypes();
                 return View(dto);
             }
         }
@@ -87,8 +92,17 @@ namespace Greenhouse_Ressource_MVC.Controllers
                 return NotFound();
             }
 
+            var writeDto = new SensorWriteDto
+            {
+                SensorCode = sensor.SensorCode,
+                Description = sensor.Description,
+                Type = sensor.Type,
+                ZoneId = sensor.ZoneId,
+            };
+
             await LoadZonesAsync();
-            return View(sensor);
+            await LoadSensorTypes();
+            return View(writeDto);
         }
 
         // POST: SensorController/Edit/5
@@ -100,6 +114,7 @@ namespace Greenhouse_Ressource_MVC.Controllers
             {
                 _logger.LogWarning("Invalid sensor modification attempt");
                 await LoadZonesAsync();
+                await LoadSensorTypes();
                 return View(dto);
             }
             try
@@ -115,6 +130,7 @@ namespace Greenhouse_Ressource_MVC.Controllers
                 ModelState.AddModelError(string.Empty, "An error occurred while updating the sensor.");
 
                 await LoadZonesAsync();
+                await LoadSensorTypes();
                 return View(dto);
             }
         }
@@ -156,7 +172,27 @@ namespace Greenhouse_Ressource_MVC.Controllers
         private async Task LoadZonesAsync()
         {
             var zones = await _zoneServiceProxy.GetAllAsync();
-            ViewBag.sensors = zones;
+
+            ViewBag.zoneCategories = zones.Select(c =>
+               new SelectListItem
+               {
+                   Value = c.Id.ToString(),
+                   Text = c.Description
+               });
         }
+
+
+        private async Task LoadSensorTypes()
+        {
+            ViewBag.SensorTypes = Enum.GetValues(typeof(SensorType))
+                .Cast<SensorType>()
+                .Select(e => new SelectListItem
+                {
+                    Value = ((int)e).ToString(),
+                    Text = e.ToString()
+                })
+                .ToList();
+        }
+
     }
 }
