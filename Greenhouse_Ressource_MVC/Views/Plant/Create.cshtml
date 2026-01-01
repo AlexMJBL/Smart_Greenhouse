@@ -6,7 +6,7 @@
 
 <h1>Create</h1>
 
-<h4>PlantWriteDto</h4>
+<h4>Plant</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -14,18 +14,30 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="ZoneId" class="control-label"></label>
-                <input asp-for="ZoneId" class="form-control" />
+                <select asp-for="ZoneId"
+                        asp-items="ViewBag.ZoneCategories"
+                        class="form-control">
+                    <option value="">-- Select a zone --</option>
+                </select>
                 <span asp-validation-for="ZoneId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="SpecimenId" class="control-label"></label>
-                <input asp-for="SpecimenId" class="form-control" />
-                <span asp-validation-for="SpecimenId" class="text-danger"></span>
+                <select asp-for="SpecimenId"
+                        asp-items="ViewBag.Specimens"
+                        class="form-control">
+                    <option value="">-- Select a specimen --</option>
+                </select>
+                <span asp-validation-for="ZoneId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="MomId" class="control-label"></label>
-                <input asp-for="MomId" class="form-control" />
-                <span asp-validation-for="MomId" class="text-danger"></span>
+                <select asp-for="MomId"
+                        asp-items="ViewBag.Plants"
+                        class="form-control">
+                    <option value="">-- Select a mom plant if it apply --</option>
+                </select>
+                <span asp-validation-for="ZoneId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>

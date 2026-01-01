@@ -2,6 +2,7 @@ using Greenhouse_Ressource_MVC.Dtos;
 using Greenhouse_Ressource_MVC.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Threading.Tasks;
 
 namespace Greenhouse_Ressource_MVC.Controllers
@@ -10,12 +11,16 @@ namespace Greenhouse_Ressource_MVC.Controllers
     {
         private readonly IPlantServiceProxy _plantServiceProxy;
         private readonly ISpecimenServiceProxy _specimenServiceProxy;
+
+        private readonly IZoneServiceProxy _zoneServiceProxy;
         private readonly ILogger<PlantController> _logger;
 
-        public PlantController(IPlantServiceProxy plantServiceProxy,ISpecimenServiceProxy specimenServiceProxy ,ILogger<PlantController> logger)
+        public PlantController(IPlantServiceProxy plantServiceProxy, ISpecimenServiceProxy specimenServiceProxy,
+        IZoneServiceProxy zoneServiceProxy, ILogger<PlantController> logger)
         {
             _plantServiceProxy = plantServiceProxy;
             _specimenServiceProxy = specimenServiceProxy;
+            _zoneServiceProxy = zoneServiceProxy;
             _logger = logger;
         }
 
@@ -43,7 +48,9 @@ namespace Greenhouse_Ressource_MVC.Controllers
         // GET: PlantController/Create
         public async Task<IActionResult> Create()
         {
+            await LoadPlantsAsync();
             await LoadSpecimensAsync();
+            await LoadZoneAsync();
             return View();
         }
 
@@ -55,13 +62,15 @@ namespace Greenhouse_Ressource_MVC.Controllers
             if (!ModelState.IsValid)
             {
                 _logger.LogWarning("Invalid plant creation attempt");
+                await LoadPlantsAsync();
                 await LoadSpecimensAsync();
+                await LoadZoneAsync();
                 return View(dto);
             }
 
             try
             {
-               await _plantServiceProxy.CreateAsync(dto);
+                await _plantServiceProxy.CreateAsync(dto);
                 _logger.LogInformation("Plant created successfully");
                 return RedirectToAction("Index");
             }
@@ -69,9 +78,11 @@ namespace Greenhouse_Ressource_MVC.Controllers
             {
                 _logger.LogError(ex, "Error while creating plant");
 
-                ModelState.AddModelError(string.Empty,"An error occurred while creating the plant.");
+                ModelState.AddModelError(string.Empty, "An error occurred while creating the plant.");
 
+                await LoadPlantsAsync();
                 await LoadSpecimensAsync();
+                await LoadZoneAsync();
                 return View(dto);
             }
         }
@@ -80,15 +91,26 @@ namespace Greenhouse_Ressource_MVC.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             var plant = await _plantServiceProxy.GetByIdAsync(id);
-            
+
             if (plant == null)
             {
                 _logger.LogWarning("Unable to retrieve plant with id {plantId}", id);
                 return NotFound();
             }
 
+            var writeDto = new PlantWriteDto
+            {
+                AcquiredDate = plant.AcquiredDate,
+                ZoneId = plant.ZoneId,
+                SpecimenId = plant.SpecimenId,
+                MomId = plant.MomId,
+                Description = plant.Description
+            };
+
+            await LoadPlantsAsync();
             await LoadSpecimensAsync();
-            return View(plant);
+            await LoadZoneAsync();
+            return View(writeDto);
         }
 
         // POST: PlantController/Edit/5
@@ -99,12 +121,15 @@ namespace Greenhouse_Ressource_MVC.Controllers
             if (!ModelState.IsValid)
             {
                 _logger.LogWarning("Invalid plant modification attempt");
+
+                await LoadPlantsAsync();
                 await LoadSpecimensAsync();
+                await LoadZoneAsync();
                 return View(dto);
             }
             try
             {
-                await _plantServiceProxy.UpdateAsync(id,dto);
+                await _plantServiceProxy.UpdateAsync(id, dto);
                 _logger.LogInformation("Plant updated successfully");
                 return RedirectToAction("Index");
             }
@@ -114,7 +139,9 @@ namespace Greenhouse_Ressource_MVC.Controllers
 
                 ModelState.AddModelError(string.Empty, "An error occurred while updating the plant.");
 
+                await LoadPlantsAsync();
                 await LoadSpecimensAsync();
+                await LoadZoneAsync();
                 return View(dto);
             }
         }
@@ -126,7 +153,7 @@ namespace Greenhouse_Ressource_MVC.Controllers
 
             if (plant == null)
             {
-                _logger.LogWarning("Unable to retrieve plant with id {plantId}",id);
+                _logger.LogWarning("Unable to retrieve plant with id {plantId}", id);
 
                 return NotFound();
             }
@@ -153,10 +180,37 @@ namespace Greenhouse_Ressource_MVC.Controllers
 
         }
 
+        private async Task LoadPlantsAsync()
+        {
+            var plants = await _plantServiceProxy.GetAllAsync();
+            ViewBag.Plants = plants.Select(c =>
+               new SelectListItem
+               {
+                   Value = c.Id.ToString(),
+                   Text = c.Description
+               });
+        }
         private async Task LoadSpecimensAsync()
         {
             var specimens = await _specimenServiceProxy.GetAllAsync();
-            ViewBag.Plants = specimens;
+            ViewBag.Specimens = specimens.Select(c =>
+               new SelectListItem
+               {
+                   Value = c.Id.ToString(),
+                   Text = c.Name
+               });
+        }
+
+        private async Task LoadZoneAsync()
+        {
+            var categories = await _zoneServiceProxy.GetAllAsync();
+
+            ViewBag.SoilHumidityCategories = categories.Select(c =>
+               new SelectListItem
+               {
+                   Value = c.Id.ToString(),
+                   Text = c.Description
+               });
         }
     }
 }

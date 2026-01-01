@@ -27,7 +27,7 @@
                 <select asp-for="Type"
                         asp-items="ViewBag.SensorTypes"
                         class="form-control">
-                    <option value="">-- Sélectionner une catégorie --</option>
+                    <option value="">-- Select a sensor type --</option>
                 </select>
                 <span asp-validation-for="ZoneId" class="text-danger"></span>
             </div>
@@ -36,15 +36,15 @@
                 <select asp-for="ZoneId"
                         asp-items="ViewBag.ZoneCategories"
                         class="form-control">
-                    <option value="">-- Sélectionner une catégorie --</option>
+                    <option value="">-- Select a category --</option>
                 </select>
                 <span asp-validation-for="ZoneId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="IsActive"></label>
                 <select asp-for="IsActive" class="form-control">
-                    <option value="true">Actif</option>
-                    <option value="false">Inactif</option>
+                    <option value="true">Active</option>
+                    <option value="false">Inactive</option>
                 </select>
                 <span asp-validation-for="IsActive" class="text-danger"></span>
             </div>
