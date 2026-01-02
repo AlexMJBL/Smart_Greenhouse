@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Greenhouse_Ressource_MVC.ViewModel;
 
 namespace Greenhouse_Ressource_MVC.Controllers
 {
@@ -13,7 +14,7 @@ namespace Greenhouse_Ressource_MVC.Controllers
         private readonly ISoilHumidityCategoryServiceProxy _soilHumidityCategoryServiceProxy;
         private readonly ILogger<specimenController> _logger;
 
-        public specimenController(ISpecimenServiceProxy specimenServiceProxy,ISoilHumidityCategoryServiceProxy soilHumidityCategoryServiceProxy ,ILogger<specimenController> logger)
+        public specimenController(ISpecimenServiceProxy specimenServiceProxy, ISoilHumidityCategoryServiceProxy soilHumidityCategoryServiceProxy, ILogger<specimenController> logger)
         {
             _specimenServiceProxy = specimenServiceProxy;
             _soilHumidityCategoryServiceProxy = soilHumidityCategoryServiceProxy;
@@ -37,8 +38,22 @@ namespace Greenhouse_Ressource_MVC.Controllers
                 _logger.LogWarning("Unable to retrieve specimen with id {specimenId}", id);
                 return NotFound();
             }
+
+            var SoilHumidityCategory = await _soilHumidityCategoryServiceProxy.GetByIdAsync(specimen.SoilHumidityCatId);
+            if (SoilHumidityCategory == null)
+            {
+                _logger.LogWarning("Unable to retrieve SoilHumidityCategory attached to specimen with id {specimenId}", id);
+                return NotFound();
+            }
+
+            var viewModel = new SpecimenDetailViewModel
+            {
+                Specimen = specimen,
+                SoilHumidityCategory = SoilHumidityCategory
+            };
+
             _logger.LogInformation("User requested specimen with id : {specimenId}", id);
-            return View(specimen);
+            return View(viewModel);
         }
 
         // GET: SpecimenController/Create
@@ -63,7 +78,7 @@ namespace Greenhouse_Ressource_MVC.Controllers
 
             try
             {
-               await _specimenServiceProxy.CreateAsync(dto);
+                await _specimenServiceProxy.CreateAsync(dto);
                 _logger.LogInformation("Specimen created successfully");
                 return RedirectToAction("Index");
             }
@@ -71,7 +86,7 @@ namespace Greenhouse_Ressource_MVC.Controllers
             {
                 _logger.LogError(ex, "Error while creating specimen");
 
-                ModelState.AddModelError(string.Empty,"An error occurred while creating the specimen.");
+                ModelState.AddModelError(string.Empty, "An error occurred while creating the specimen.");
 
                 await LoadSoilHumidityCategorysAsync();
                 return View(dto);
@@ -82,7 +97,7 @@ namespace Greenhouse_Ressource_MVC.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             var specimen = await _specimenServiceProxy.GetByIdAsync(id);
-            
+
             if (specimen == null)
             {
                 _logger.LogWarning("Unable to retrieve specimen with id {specimenId}", id);
@@ -112,7 +127,7 @@ namespace Greenhouse_Ressource_MVC.Controllers
             }
             try
             {
-                await _specimenServiceProxy.UpdateAsync(id,dto);
+                await _specimenServiceProxy.UpdateAsync(id, dto);
                 _logger.LogInformation("Specimen updated successfully");
                 return RedirectToAction("Index");
             }
@@ -134,7 +149,7 @@ namespace Greenhouse_Ressource_MVC.Controllers
 
             if (specimen == null)
             {
-                _logger.LogWarning("Unable to retrieve specimen with id {specimenId}",id);
+                _logger.LogWarning("Unable to retrieve specimen with id {specimenId}", id);
 
                 return NotFound();
             }

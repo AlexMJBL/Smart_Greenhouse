@@ -1,6 +1,7 @@
 using Greenhouse_Ressource_MVC.Dtos;
 using Greenhouse_Ressource_MVC.Enums;
 using Greenhouse_Ressource_MVC.Interfaces;
+using Greenhouse_Ressource_MVC.ViewModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -14,7 +15,7 @@ namespace Greenhouse_Ressource_MVC.Controllers
         private readonly IZoneServiceProxy _zoneServiceProxy;
         private readonly ILogger<SensorController> _logger;
 
-        public SensorController(ISensorServiceProxy sensorServiceProxy,IZoneServiceProxy zoneServiceProxy ,ILogger<SensorController> logger)
+        public SensorController(ISensorServiceProxy sensorServiceProxy, IZoneServiceProxy zoneServiceProxy, ILogger<SensorController> logger)
         {
             _sensorServiceProxy = sensorServiceProxy;
             _zoneServiceProxy = zoneServiceProxy;
@@ -38,8 +39,22 @@ namespace Greenhouse_Ressource_MVC.Controllers
                 _logger.LogWarning("Unable to retrieve sensor with id {sensorId}", id);
                 return NotFound();
             }
+
+            var zone = await _zoneServiceProxy.GetByIdAsync(sensor.ZoneId);
+            if (zone == null)
+            {
+                _logger.LogWarning("Unable to retrieve zone attached to sensor with id {sensorId}", id);
+                return NotFound();
+            }
+
+            var viewModel = new SensorDetailViewModel
+            {
+                Sensor = sensor,
+                Zone = zone
+            };
+
             _logger.LogInformation("User requested sensor with id : {sensorId}", id);
-            return View(sensor);
+            return View(viewModel);
         }
 
         // GET: SensorController/Create
@@ -65,7 +80,7 @@ namespace Greenhouse_Ressource_MVC.Controllers
 
             try
             {
-               await _sensorServiceProxy.CreateAsync(dto);
+                await _sensorServiceProxy.CreateAsync(dto);
                 _logger.LogInformation("Sensor created successfully");
                 return RedirectToAction("Index");
             }
@@ -73,7 +88,7 @@ namespace Greenhouse_Ressource_MVC.Controllers
             {
                 _logger.LogError(ex, "Error while creating sensor");
 
-                ModelState.AddModelError(string.Empty,"An error occurred while creating the sensor.");
+                ModelState.AddModelError(string.Empty, "An error occurred while creating the sensor.");
 
                 await LoadZonesAsync();
                 await LoadSensorTypes();
@@ -85,7 +100,7 @@ namespace Greenhouse_Ressource_MVC.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             var sensor = await _sensorServiceProxy.GetByIdAsync(id);
-            
+
             if (sensor == null)
             {
                 _logger.LogWarning("Unable to retrieve sensor with id {sensorId}", id);
@@ -119,7 +134,7 @@ namespace Greenhouse_Ressource_MVC.Controllers
             }
             try
             {
-                await _sensorServiceProxy.UpdateAsync(id,dto);
+                await _sensorServiceProxy.UpdateAsync(id, dto);
                 _logger.LogInformation("Sensor updated successfully");
                 return RedirectToAction("Index");
             }
@@ -142,7 +157,7 @@ namespace Greenhouse_Ressource_MVC.Controllers
 
             if (sensor == null)
             {
-                _logger.LogWarning("Unable to retrieve sensor with id {sensorId}",id);
+                _logger.LogWarning("Unable to retrieve sensor with id {sensorId}", id);
 
                 return NotFound();
             }

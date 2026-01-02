@@ -1,5 +1,6 @@
 using Greenhouse_Ressource_MVC.Dtos;
 using Greenhouse_Ressource_MVC.Interfaces;
+using Greenhouse_Ressource_MVC.ViewModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -41,8 +42,30 @@ namespace Greenhouse_Ressource_MVC.Controllers
                 _logger.LogWarning("Unable to retrieve plant with id {plantId}", id);
                 return NotFound();
             }
+
+            var zone = await _zoneServiceProxy.GetByIdAsync(plant.ZoneId);
+            if (zone == null)
+            {
+                _logger.LogWarning("Unable to retrieve zone attached to plant with id {plantyId}", id);
+                return NotFound();
+            }
+
+            var specimen = await _specimenServiceProxy.GetByIdAsync(plant.SpecimenId);
+            if (specimen == null)
+            {
+                _logger.LogWarning("Unable to retrieve specimen attached to plant with id {plantyId}", id);
+                return NotFound();
+            }
+
+            var viewModel = new PlantDetailViewModel
+            {
+                Plant = plant,
+                Specimen = specimen,
+                Zone = zone
+            };
+
             _logger.LogInformation("User requested plant with id : {plantId}", id);
-            return View(plant);
+            return View(viewModel);
         }
 
         // GET: PlantController/Create

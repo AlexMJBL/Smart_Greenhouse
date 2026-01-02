@@ -1,8 +1,10 @@
 ﻿using Greenhouse_Ressource_MVC.Dtos;
 using Greenhouse_Ressource_MVC.Interfaces;
+using Greenhouse_Ressource_MVC.ViewModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using NuGet.Protocol;
 using System.Threading.Tasks;
 
 namespace Greenhouse_Ressource_MVC.Controllers
@@ -37,8 +39,22 @@ namespace Greenhouse_Ressource_MVC.Controllers
                 _logger.LogWarning("Unable to retrieve fertilizer with id {FertilizerId}", id);
                 return NotFound();
             }
+
+            var plant = await _plantServiceProxy.GetByIdAsync(fertilizer.PlantId);
+            if (plant == null)
+            {
+                _logger.LogWarning("Unable to retrieve plant attached to fertilizer with id {fertilizerId}", id);
+                return NotFound();
+            }
+
+            var viewModel = new FertilizerDetailViewModel
+            {
+                Fertilizer = fertilizer,
+                Plant = plant
+            };
+
             _logger.LogInformation("User requested fertilizer with id : {FertilizerId}", id);
-            return View(fertilizer);
+            return View(viewModel);
         }
 
         // GET: FertilizerController/Create

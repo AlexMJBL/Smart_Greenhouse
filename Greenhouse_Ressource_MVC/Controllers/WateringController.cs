@@ -1,5 +1,6 @@
 using Greenhouse_Ressource_MVC.Dtos;
 using Greenhouse_Ressource_MVC.Interfaces;
+using Greenhouse_Ressource_MVC.ViewModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -37,8 +38,23 @@ namespace Greenhouse_Ressource_MVC.Controllers
                 _logger.LogWarning("Unable to retrieve watering with id {wateringId}", id);
                 return NotFound();
             }
+
+
+            var plant = await _plantServiceProxy.GetByIdAsync(watering.PlantId);
+            if (plant == null)
+            {
+                _logger.LogWarning("Unable to retrieve plant attached to watering with id {wateringId}", id);
+                return NotFound();
+            }
+
+            var viewModel = new WateringDetailViewModel
+            {
+                Watering= watering,
+                Plant = plant
+            };
+
             _logger.LogInformation("User requested watering with id : {wateringId}", id);
-            return View(watering);
+            return View(viewModel);
         }
 
         // GET: WateringController/Create
