@@ -20,12 +20,12 @@ namespace Greenhouse_API.DTOs
         /// <summary>
         /// Minimum acceptable soil humidity percentage (0–100)
         /// </summary>
-        public float? MinHumidityPct { get; set; }
+        public float MinHumidityPct { get; set; }
 
         /// <summary>
         /// Maximum acceptable soil humidity percentage (0–100)
         /// </summary>
-        public float? MaxHumidityPct { get; set; }
+        public float MaxHumidityPct { get; set; }
 
         /// <summary>
         /// Date and time when the category was created
@@ -36,7 +36,7 @@ namespace Greenhouse_API.DTOs
     /// <summary>
     /// Data required to create a new soil humidity category
     /// </summary>
-    public class SoilHumidityCategoryWriteDto
+    public class SoilHumidityCategoryWriteDto : IValidatableObject
     {
         /// <summary>
         /// Name of the soil humidity category
@@ -48,13 +48,26 @@ namespace Greenhouse_API.DTOs
         /// <summary>
         /// Minimum acceptable soil humidity percentage (0–100)
         /// </summary>
+        [Required]
         [Range(0, 100)]
-        public float? MinHumidityPct { get; set; }
+        public float MinHumidityPct { get; set; }
 
         /// <summary>
         /// Maximum acceptable soil humidity percentage (0–100)
         /// </summary>
+        [Required]
         [Range(0, 100)]
-        public float? MaxHumidityPct { get; set; }
+        public float MaxHumidityPct { get; set; }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (MaxHumidityPct <= MinHumidityPct)
+            {
+                yield return new ValidationResult(
+                    "The maximum need to be higher than minimum",
+                    new[] { nameof(MaxHumidityPct) }
+                );
+            }
+        }
     }
 }
