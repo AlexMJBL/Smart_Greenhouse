@@ -1,6 +1,7 @@
 using Greenhouse_Ressource_MVC.Dtos;
 using Greenhouse_Ressource_MVC.Enums;
 using Greenhouse_Ressource_MVC.Interfaces;
+using Greenhouse_Ressource_MVC.ViewModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -14,7 +15,7 @@ namespace Greenhouse_Ressource_MVC.Controllers
         private readonly IPlantServiceProxy _plantServiceProxy;
         private readonly ILogger<ObservationController> _logger;
 
-        public ObservationController(IObservationServiceProxy observationServiceProxy,IPlantServiceProxy plantServiceProxy ,ILogger<ObservationController> logger)
+        public ObservationController(IObservationServiceProxy observationServiceProxy, IPlantServiceProxy plantServiceProxy, ILogger<ObservationController> logger)
         {
             _observationServiceProxy = observationServiceProxy;
             _plantServiceProxy = plantServiceProxy;
@@ -38,8 +39,22 @@ namespace Greenhouse_Ressource_MVC.Controllers
                 _logger.LogWarning("Unable to retrieve observation with id {ObservationId}", id);
                 return NotFound();
             }
+
+            var plant = await _plantServiceProxy.GetByIdAsync(observation.PlantId);
+            if (plant == null)
+            {
+                _logger.LogWarning("Unable to retrieve plant attached to observation with id {observationId}", id);
+                return NotFound();
+            }
+
+            var viewModel = new ObservationDetailViewModel
+            {
+                Observation = observation,
+                Plant = plant
+            };
+
             _logger.LogInformation("User requested observation with id : {ObservationId}", id);
-            return View(observation);
+            return View(viewModel);
         }
 
         // GET: ObservationController/Create
@@ -65,7 +80,7 @@ namespace Greenhouse_Ressource_MVC.Controllers
 
             try
             {
-               await _observationServiceProxy.CreateAsync(dto);
+                await _observationServiceProxy.CreateAsync(dto);
                 _logger.LogInformation("Observation created successfully");
                 return RedirectToAction("Index");
             }
@@ -73,7 +88,7 @@ namespace Greenhouse_Ressource_MVC.Controllers
             {
                 _logger.LogError(ex, "Error while creating observation");
 
-                ModelState.AddModelError(string.Empty,"An error occurred while creating the observation.");
+                ModelState.AddModelError(string.Empty, "An error occurred while creating the observation.");
 
                 await LoadRatingTypes();
                 await LoadPlantsAsync();
@@ -85,7 +100,7 @@ namespace Greenhouse_Ressource_MVC.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             var observation = await _observationServiceProxy.GetByIdAsync(id);
-            
+
             if (observation == null)
             {
                 _logger.LogWarning("Unable to retrieve observation with id {ObservationId}", id);
@@ -117,7 +132,7 @@ namespace Greenhouse_Ressource_MVC.Controllers
             }
             try
             {
-                await _observationServiceProxy.UpdateAsync(id,dto);
+                await _observationServiceProxy.UpdateAsync(id, dto);
                 _logger.LogInformation("Observation updated successfully");
                 return RedirectToAction("Index");
             }
@@ -140,7 +155,7 @@ namespace Greenhouse_Ressource_MVC.Controllers
 
             if (observation == null)
             {
-                _logger.LogWarning("Unable to retrieve observation with id {ObservationId}",id);
+                _logger.LogWarning("Unable to retrieve observation with id {ObservationId}", id);
 
                 return NotFound();
             }
@@ -167,7 +182,7 @@ namespace Greenhouse_Ressource_MVC.Controllers
 
         }
 
-        
+
         private async Task LoadPlantsAsync()
         {
             var plants = await _plantServiceProxy.GetAllAsync();
@@ -179,7 +194,7 @@ namespace Greenhouse_Ressource_MVC.Controllers
                });
         }
 
-         private async Task LoadRatingTypes()
+        private async Task LoadRatingTypes()
         {
             ViewBag.Rating = Enum.GetValues(typeof(ObservationRating))
                 .Cast<ObservationRating>()

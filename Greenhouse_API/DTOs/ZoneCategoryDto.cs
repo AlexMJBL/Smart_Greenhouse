@@ -66,7 +66,7 @@ namespace Greenhouse_API.DTOs
     /// <summary>
     /// Data required to create a new zone category
     /// </summary>
-    public class ZoneCategoryWriteDto
+    public class ZoneCategoryWriteDto : IValidatableObject
     {
         /// <summary>
         /// Name of the zone category (max 100 characters)
@@ -130,5 +130,41 @@ namespace Greenhouse_API.DTOs
         [Required]
         [Range(0, float.MaxValue)]
         public float? PressureMaxPa { get; set; }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (HumidityMaxPct <= HumidityMinPct)
+            {
+                yield return new ValidationResult(
+                    "L'humidité maximale doit être plus grande que l'humidité minimale.",
+                    new[] { nameof(HumidityMaxPct) }
+                );
+            }
+
+            if (LuminosityMaxLux <= LuminosityMinLux)
+            {
+                yield return new ValidationResult(
+                    "La luminosité maximale doit être plus grande que la luminosité minimale.",
+                    new[] { nameof(LuminosityMaxLux) }
+                );
+            }
+
+            if (TemperatureMaxC <= TemperatureMinC)
+            {
+                yield return new ValidationResult(
+                    "La température maximale doit être plus grande que la température minimale.",
+                    new[] { nameof(TemperatureMaxC) }
+                );
+            }
+
+            if (PressureMinPa.HasValue && PressureMaxPa.HasValue &&
+                PressureMaxPa <= PressureMinPa)
+            {
+                yield return new ValidationResult(
+                    "La pression maximale doit être plus grande que la pression minimale.",
+                    new[] { nameof(PressureMaxPa) }
+                );
+            }
+        }
     }
 }

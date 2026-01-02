@@ -1,5 +1,6 @@
 using Greenhouse_Ressource_MVC.Dtos;
 using Greenhouse_Ressource_MVC.Interfaces;
+using Greenhouse_Ressource_MVC.ViewModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -37,8 +38,22 @@ namespace Greenhouse_Ressource_MVC.Controllers
                 _logger.LogWarning("Unable to retrieve zone with id {zoneId}", id);
                 return NotFound();
             }
+
+            var zoneCategory = await _zoneCategoryServiceProxy.GetByIdAsync(zone.ZoneCategoryId);
+                   if (zoneCategory== null)
+            {
+                _logger.LogWarning("Unable to retrieve zoneCategory attached to zone with id {zoneId}", id);
+                return NotFound();
+            }
+
+            var viewModel = new ZoneDetailViewModel
+            {
+                Zone = zone,
+                ZoneCategory = zoneCategory
+            };
+
             _logger.LogInformation("User requested zone with id : {zoneId}", id);
-            return View(zone);
+            return View(viewModel);
         }
 
         // GET: ZoneController/Create

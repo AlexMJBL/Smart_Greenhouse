@@ -9,9 +9,9 @@ public partial class SoilHumidityCategory
 
     public string Name { get; set; } = null!;
 
-    public float? MinHumidityPct { get; set; }
+    public float MinHumidityPct { get; set; }
 
-    public float? MaxHumidityPct { get; set; }
+    public float MaxHumidityPct { get; set; }
 
     public DateTime CreatedAt { get; set; }
 

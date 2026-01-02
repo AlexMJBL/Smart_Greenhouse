@@ -1,13 +1,14 @@
-﻿using Greenhouse_Ressource_MVC.Dtos;
-using Greenhouse_Ressource_MVC.Interfaces;
-using Greenhouse_Ressource_MVC.ViewModel;
+using Greenhouse_Data_MVC.ViewModel;
+using Greenhouse_Data_MVC.Dtos;
+using Greenhouse_Data_MVC.Interfaces;
+using Greenhouse_Data_MVC.ViewModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using NuGet.Protocol;
+
 using System.Threading.Tasks;
 
-namespace Greenhouse_Ressource_MVC.Controllers
+namespace Greenhouse_Data_MVC.Controllers
 {
     public class FertilizerController : Controller
     {
@@ -47,7 +48,7 @@ namespace Greenhouse_Ressource_MVC.Controllers
                 return NotFound();
             }
 
-            var viewModel = new FertilizerDetailViewModel
+            var viewModel = new FertilizerViewModel
             {
                 Fertilizer = fertilizer,
                 Plant = plant
@@ -55,91 +56,6 @@ namespace Greenhouse_Ressource_MVC.Controllers
 
             _logger.LogInformation("User requested fertilizer with id : {FertilizerId}", id);
             return View(viewModel);
-        }
-
-        // GET: FertilizerController/Create
-        public async Task<IActionResult> Create()
-        {
-            await LoadPlantsAsync();
-            return View();
-        }
-
-        // POST: FertilizerController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(FertilizerWriteDto dto)
-        {
-            if (!ModelState.IsValid)
-            {
-                _logger.LogWarning("Invalid fertilizer creation attempt");
-                await LoadPlantsAsync();
-                return View(dto);
-            }
-
-            try
-            {
-               await _fertilizerServiceProxy.CreateAsync(dto);
-                _logger.LogInformation("Fertilizer created successfully");
-                return RedirectToAction("Index");
-            }
-            catch (HttpRequestException ex)
-            {
-                _logger.LogError(ex, "Error while creating fertilizer");
-
-                ModelState.AddModelError(string.Empty,"An error occurred while creating the fertilizer.");
-
-                await LoadPlantsAsync();
-                return View(dto);
-            }
-        }
-
-        // GET: FertilizerController/Edit/5
-        public async Task<IActionResult> Edit(int id)
-        {
-            var fertilizer = await _fertilizerServiceProxy.GetByIdAsync(id);
-            
-            if (fertilizer == null)
-            {
-                _logger.LogWarning("Unable to retrieve fertilizer with id {FertilizerId}", id);
-                return NotFound();
-            }
-            
-            var writeDto = new FertilizerWriteDto
-            {
-                Type = fertilizer.Type,
-                PlantId = fertilizer.PlantId
-            };
-
-            await LoadPlantsAsync();
-            return View(writeDto);
-        }
-
-        // POST: FertilizerController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, FertilizerWriteDto dto)
-        {
-            if (!ModelState.IsValid)
-            {
-                _logger.LogWarning("Invalid fertilizer modification attempt");
-                await LoadPlantsAsync();
-                return View(dto);
-            }
-            try
-            {
-                await _fertilizerServiceProxy.UpdateAsync(id,dto);
-                _logger.LogInformation("Fertilizer updated successfully");
-                return RedirectToAction("Index");
-            }
-            catch (HttpRequestException ex)
-            {
-                _logger.LogError(ex, "Error while updating fertilizer with id {FertilizerId}", id);
-
-                ModelState.AddModelError(string.Empty, "An error occurred while updating the fertilizer.");
-
-                await LoadPlantsAsync();
-                return View(dto);
-            }
         }
 
         // GET: FertilizerController/Delete/5
