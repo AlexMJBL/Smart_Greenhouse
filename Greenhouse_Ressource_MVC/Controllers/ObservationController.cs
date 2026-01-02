@@ -1,7 +1,9 @@
 using Greenhouse_Ressource_MVC.Dtos;
+using Greenhouse_Ressource_MVC.Enums;
 using Greenhouse_Ressource_MVC.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Threading.Tasks;
 
 namespace Greenhouse_Ressource_MVC.Controllers
@@ -43,6 +45,7 @@ namespace Greenhouse_Ressource_MVC.Controllers
         // GET: ObservationController/Create
         public async Task<IActionResult> Create()
         {
+            await LoadRatingTypes();
             await LoadPlantsAsync();
             return View();
         }
@@ -55,6 +58,7 @@ namespace Greenhouse_Ressource_MVC.Controllers
             if (!ModelState.IsValid)
             {
                 _logger.LogWarning("Invalid observation creation attempt");
+                await LoadRatingTypes();
                 await LoadPlantsAsync();
                 return View(dto);
             }
@@ -71,6 +75,7 @@ namespace Greenhouse_Ressource_MVC.Controllers
 
                 ModelState.AddModelError(string.Empty,"An error occurred while creating the observation.");
 
+                await LoadRatingTypes();
                 await LoadPlantsAsync();
                 return View(dto);
             }
@@ -87,8 +92,16 @@ namespace Greenhouse_Ressource_MVC.Controllers
                 return NotFound();
             }
 
+            var writeDto = new ObservationWriteDto
+            {
+                PlantId = observation.PlantId,
+                Rating = observation.Rating,
+                Comments = observation.Comments
+            };
+
+            await LoadRatingTypes();
             await LoadPlantsAsync();
-            return View(observation);
+            return View(writeDto);
         }
 
         // POST: ObservationController/Edit/5
@@ -114,6 +127,7 @@ namespace Greenhouse_Ressource_MVC.Controllers
 
                 ModelState.AddModelError(string.Empty, "An error occurred while updating the observation.");
 
+                await LoadRatingTypes();
                 await LoadPlantsAsync();
                 return View(dto);
             }
@@ -153,10 +167,28 @@ namespace Greenhouse_Ressource_MVC.Controllers
 
         }
 
+        
         private async Task LoadPlantsAsync()
         {
             var plants = await _plantServiceProxy.GetAllAsync();
-            ViewBag.Plants = plants;
+            ViewBag.Plants = plants.Select(c =>
+               new SelectListItem
+               {
+                   Value = c.Id.ToString(),
+                   Text = c.Description
+               });
+        }
+
+         private async Task LoadRatingTypes()
+        {
+            ViewBag.Rating = Enum.GetValues(typeof(ObservationRating))
+                .Cast<ObservationRating>()
+                .Select(e => new SelectListItem
+                {
+                    Value = ((int)e).ToString(),
+                    Text = e.ToString()
+                })
+                .ToList();
         }
     }
 }

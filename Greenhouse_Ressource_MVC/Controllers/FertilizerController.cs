@@ -2,6 +2,7 @@
 using Greenhouse_Ressource_MVC.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Threading.Tasks;
 
 namespace Greenhouse_Ressource_MVC.Controllers
@@ -86,9 +87,15 @@ namespace Greenhouse_Ressource_MVC.Controllers
                 _logger.LogWarning("Unable to retrieve fertilizer with id {FertilizerId}", id);
                 return NotFound();
             }
+            
+            var writeDto = new FertilizerWriteDto
+            {
+                Type = fertilizer.Type,
+                PlantId = fertilizer.PlantId
+            };
 
             await LoadPlantsAsync();
-            return View(fertilizer);
+            return View(writeDto);
         }
 
         // POST: FertilizerController/Edit/5
@@ -156,7 +163,12 @@ namespace Greenhouse_Ressource_MVC.Controllers
         private async Task LoadPlantsAsync()
         {
             var plants = await _plantServiceProxy.GetAllAsync();
-            ViewBag.Plants = plants;
+            ViewBag.Plants = plants.Select(c =>
+               new SelectListItem
+               {
+                   Value = c.Id.ToString(),
+                   Text = c.Description
+               });
         }
     }
 }

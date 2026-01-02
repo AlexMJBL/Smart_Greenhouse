@@ -5,7 +5,7 @@ namespace Greenhouse_Ressource_MVC.Dtos
         public class FertilizerDto
         {
             public int Id { get; set; }
-            public string Type { get; set; } = null!;
+            public string Type { get; set; }
             public int PlantId { get; set; }
             public DateTime CreatedAt { get; set; }
         }
@@ -13,7 +13,7 @@ namespace Greenhouse_Ressource_MVC.Dtos
         {
             [Required]
             [StringLength(50)]
-            public string Type { get; set; } = null!;
+            public string Type { get; set; } 
             [Required]
             [Range(1, int.MaxValue)]
             public int PlantId { get; set; }
