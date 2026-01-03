@@ -1,5 +1,6 @@
 using Greenhouse_Data_MVC.Dtos;
 using Greenhouse_Data_MVC.Interfaces;
+using Greenhouse_Data_MVC.Services;
 using Greenhouse_Data_MVC.ViewModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,12 +12,15 @@ namespace Greenhouse_Data_MVC.Controllers
     {
         private readonly IZoneSensorAlertServiceProxy _zoneSensorAlertServiceProxy;
         private readonly ISensorServiceProxy _sensorServiceProxy;
+        private readonly IZoneServiceProxy _zoneServiceProxy;
         private readonly ILogger<ZoneSensorAlertController> _logger;
 
-        public ZoneSensorAlertController(IZoneSensorAlertServiceProxy zoneSensorAlertServiceProxy,ISensorServiceProxy sensorServiceProxy ,ILogger<ZoneSensorAlertController> logger)
+        public ZoneSensorAlertController(IZoneSensorAlertServiceProxy zoneSensorAlertServiceProxy,ISensorServiceProxy sensorServiceProxy,
+        IZoneServiceProxy zoneServiceProxy,ILogger<ZoneSensorAlertController> logger)
         {
             _zoneSensorAlertServiceProxy = zoneSensorAlertServiceProxy;
             _sensorServiceProxy = sensorServiceProxy;
+            _zoneServiceProxy = zoneServiceProxy;
             _logger = logger;
         }
 
@@ -41,14 +45,22 @@ namespace Greenhouse_Data_MVC.Controllers
              var sensor = await _sensorServiceProxy.GetByIdAsync(zoneSensorAlert.SensorId);
             if( sensor == null)
              {
-                _logger.LogWarning("Unable to retrieve zone with id {SensorId}", zoneSensorAlert.SensorId);
+                _logger.LogWarning("Unable to retrieve sensor attached to zoneSensorAlert with id {zoneSensorAlertId}", id);
+                return NotFound();
+            }
+
+            var zone = await _zoneServiceProxy.GetByIdAsync(sensor.ZoneId);
+            if( zone == null)
+             {
+                _logger.LogWarning("Unable to retrieve zone attached to zoneSensorAlert with id {zoneSensorAlertId}", id);
                 return NotFound();
             }
 
             var vm = new ZoneSensorAlertViewModel
             {
                 ZoneSensorAlert = zoneSensorAlert,
-                Sensor = sensor
+                Sensor = sensor,
+                Zone = zone
             };
             
             _logger.LogInformation("User requested zoneSensorAlert with id : {zoneSensorAlertId}", id);

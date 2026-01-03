@@ -7,5 +7,7 @@ namespace Greenhouse_Data_MVC.ViewModel
     {
         public ZoneRecordDto ZoneRecord { get; set; }
         public ZoneDto Zone { get; set; }
+
+        public SensorDto Sensor {get;set;}
     }
 }
