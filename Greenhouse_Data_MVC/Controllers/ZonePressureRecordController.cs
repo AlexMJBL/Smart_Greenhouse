@@ -41,7 +41,7 @@ namespace Greenhouse_Data_MVC.Controllers
              var zone = await _zoneServiceProxy.GetByIdAsync(zonePressureRecord.ZoneId);
             if( zone == null)
              {
-                _logger.LogWarning("Unable to retrieve zone with id {ZoneId}", zonePressureRecord.ZoneId);
+                _logger.LogWarning("Unable to retrieve zone attached to zonePressureRecord with id {zonePressureRecordId}", id);
                 return NotFound();
             }
 

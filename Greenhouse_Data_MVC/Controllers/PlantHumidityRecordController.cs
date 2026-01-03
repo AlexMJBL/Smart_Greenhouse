@@ -41,7 +41,7 @@ namespace Greenhouse_Data_MVC.Controllers
              var plant = await _plantServiceProxy.GetByIdAsync(plantHumidityRecord.PlantId);
             if( plant == null)
              {
-                _logger.LogWarning("Unable to retrieve plant with id {PlantId}", plantHumidityRecord.PlantId);
+                _logger.LogWarning("Unable to retrieve plant attached to plantHumidityRecord with id {plantHumidityRecordId}", id);
                 return NotFound();
             }
 

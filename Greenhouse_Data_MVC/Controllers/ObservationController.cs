@@ -40,7 +40,7 @@ namespace Greenhouse_Data_MVC.Controllers
 
             if( plant == null)
              {
-                _logger.LogWarning("Unable to retrieve plant with id {PlantId}", observation.PlantId);
+                _logger.LogWarning("Unable to retrieve plant attached to observation with id {ObservationId}", id);
                 return NotFound();
             }
 

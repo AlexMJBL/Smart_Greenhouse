@@ -41,7 +41,7 @@ namespace Greenhouse_Data_MVC.Controllers
              var plant = await _plantServiceProxy.GetByIdAsync(plantSensorAlert.PlantId);
             if( plant == null)
              {
-                _logger.LogWarning("Unable to retrieve plant with id {PlantId}", plantSensorAlert.PlantId);
+                _logger.LogWarning("Unable to retrieve plant  attached to plantSensorAlert with id {plantSensorAlertId}", id);
                 return NotFound();
             }
 
