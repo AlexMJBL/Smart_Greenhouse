@@ -1,4 +1,4 @@
-﻿@model Greenhouse_Ressource_MVC.Dtos.ZoneDto
+﻿@model Greenhouse_Ressource_MVC.ViewModel.ZoneDetailViewModel
 
 @{
     ViewData["Title"] = "View";
@@ -6,37 +6,105 @@
 
 <h1>View</h1>
 
-<div>
-    <h4>Zone</h4>
+  <div>
+  <h4>Zone</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Id)
+            @Html.DisplayNameFor(model => model.Zone.Id)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Id)
+            @Html.DisplayFor(model => model.Zone.Id)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.DisplayNameFor(model => model.Zone.Description)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
+            @Html.DisplayFor(model => model.Zone.Description)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ZoneCategoryId)
+            @Html.DisplayNameFor(model => model.Zone.CreatedAt)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ZoneCategoryId)
+            @Html.DisplayFor(model => model.Zone.CreatedAt)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CreatedAt)
+    </dl>
+</div>
+
+
+<div>
+    <h4>Zone Category</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ZoneCategory.Id)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CreatedAt)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ZoneCategory.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ZoneCategory.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ZoneCategory.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ZoneCategory.HumidityMinPct)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ZoneCategory.HumidityMinPct)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ZoneCategory.HumidityMaxPct)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ZoneCategory.HumidityMaxPct)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ZoneCategory.LuminosityMinLux)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ZoneCategory.LuminosityMinLux)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ZoneCategory.LuminosityMaxLux)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ZoneCategory.LuminosityMaxLux)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ZoneCategory.TemperatureMinC)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ZoneCategory.TemperatureMinC)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ZoneCategory.TemperatureMaxC)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ZoneCategory.TemperatureMaxC)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ZoneCategory.PressureMinPa)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ZoneCategory.PressureMinPa)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ZoneCategory.PressureMaxPa)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ZoneCategory.PressureMaxPa)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ZoneCategory.CreatedAt)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ZoneCategory.CreatedAt)
         </dd>
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Zone.Id }) |
     <a asp-action="Index">Back to List</a>
 </div>

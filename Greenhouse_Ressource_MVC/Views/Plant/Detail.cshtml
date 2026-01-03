@@ -1,4 +1,5 @@
-﻿@model Greenhouse_Ressource_MVC.Dtos.PlantDto
+﻿@model Greenhouse_Ressource_MVC.ViewModel.PlantDetailViewModel;
+
 
 @{
     ViewData["Title"] = "Detail";
@@ -11,50 +12,112 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Id)
+            @Html.DisplayNameFor(model => model.Plant.Id)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Id)
+            @Html.DisplayFor(model => model.Plant.Id)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SpecimenId)
+            @Html.DisplayNameFor(model => model.Plant.Description)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SpecimenId)
+            @Html.DisplayFor(model => model.Plant.Description)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ZoneId)
+            @Html.DisplayNameFor(model => model.Plant.IsActive)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ZoneId)
+            @Html.DisplayFor(model => model.Plant.IsActive)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MomId)
+            @Html.DisplayNameFor(model => model.Plant.CreatedAt)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MomId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsActive)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsActive)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CreatedAt)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CreatedAt)
+            @Html.DisplayFor(model => model.Plant.CreatedAt)
         </dd>
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    <h4>Specimen</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Specimen.Id)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Specimen.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Specimen.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Specimen.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Specimen.CreatedAt)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Specimen.CreatedAt)
+        </dd>
+    </dl>
+</div>
+
+<div>
+    <h4>Zone</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Zone.Id)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Zone.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Zone.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Zone.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Zone.CreatedAt)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Zone.CreatedAt)
+        </dd>
+    </dl>
+</div>
+
+@if (Model.momPlant != null)
+{
+    <div>
+        <h4>Plante mère</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.momPlant.Id)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.momPlant.Id)
+            </dd>
+
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.momPlant.Description)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.momPlant.Description)
+            </dd>
+
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.momPlant.IsActive)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.momPlant.IsActive)
+            </dd>
+        </dl>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Plant.Id }) |
     <a asp-action="Index">Back to List</a>
 </div>

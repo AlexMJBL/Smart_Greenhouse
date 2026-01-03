@@ -1,43 +1,39 @@
-﻿@model Greenhouse_Ressource_MVC.ViewModel.WateringDetailViewModel;
+﻿
+@model Greenhouse_Data_MVC.ViewModel.ObservationViewModel;
+
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detail";
 }
 
-<h1>Details</h1>
+<h1>Detail</h1>
 
 <div>
-    <h4>Watering</h4>
+    <h4>ObservationDto</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Watering.Id)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Observation.Id)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Watering.Id)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Observation.Id)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Watering.HumPctBefore)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Observation.Rating)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Watering.HumPctBefore)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Observation.Rating)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Watering.HumPctAfter)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Observation.Comments)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Watering.HumPctAfter)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Observation.Comments)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Watering.WaterQuantityMl)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Observation.CreatedAt)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Watering.WaterQuantityMl)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Watering.CreatedAt)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Watering.CreatedAt)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Observation.CreatedAt)
         </dd>
     </dl>
 </div>
@@ -78,6 +74,6 @@
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Watering.Id }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Observation.Id }) |
     <a asp-action="Index">Back to List</a>
 </div>

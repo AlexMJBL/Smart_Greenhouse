@@ -1,10 +1,10 @@
-@model IEnumerable<Greenhouse_Data_MVC.Dtos.FertilizerDto>
+﻿@model IEnumerable<Greenhouse_Data_MVC.Dtos.ZoneSensorAlertDto>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>List of fertilizers</h1>
+<h1>Index</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -16,10 +16,13 @@
                 @Html.DisplayNameFor(model => model.Id)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Type)
+                @Html.DisplayNameFor(model => model.SensorId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PlantId)
+                @Html.DisplayNameFor(model => model.Reason)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SensorType)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.CreatedAt)
@@ -34,16 +37,19 @@
                 @Html.DisplayFor(modelItem => item.Id)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Type)
+                @Html.DisplayFor(modelItem => item.SensorId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PlantId)
+                @Html.DisplayFor(modelItem => item.Reason)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SensorType)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CreatedAt)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
                     @Html.ActionLink("Details", "Details", new { id = item.Id }) |
                     @Html.ActionLink("Delete", "Delete", new { id = item.Id })
             </td>
