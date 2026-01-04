@@ -57,11 +57,25 @@ namespace Greenhouse_Ressource_MVC.Controllers
                 return NotFound();
             }
 
+            PlantDto? momPlant = null;
+
+            if (plant.MomId != null)
+            {
+                momPlant = await _plantServiceProxy.GetByIdAsync(plant.MomId.Value);
+
+                if (momPlant == null)
+                {
+                    _logger.LogWarning("Unable to retrieve mom plant attached to plant with id {plantId}", id);
+                    return NotFound();
+                }
+            }
+
             var viewModel = new PlantDetailViewModel
             {
                 Plant = plant,
                 Specimen = specimen,
-                Zone = zone
+                Zone = zone,
+                MomPlant = momPlant
             };
 
             _logger.LogInformation("User requested plant with id : {plantId}", id);
@@ -228,7 +242,7 @@ namespace Greenhouse_Ressource_MVC.Controllers
         {
             var categories = await _zoneServiceProxy.GetAllAsync();
 
-            ViewBag.SoilHumidityCategories = categories.Select(c =>
+            ViewBag.Zones = categories.Select(c =>
                new SelectListItem
                {
                    Value = c.Id.ToString(),

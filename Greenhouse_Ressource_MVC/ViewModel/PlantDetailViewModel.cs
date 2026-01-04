@@ -8,6 +8,6 @@ namespace Greenhouse_Ressource_MVC.ViewModel
         public PlantDto Plant { get; set; }
         public SpecimenDto Specimen{ get; set; }
         public ZoneDto Zone {get;set;}
-        public PlantDto? momPlant { get; set; }
+        public PlantDto? MomPlant { get; set; }
     }
 }

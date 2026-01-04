@@ -196,7 +196,7 @@ namespace Greenhouse_Ressource_MVC.Controllers
 
         private async Task LoadRatingTypes()
         {
-            ViewBag.Rating = Enum.GetValues(typeof(ObservationRating))
+            ViewBag.RatingS = Enum.GetValues(typeof(ObservationRating))
                 .Cast<ObservationRating>()
                 .Select(e => new SelectListItem
                 {

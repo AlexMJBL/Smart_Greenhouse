@@ -2,10 +2,10 @@
 
 
 @{
-    ViewData["Title"] = "Detail";
+    ViewData["Title"] = "Details";
 }
 
-<h1>Detail</h1>
+<h1>Details</h1>
 
 <div>
     <h4>Plant</h4>
@@ -87,31 +87,31 @@
     </dl>
 </div>
 
-@if (Model.momPlant != null)
+@if (Model.MomPlant != null)
 {
     <div>
         <h4>Plante mère</h4>
         <hr />
         <dl class="row">
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.momPlant.Id)
+                @Html.DisplayNameFor(model => model.MomPlant.Id)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.momPlant.Id)
+                @Html.DisplayFor(model => model.MomPlant.Id)
             </dd>
 
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.momPlant.Description)
+                @Html.DisplayNameFor(model => model.MomPlant.Description)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.momPlant.Description)
+                @Html.DisplayFor(model => model.MomPlant.Description)
             </dd>
 
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.momPlant.IsActive)
+                @Html.DisplayNameFor(model => model.MomPlant.IsActive)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.momPlant.IsActive)
+                @Html.DisplayFor(model => model.MomPlant.IsActive)
             </dd>
         </dl>
     </div>
