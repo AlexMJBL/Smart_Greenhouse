@@ -52,7 +52,7 @@ namespace Greenhouse_Data_MVC.Controllers
             };
             
             _logger.LogInformation("User requested plantSensorAlert with id : {plantSensorAlertId}", id);
-            return View(plantSensorAlert);
+            return View(vm);
         }
 
         // GET: PlantSensorAlertController/Delete/5

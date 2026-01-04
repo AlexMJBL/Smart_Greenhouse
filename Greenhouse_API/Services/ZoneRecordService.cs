@@ -71,24 +71,24 @@ namespace Greenhouse_API.Services
 
         public async Task<ZoneRecordDto> CreateAsync(ZoneRecordWriteDto dto)
         {
-            var zone = await _zoneService.GetByIdAsync(dto.ZoneId);
-            if (zone == null)
+            var sensor = await _sensorService.GetByIdAsync(dto.SensorId);
+            if (sensor == null)
             {
-                _logger.LogWarning("Zone with ID: {ZoneId} not found for zone recordcreation", dto.ZoneId);
+                _logger.LogWarning("Sensor with ID: {SensorId} not found for pressure record creation", dto.SensorId);
                 throw new NotFoundException("Zone not found");
             }
 
-            var sensor = await _sensorService.GetByIdAsync(dto.SensorId);
-            if (sensor == null || sensor.ZoneId != dto.ZoneId)
+            var zone = await _zoneService.GetByIdAsync(sensor.ZoneId);
+            if (zone == null)
             {
-                _logger.LogWarning("Sensor with ID: {SensorId} not found in Zone ID: {ZoneId} for zone record creation", dto.SensorId, dto.ZoneId);
-                throw new NotFoundException("Sensor not found in the specified zone");
+                _logger.LogWarning("Zone with ID: {ZoneId} not found for pressure record creation", sensor.ZoneId);
+                throw new NotFoundException("Zone not found");
             }
 
             var zoneRecord = new ZoneRecord
             {
                 Record = dto.Record,
-                ZoneId = dto.ZoneId,
+                ZoneId = sensor.ZoneId,
                 SensorId = dto.SensorId,
                 Type = dto.Type,
                 CreatedAt = DateTime.UtcNow

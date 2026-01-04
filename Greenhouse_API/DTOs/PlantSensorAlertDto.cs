@@ -26,7 +26,7 @@ namespace Greenhouse_API.DTOs
         /// <summary>
         /// Type of sensor that triggered the alert
         /// </summary>
-        public SensorType SensorType { get; set; }
+        public string SensorType { get; set; }
 
         /// <summary>
         /// Date and time when the alert was created
@@ -58,6 +58,6 @@ namespace Greenhouse_API.DTOs
         /// </summary>
         [Required]
         [EnumDataType(typeof(SensorType))]
-        public SensorType SensorType { get; set; }
+        public string SensorType { get; set; }
     }
 }

@@ -52,7 +52,7 @@ namespace Greenhouse_Data_MVC.Controllers
             };
             
             _logger.LogInformation("User requested zoneRecord with id : {zoneRecordId}", id);
-            return View(zoneRecord);
+            return View(vm);
         }
 
         // GET: ZoneRecordController/Delete/5

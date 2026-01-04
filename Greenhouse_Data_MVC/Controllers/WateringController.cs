@@ -56,7 +56,42 @@ namespace Greenhouse_Data_MVC.Controllers
 
             _logger.LogInformation("User requested watering with id : {wateringId}", id);
             return View(viewModel);
-        } 
+        }
+
+
+        // GET: WateringController/Delete/5
+        public async Task<IActionResult> Delete(int id)
+        {
+            var watering = await _wateringServiceProxy.GetByIdAsync(id);
+
+            if (watering == null)
+            {
+                _logger.LogWarning("Unable to retrieve watering with id {WateringId}", id);
+
+                return NotFound();
+            }
+
+            return View(watering);
+        }
+
+        // POST: WateringController/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            try
+            {
+                await _wateringServiceProxy.DeleteAsync(id);
+                _logger.LogInformation("Watering with id {WateringId} deleted successfully", id);
+                return RedirectToAction("Index");
+            }
+            catch (HttpRequestException ex)
+            {
+                _logger.LogError(ex, "Error while deleting watering with id {WateringId}", id);
+                return Problem("An error occurred while deleting the watering.");
+            }
+
+        }
         private async Task LoadPlantsAsync()
         {
             var plants = await _plantServiceProxy.GetAllAsync();

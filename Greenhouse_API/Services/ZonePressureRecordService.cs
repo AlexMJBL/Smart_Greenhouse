@@ -12,10 +12,15 @@ namespace Greenhouse_API.Services
     {
         private IRepository<ZonePressureRecord> _repository;
         private readonly ILogger<ZonePressureRecordService> _logger;
-        public ZonePressureRecordService(IRepository<ZonePressureRecord> repository, ILogger<ZonePressureRecordService> logger)
+        private readonly IZoneService _zoneService;
+        private readonly ISensorService _sensorService;
+        public ZonePressureRecordService(IRepository<ZonePressureRecord> repository,IZoneService zoneService ,
+            ISensorService sensorService, ILogger<ZonePressureRecordService> logger)
         {
             _repository = repository;
             _logger = logger;
+            _zoneService = zoneService;
+            _sensorService = sensorService;
         }
 
         public async Task<IEnumerable<ZonePressureRecordDto>> GetAllAsync()
@@ -54,7 +59,14 @@ namespace Greenhouse_API.Services
 
         public async Task<ZonePressureRecordDto> CreateAsync(ZonePressureRecordWriteDto dto)
         {
-            var zone = await _repository.GetByIdAsync(dto.ZoneId);
+            var sensor = await _sensorService.GetByIdAsync(dto.SensorId);
+            if (sensor == null)
+            {
+                _logger.LogWarning("Sensor with ID: {SensorId} not found for pressure record creation", dto.SensorId);
+                throw new NotFoundException("Zone not found");
+            }
+
+            var zone = await _zoneService.GetByIdAsync(sensor.ZoneId);
             if (zone == null)
             {
                 _logger.LogWarning("Zone with ID: {ZoneId} not found for pressure record creation", dto.ZoneId);
@@ -64,7 +76,7 @@ namespace Greenhouse_API.Services
             var record = new ZonePressureRecord
             {
                 RecordedHPa = dto.RecordedHPa,
-                ZoneId = dto.ZoneId,
+                ZoneId = sensor.ZoneId,
                 SensorId = dto.SensorId,
                 CreatedAt = DateTime.UtcNow
             };
@@ -95,6 +107,13 @@ namespace Greenhouse_API.Services
             if (zone == null)
             {
                 _logger.LogWarning("Zone with ID: {ZoneId} not found for pressure record update", dto.ZoneId);
+                throw new NotFoundException("Zone not found");
+            }
+
+            var sensor = await _sensorService.GetByIdAsync(dto.SensorId);
+            if (sensor == null)
+            {
+                _logger.LogWarning("Sensor with ID: {SensorId} not found for pressure record creation", dto.SensorId);
                 throw new NotFoundException("Zone not found");
             }
 

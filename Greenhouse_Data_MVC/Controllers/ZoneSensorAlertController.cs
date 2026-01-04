@@ -64,7 +64,7 @@ namespace Greenhouse_Data_MVC.Controllers
             };
             
             _logger.LogInformation("User requested zoneSensorAlert with id : {zoneSensorAlertId}", id);
-            return View(zoneSensorAlert);
+            return View(vm);
         }
 
         // GET: ZoneSensorAlertController/Delete/5

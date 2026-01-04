@@ -33,7 +33,7 @@ namespace Greenhouse_API.Services
             {
                 PlantId = alert.PlantId,
                 Reason = alert.Reason,
-                SensorType = alert.SensorType,
+                SensorType = "Soil Humidity",
                 CreatedAt = DateTime.UtcNow
             };
 

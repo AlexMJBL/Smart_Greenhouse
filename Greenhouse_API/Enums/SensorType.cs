@@ -3,7 +3,6 @@
     public enum SensorType
     {
         light,
-        soil_moisture,
         temperature,
         humidity,
         pressure

@@ -52,7 +52,7 @@ namespace Greenhouse_Data_MVC.Controllers
             };
             
             _logger.LogInformation("User requested zonePressureRecord with id : {zonePressureRecordId}", id);
-            return View(zonePressureRecord);
+            return View(vm);
         }
 
         // GET: ZonePressureRecordController/Delete/5

@@ -6,7 +6,7 @@ namespace Greenhouse_Data_MVC.Services
     public class ZoneRecordServiceProxy : ServiceProxy<ZoneRecordDto> , IZoneRecordServiceProxy
     {
         public ZoneRecordServiceProxy(IHttpClientFactory httpClientFactory, IConfiguration config)
-        : base (httpClientFactory, config, "/zoneRecords")
+        : base (httpClientFactory, config, "zoneRecords")
         { 
         }
     }

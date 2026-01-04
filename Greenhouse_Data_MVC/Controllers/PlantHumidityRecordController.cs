@@ -38,7 +38,7 @@ namespace Greenhouse_Data_MVC.Controllers
                 return NotFound();
             }
 
-             var plant = await _plantServiceProxy.GetByIdAsync(plantHumidityRecord.PlantId);
+            var plant = await _plantServiceProxy.GetByIdAsync(plantHumidityRecord.PlantId);
             if( plant == null)
              {
                 _logger.LogWarning("Unable to retrieve plant attached to plantHumidityRecord with id {plantHumidityRecordId}", id);
@@ -52,7 +52,7 @@ namespace Greenhouse_Data_MVC.Controllers
             };
             
             _logger.LogInformation("User requested plantHumidityRecord with id : {plantHumidityRecordId}", id);
-            return View(plantHumidityRecord);
+            return View(vm);
         }
 
         // GET: PlantHumidityRecordController/Delete/5

@@ -57,19 +57,6 @@ namespace Greenhouse_API.DTOs
         public float Record { get; set; }
 
         /// <summary>
-        /// Indicates whether the recorded value is within the acceptable range
-        /// </summary>
-        [Required]
-        public bool InRange { get; set; }
-
-        /// <summary>
-        /// Identifier of the zone where the record was taken
-        /// </summary>
-        [Required]
-        [Range(1, int.MaxValue)]
-        public int ZoneId { get; set; }
-
-        /// <summary>
         /// Identifier of the sensor that recorded the value
         /// </summary>
         [Required]
