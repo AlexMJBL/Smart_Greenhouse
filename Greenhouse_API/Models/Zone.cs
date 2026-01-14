@@ -19,7 +19,7 @@ public partial class Zone
 
     public virtual ICollection<ZoneSensorAlert> ZoneAlerts { get; set; } = new List<ZoneSensorAlert>();
 
-    public virtual ZoneCategory ZoneCategory { get; set; } = null!;
+    public virtual ZoneCategory? ZoneCategory { get; set; } = null!;
 
     public virtual ICollection<ZonePressureRecord> ZonePressureRecords { get; set; } = new List<ZonePressureRecord>();
 
