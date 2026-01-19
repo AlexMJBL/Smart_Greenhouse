@@ -17,10 +17,6 @@ builder.Services.AddDbContext<GreenHouseDbContext>(options =>
    options.UseNpgsql(
         builder.Configuration.GetConnectionString("DefaultConnection")));
 
-Console.WriteLine(
-    $"CS = {builder.Configuration.GetConnectionString("DefaultConnection")}"
-);
-
 builder.Services.AddControllers();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -47,6 +43,10 @@ var app = builder.Build();
     app.UseSwagger();
     app.UseSwaggerUI();
 
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+}
 
 app.UseExceptionHandler(errorApp =>
 {
