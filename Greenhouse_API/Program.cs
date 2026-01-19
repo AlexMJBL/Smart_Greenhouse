@@ -1,4 +1,4 @@
-using Greenhouse_API.Data;
+﻿using Greenhouse_API.Data;
 using Greenhouse_API.Exceptions;
 using Greenhouse_API.Extensions;
 using Greenhouse_API.Interfaces;
@@ -23,9 +23,10 @@ builder.Services.AddDbContext<GreenHouseDbContext>(options =>
     if (string.IsNullOrWhiteSpace(cs))
         throw new Exception("Connection string is NULL or EMPTY");
 
+    Console.WriteLine("🔥 DB CONNECTION STRING = " + cs);
+
     options.UseNpgsql(cs);
 });
-Console.WriteLine("CS = " + builder.Configuration["ConnectionStrings:DefaultConnection"]);
 
 builder.Services.AddControllers();
 
