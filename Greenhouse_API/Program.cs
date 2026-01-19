@@ -23,6 +23,14 @@ builder.Services.AddDbContext<GreenHouseDbContext>(options =>
     options.UseNpgsql(cs);
 });
 
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<GreenHouseDbContext>();
+    db.Database.Migrate();
+}
+
+Console.WriteLine("Connection string: " + builder.Configuration.GetConnectionString("DefaultConnection"));
+
 builder.Services.AddControllers();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
