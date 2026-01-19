@@ -37,5 +37,25 @@ namespace Greenhouse_API.Data
         public virtual DbSet<ZonePressureRecord> ZonePressureRecords { get; set; }
 
         public virtual DbSet<ZoneRecord> ZoneRecords { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<ZoneCategory>().ToTable("ZoneCategories");
+            modelBuilder.Entity<Plant>().ToTable("Plants");
+            modelBuilder.Entity<Sensor>().ToTable("Sensors");
+            modelBuilder.Entity<Fertilizer>().ToTable("Fertilizers");
+            modelBuilder.Entity<Observation>().ToTable("Observations");
+            modelBuilder.Entity<Specimen>().ToTable("Specimens");
+            modelBuilder.Entity<Watering>().ToTable("Waterings");
+            modelBuilder.Entity<Zone>().ToTable("Zones");
+            modelBuilder.Entity<ZoneRecord>().ToTable("ZoneRecords");
+            modelBuilder.Entity<ZoneAlert>().ToTable("ZoneAlerts");
+            modelBuilder.Entity<ZonePressureRecord>().ToTable("ZonePressureRecords");
+            modelBuilder.Entity<PlantAlert>().ToTable("PlantAlerts");
+            modelBuilder.Entity<PlantHumidityRecord>().ToTable("PlantHumidityRecords");
+            modelBuilder.Entity<SoilHumidityCategory>().ToTable("SoilHumidityCategories");
+        }
     }
 }
