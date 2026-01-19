@@ -11,16 +11,18 @@ using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Configuration.AddEnvironmentVariables();
 
-//builder.Services.AddDbContext<GreenHouseDbContext>(options =>
-//options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 builder.Services.AddDbContext<GreenHouseDbContext>(options =>
    options.UseNpgsql(
         builder.Configuration.GetConnectionString("DefaultConnection")));
 
+Console.WriteLine(
+    $"CS = {builder.Configuration.GetConnectionString("DefaultConnection")}"
+);
+
 builder.Services.AddControllers();
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
