@@ -51,9 +51,9 @@ namespace Greenhouse_API.Data
             modelBuilder.Entity<Watering>().ToTable("Waterings");
             modelBuilder.Entity<Zone>().ToTable("Zones");
             modelBuilder.Entity<ZoneRecord>().ToTable("ZoneRecords");
-            modelBuilder.Entity<ZoneAlert>().ToTable("ZoneAlerts");
+            modelBuilder.Entity<ZoneSensorAlert>().ToTable("ZoneSensorAlerts");
             modelBuilder.Entity<ZonePressureRecord>().ToTable("ZonePressureRecords");
-            modelBuilder.Entity<PlantAlert>().ToTable("PlantAlerts");
+            modelBuilder.Entity<PlantSensorAlert>().ToTable("PlantSensorAlerts");
             modelBuilder.Entity<PlantHumidityRecord>().ToTable("PlantHumidityRecords");
             modelBuilder.Entity<SoilHumidityCategory>().ToTable("SoilHumidityCategories");
         }
