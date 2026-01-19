@@ -94,7 +94,7 @@ Resource configurations
 
 🗄️ Database & Deployment
 
-All data is stored in a MariaDB database running on a Raspberry Pi 3B+, acting as a lightweight and energy-efficient local server.
+All data is stored in a PostgreSQL database running on a Raspberry Pi 3B+, acting as a lightweight and energy-efficient local server.
 The API is the only component allowed to directly access the database, ensuring data integrity and security.
 
 
