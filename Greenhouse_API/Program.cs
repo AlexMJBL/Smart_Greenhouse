@@ -14,8 +14,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddEnvironmentVariables();
 
 builder.Services.AddDbContext<GreenHouseDbContext>(options =>
-   options.UseNpgsql(
-        builder.Configuration.GetConnectionString("DefaultConnection")));
+{
+    var cs = builder.Configuration["ConnectionStrings:DefaultConnection"];
+
+    if (string.IsNullOrWhiteSpace(cs))
+        throw new Exception("Connection string is NULL or EMPTY");
+
+    options.UseNpgsql(cs);
+});
 
 builder.Services.AddControllers();
 
