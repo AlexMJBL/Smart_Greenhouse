@@ -22,6 +22,7 @@ builder.Services.AddDbContext<GreenHouseDbContext>(options =>
 
     options.UseNpgsql(cs);
 });
+Console.WriteLine("CS = " + builder.Configuration["ConnectionStrings:DefaultConnection"]);
 
 builder.Services.AddControllers();
 
@@ -48,7 +49,7 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 
 app.UseSwagger();
-    app.UseSwaggerUI();
+app.UseSwaggerUI();
 
 if (app.Environment.IsDevelopment())
 {
