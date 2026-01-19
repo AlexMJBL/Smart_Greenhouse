@@ -23,12 +23,6 @@ builder.Services.AddDbContext<GreenHouseDbContext>(options =>
     options.UseNpgsql(cs);
 });
 
-using (var scope = app.Services.CreateScope())
-{
-    var db = scope.ServiceProvider.GetRequiredService<GreenHouseDbContext>();
-    db.Database.Migrate();
-}
-
 Console.WriteLine("Connection string: " + builder.Configuration.GetConnectionString("DefaultConnection"));
 
 builder.Services.AddControllers();
@@ -52,9 +46,16 @@ builder.Services.AddApplicationServices();
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<GreenHouseDbContext>();
+    db.Database.Migrate();
+}
+
+
 // Configure the HTTP request pipeline.
 
-    app.UseSwagger();
+app.UseSwagger();
     app.UseSwaggerUI();
 
 if (app.Environment.IsDevelopment())
