@@ -3,6 +3,7 @@ using System;
 using Greenhouse_API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Greenhouse_API.Migrations
 {
     [DbContext(typeof(GreenHouseDbContext))]
-    partial class GreenHouseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260225145338_AddPlantSensor")]
+    partial class AddPlantSensor
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -140,31 +143,6 @@ namespace Greenhouse_API.Migrations
                     b.HasIndex("PlantId");
 
                     b.ToTable("PlantHumidityRecords", (string)null);
-                });
-
-            modelBuilder.Entity("Greenhouse_API.Models.PlantSensor", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("PlantId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PlantId");
-
-                    b.ToTable("PlantSensors");
                 });
 
             modelBuilder.Entity("Greenhouse_API.Models.PlantSensorAlert", b =>
@@ -528,17 +506,6 @@ namespace Greenhouse_API.Migrations
                 {
                     b.HasOne("Greenhouse_API.Models.Plant", "Plant")
                         .WithMany("PlantHumidityRecords")
-                        .HasForeignKey("PlantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Plant");
-                });
-
-            modelBuilder.Entity("Greenhouse_API.Models.PlantSensor", b =>
-                {
-                    b.HasOne("Greenhouse_API.Models.Plant", "Plant")
-                        .WithMany()
                         .HasForeignKey("PlantId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

@@ -32,6 +32,7 @@ namespace Greenhouse_API.Extensions
             services.AddScoped<ISoilHumidityCategoryService, SoilHumidityCategoryService>();
 
             services.AddScoped<ISensorService, SensorService>();
+            services.AddScoped<IPlantSensorService, PlantSensorService>();
 
             services.AddScoped<IZoneService, ZoneService>();
             services.AddScoped<IZoneRecordService, ZoneRecordService>();

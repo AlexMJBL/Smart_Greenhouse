@@ -37,6 +37,7 @@ namespace Greenhouse_API.Data
         public virtual DbSet<ZonePressureRecord> ZonePressureRecords { get; set; }
 
         public virtual DbSet<ZoneRecord> ZoneRecords { get; set; }
+        public DbSet<PlantSensor> PlantSensors { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
