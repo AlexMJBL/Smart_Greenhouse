@@ -1,110 +1,122 @@
 ﻿@model Greenhouse_Data_MVC.ViewModel.ZonePressureRecordViewModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Zone Pressure Record Details";
 }
 
-<h1>Details</h1>
+<div class="container mt-4">
 
-<div>
-    <h4>Zone Pressure Record</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ZonePressureRecord.Id)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ZonePressureRecord.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ZonePressureRecord.RecordedHPa)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ZonePressureRecord.RecordedHPa)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ZonePressureRecord.CreatedAt)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ZonePressureRecord.CreatedAt)
-        </dd>
-    </dl>
-</div>
+    <div class="card shadow-sm border-0">
 
-<div>
-  <h4>Zone</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Zone.Id)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Zone.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Zone.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Zone.Description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Zone.CreatedAt)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Zone.CreatedAt)
-        </dd>
-    </dl>
-</div>
+        <div class="card-body">
 
-<div>
-    <h4>Sensor</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Sensor.Id)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Sensor.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Sensor.SensorCode)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Sensor.SensorCode)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Sensor.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Sensor.Description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Sensor.Type)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Sensor.Type)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Sensor.LastSeen)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Sensor.LastSeen)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Sensor.IsActive)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Sensor.IsActive)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Sensor.CreatedAt)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Sensor.CreatedAt)
-        </dd>
-    </dl>
-</div>
+            <h3 class="mb-4">📊 Zone Pressure Record Details</h3>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+            <!-- PRESSURE RECORD -->
+            <h5 class="text-primary">Pressure Record</h5>
+            <hr />
+
+            <dl class="row mb-4">
+
+                <dt class="col-sm-3">Id</dt>
+                <dd class="col-sm-9">@Model.ZonePressureRecord.Id</dd>
+
+                <dt class="col-sm-3">Pressure</dt>
+                <dd class="col-sm-9">
+                    <span class="badge bg-info text-dark">
+                        @Model.ZonePressureRecord.RecordedHPa hPa
+                    </span>
+                </dd>
+
+                <dt class="col-sm-3">Created</dt>
+                <dd class="col-sm-9 text-muted">
+                    @Model.ZonePressureRecord.CreatedAt.ToString("yyyy-MM-dd HH:mm")
+                </dd>
+
+            </dl>
+
+            <!-- ZONE -->
+            <h5 class="text-success">Zone</h5>
+            <hr />
+
+            <dl class="row mb-4">
+
+                <dt class="col-sm-3">Id</dt>
+                <dd class="col-sm-9">@Model.Zone.Id</dd>
+
+                <dt class="col-sm-3">Description</dt>
+                <dd class="col-sm-9">@Model.Zone.Description</dd>
+
+                <dt class="col-sm-3">Created</dt>
+                <dd class="col-sm-9 text-muted">
+                    @Model.Zone.CreatedAt.ToString("yyyy-MM-dd HH:mm")
+                </dd>
+
+            </dl>
+
+            <!-- SENSOR -->
+            <h5 class="text-warning">Sensor</h5>
+            <hr />
+
+            <dl class="row mb-0">
+
+                <dt class="col-sm-3">Id</dt>
+                <dd class="col-sm-9">@Model.Sensor.Id</dd>
+
+                <dt class="col-sm-3">Code</dt>
+                <dd class="col-sm-9">@Model.Sensor.SensorCode</dd>
+
+                <dt class="col-sm-3">Description</dt>
+                <dd class="col-sm-9">@Model.Sensor.Description</dd>
+
+                <dt class="col-sm-3">Type</dt>
+                <dd class="col-sm-9">
+                    <span class="badge bg-secondary">
+                        @Model.Sensor.Type
+                    </span>
+                </dd>
+
+                <dt class="col-sm-3">Last Seen</dt>
+                <dd class="col-sm-9">
+                    @if (Model.Sensor.LastSeen)
+                    {
+                        <span class="badge bg-info text-dark">Online</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">Offline</span>
+                    }
+                </dd>
+
+                <dt class="col-sm-3">Active</dt>
+                <dd class="col-sm-9">
+                    @if (Model.Sensor.IsActive)
+                    {
+                        <span class="badge bg-success">Active</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-danger">Inactive</span>
+                    }
+                </dd>
+
+                <dt class="col-sm-3">Created</dt>
+                <dd class="col-sm-9 text-muted">
+                    @Model.Sensor.CreatedAt.ToString("yyyy-MM-dd HH:mm")
+                </dd>
+
+            </dl>
+
+        </div>
+
+        <div class="card-footer bg-white border-0 d-flex justify-content-end">
+
+            <a asp-action="Index" class="btn btn-outline-secondary">
+                Back to List
+            </a>
+
+        </div>
+
+    </div>
+
 </div>
