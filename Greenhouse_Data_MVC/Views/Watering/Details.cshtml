@@ -1,82 +1,96 @@
-﻿@model Greenhouse_Data_MVC.ViewModel.WateringViewModel;
+﻿@model Greenhouse_Data_MVC.ViewModel.WateringViewModel
+
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Watering Details";
 }
 
-<h1>Details</h1>
+<div class="container mt-4">
 
-<div>
-    <h4>Watering</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Watering.Id)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Watering.Id)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Watering.HumPctBefore)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Watering.HumPctBefore)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Watering.HumPctAfter)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Watering.HumPctAfter)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Watering.WaterQuantityMl)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Watering.WaterQuantityMl)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Watering.CreatedAt)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Watering.CreatedAt)
-        </dd>
-    </dl>
-</div>
-<div>
-    <h4>Plant</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Plant.Id)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Plant.Id)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Plant.MomId)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Plant.MomId)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Plant.Description)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Plant.Description)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Plant.IsActive)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Plant.IsActive)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Plant.CreatedAt)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Plant.CreatedAt)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Index">Back to List</a>
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body">
+
+            <h3 class="mb-3">💧 Watering Details</h3>
+
+            <dl class="row">
+
+                <dt class="col-sm-3">Id</dt>
+                <dd class="col-sm-9">@Model.Watering.Id</dd>
+
+                <dt class="col-sm-3">Humidity Before</dt>
+                <dd class="col-sm-9">
+                    <span class="badge bg-danger">
+                        @Model.Watering.HumPctBefore%
+                    </span>
+                </dd>
+
+                <dt class="col-sm-3">Humidity After</dt>
+                <dd class="col-sm-9">
+                    <span class="badge bg-success">
+                        @Model.Watering.HumPctAfter%
+                    </span>
+                </dd>
+
+                <dt class="col-sm-3">Water Quantity</dt>
+                <dd class="col-sm-9">
+                    <span class="badge bg-primary">
+                        @Model.Watering.WaterQuantityMl ml
+                    </span>
+                </dd>
+
+                <dt class="col-sm-3">Created</dt>
+                <dd class="col-sm-9 text-muted">
+                    @Model.Watering.CreatedAt.ToString("yyyy-MM-dd HH:mm")
+                </dd>
+
+            </dl>
+
+        </div>
+    </div>
+
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+
+            <h4 class="mb-3">🌱 Plant</h4>
+
+            <dl class="row">
+
+                <dt class="col-sm-3">Id</dt>
+                <dd class="col-sm-9">@Model.Plant.Id</dd>
+
+                <dt class="col-sm-3">Mom Id</dt>
+                <dd class="col-sm-9">@Model.Plant.MomId</dd>
+
+                <dt class="col-sm-3">Description</dt>
+                <dd class="col-sm-9">@Model.Plant.Description</dd>
+
+                <dt class="col-sm-3">Active</dt>
+                <dd class="col-sm-9">
+                    @if (Model.Plant.IsActive)
+                    {
+                        <span class="badge bg-success">Active</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">Inactive</span>
+                    }
+                </dd>
+
+                <dt class="col-sm-3">Created</dt>
+                <dd class="col-sm-9 text-muted">
+                    @Model.Plant.CreatedAt.ToString("yyyy-MM-dd HH:mm")
+                </dd>
+
+            </dl>
+
+        </div>
+    </div>
+
+
+    <div class="mt-3">
+        <a asp-action="Index" class="btn btn-outline-secondary">
+            Back to List
+        </a>
+    </div>
+
 </div>

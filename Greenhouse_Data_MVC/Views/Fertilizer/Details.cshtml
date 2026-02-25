@@ -1,71 +1,82 @@
 ﻿@model Greenhouse_Data_MVC.ViewModel.FertilizerViewModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Fertilizer Details";
 }
 
-<h1>Details</h1>
+<div class="container mt-4">
 
-<div>
-    <h4>Fertilizer</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Fertilizer.Id)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Fertilizer.Id)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Fertilizer.Type)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Fertilizer.Type)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Fertilizer.CreatedAt)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Fertilizer.CreatedAt)
-        </dd>
-    </dl>
-</div>
-<div>
-    <h4>Plant</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Plant.Id)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Plant.Id)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Plant.MomId)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Plant.MomId)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Plant.Description)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Plant.Description)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Plant.IsActive)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Plant.IsActive)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Plant.CreatedAt)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Plant.CreatedAt)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Index">Back to List</a>
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+
+            <h3 class="mb-4">🌱 Fertilizer Details</h3>
+
+            <dl class="row mb-4">
+
+                <dt class="col-sm-3">Id</dt>
+                <dd class="col-sm-9">@Model.Fertilizer.Id</dd>
+
+                <dt class="col-sm-3">Type</dt>
+                <dd class="col-sm-9">
+                    <span class="badge bg-success-subtle text-success fw-semibold">
+                        @Model.Fertilizer.Type
+                    </span>
+                </dd>
+
+                <dt class="col-sm-3">Created</dt>
+                <dd class="col-sm-9 text-muted">
+                    @Model.Fertilizer.CreatedAt.ToString("yyyy-MM-dd HH:mm")
+                </dd>
+
+            </dl>
+
+            <h5 class="mb-3 border-top pt-3">🪴 Plant</h5>
+
+            <dl class="row">
+
+                <dt class="col-sm-3">Id</dt>
+                <dd class="col-sm-9">@Model.Plant.Id</dd>
+
+                <dt class="col-sm-3">MomId</dt>
+                <dd class="col-sm-9">@Model.Plant.MomId</dd>
+
+                <dt class="col-sm-3">Description</dt>
+                <dd class="col-sm-9">@Model.Plant.Description</dd>
+
+                <dt class="col-sm-3">Active</dt>
+                <dd class="col-sm-9">
+                    @if (Model.Plant.IsActive)
+                    {
+                        <span class="badge bg-success">Active</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">Inactive</span>
+                    }
+                </dd>
+
+                <dt class="col-sm-3">Created</dt>
+                <dd class="col-sm-9 text-muted">
+                    @Model.Plant.CreatedAt.ToString("yyyy-MM-dd HH:mm")
+                </dd>
+
+            </dl>
+
+            <div class="text-end mt-4">
+
+                <a asp-action="Index" class="btn btn-outline-secondary">
+                    Back
+                </a>
+
+                <a asp-action="Delete"
+                   asp-route-id="@Model.Fertilizer.Id"
+                   class="btn btn-outline-danger">
+                    Delete
+                </a>
+
+            </div>
+
+        </div>
+    </div>
+
 </div>

@@ -3,73 +3,92 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Greenhouse_Data_MVC</title>
-    <script type="importmap"></script>
+    <title>@ViewData["Title"] - Smart Greenhouse</title>
+
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Greenhouse_Data_MVC.styles.css" asp-append-version="true" />
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Greenhouse_Data_MVC</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Fertilizer" asp-action="Index">Fertilizer</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Observation" asp-action="Index">Observation</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="PlantHumidityRecord" asp-action="Index">PlantHumidityRecord</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="PlantSensorAlert" asp-action="Index">PlantSensorAlert</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Watering" asp-action="Index">Watering</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="ZonePressureRecord" asp-action="Index">ZonePressureRecord</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="ZoneRecord" asp-action="Index">ZoneRecord</a>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="ZoneSensorAlert" asp-action="Index">ZoneSensorAlert</a>
-                        </li>
 
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
+<body>
+
+    <!-- 🌿 NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark gh-navbar shadow-sm">
+
+        <div class="container-fluid">
+
+            <a class="navbar-brand fw-bold" asp-controller="Home" asp-action="Index">
+                🌿 Smart Greenhouse
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="mainMenu">
+
+                <ul class="navbar-nav me-auto">
+
+                    <!-- Dashboard -->
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Home" asp-action="Index">Dashboard</a>
+                    </li>
+
+                    <!-- 🌱 Plant Care -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                            Plant Care
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" asp-controller="Fertilizer" asp-action="Index">Fertilizer</a></li>
+                            <li><a class="dropdown-item" asp-controller="Observation" asp-action="Index">Observation</a></li>
+                            <li><a class="dropdown-item" asp-controller="Watering" asp-action="Index">Watering</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- 💧 Records -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                            Environmental Records
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" asp-controller="PlantHumidityRecord" asp-action="Index">Plant Humidity</a></li>
+                            <li><a class="dropdown-item" asp-controller="ZonePressureRecord" asp-action="Index">Zone Pressure</a></li>
+                            <li><a class="dropdown-item" asp-controller="ZoneRecord" asp-action="Index">Zone Record</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- 🚨 Alerts -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                            Alerts
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" asp-controller="PlantSensorAlert" asp-action="Index">Plant Sensor Alert</a></li>
+                            <li><a class="dropdown-item" asp-controller="ZoneSensorAlert" asp-action="Index">Zone Sensor Alert</a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+
             </div>
-        </nav>
-    </header>
-    <div class="container">
+        </div>
+    </nav>
+
+    <!-- 📦 MAIN -->
+    <div class="container gh-main-container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - Greenhouse_Data_MVC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
+    <!-- 🦶 FOOTER -->
+    <footer class="gh-footer text-center">
+        <p>© 2025 Smart Greenhouse • IoT Monitoring System</p>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
+
 </body>
 </html>

@@ -2,7 +2,34 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="hero">
+    <h1>🌿 Smart Greenhouse Dashboard</h1>
+    <p>Monitor and manage your greenhouse environment in real time.</p>
+</div>
+
+<div class="card-container">
+
+    <!-- 🌱 Fertilizer / Observation / Watering -->
+    <div class="gh-card">
+        <h2>Plant Care</h2>
+        <a asp-controller="Fertilizer" asp-action="Index">Fertilizer</a>
+        <a asp-controller="Observation" asp-action="Index">Observation</a>
+        <a asp-controller="Watering" asp-action="Index">Watering</a>
+    </div>
+
+    <!-- 💧 Humidity & Pressure -->
+    <div class="gh-card">
+        <h2>Environmental Records</h2>
+        <a asp-controller="PlantHumidityRecord" asp-action="Index">Plant Humidity</a>
+        <a asp-controller="ZonePressureRecord" asp-action="Index">Zone Pressure</a>
+        <a asp-controller="ZoneRecord" asp-action="Index">Zone Record</a>
+    </div>
+
+    <!-- 🚨 Alerts -->
+    <div class="gh-card">
+        <h2>Alerts</h2>
+        <a asp-controller="PlantSensorAlert" asp-action="Index">Plant Sensor Alert</a>
+        <a asp-controller="ZoneSensorAlert" asp-action="Index">Zone Sensor Alert</a>
+    </div>
+
 </div>
