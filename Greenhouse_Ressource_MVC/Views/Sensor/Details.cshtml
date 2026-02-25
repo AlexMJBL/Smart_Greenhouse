@@ -1,4 +1,5 @@
 ﻿@model Greenhouse_Ressource_MVC.ViewModel.SensorDetailViewModel
+@using Greenhouse_Ressource_MVC.Enums
 
 @{
     ViewData["Title"] = "Sensor details";
@@ -24,7 +25,6 @@
 
         <!-- SENSOR CARD -->
         <div class="col-md-6">
-
             <div class="card shadow-sm mb-4">
 
                 <div class="card-header bg-primary text-white">
@@ -33,13 +33,9 @@
 
                 <div class="card-body">
 
-                    <h5 class="card-title">
-                        @Model.Sensor.SensorCode
-                    </h5>
+                    <h5 class="card-title">@Model.Sensor.SensorCode</h5>
 
-                    <p class="text-muted">
-                        @Model.Sensor.Description
-                    </p>
+                    <p class="text-muted">@Model.Sensor.Description</p>
 
                     <hr />
 
@@ -47,22 +43,19 @@
 
                         <dt class="col-sm-4">Type</dt>
                         <dd class="col-sm-8">
-                            @switch (Model.Sensor.Type.ToString())
+                            @switch (Model.Sensor.Type)
                             {
-                                case "temperature":
+                                case SensorType.temperature:
                                     <span>🌡️ Temperature</span>
                                     break;
-                                case "humidity":
+                                case SensorType.humidity:
                                     <span>💧 Humidity</span>
                                     break;
-                                case "light":
+                                case SensorType.light:
                                     <span>☀️ Light</span>
                                     break;
-                                case "pressure":
+                                case SensorType.pressure:
                                     <span>🌬️ Pressure</span>
-                                    break;
-                                default:
-                                    @Model.Sensor.Type
                                     break;
                             }
                         </dd>
@@ -79,11 +72,6 @@
                             }
                         </dd>
 
-                        <dt class="col-sm-4">Created</dt>
-                        <dd class="col-sm-8">
-                            @Model.Sensor.CreatedAt.ToString("yyyy-MM-dd HH:mm")
-                        </dd>
-
                         <dt class="col-sm-4">Status</dt>
                         <dd class="col-sm-8">
                             @if (Model.Sensor.IsActive)
@@ -96,16 +84,19 @@
                             }
                         </dd>
 
+                        <dt class="col-sm-4">Created</dt>
+                        <dd class="col-sm-8">
+                            @Model.Sensor.CreatedAt.ToString("yyyy-MM-dd HH:mm")
+                        </dd>
+
                     </dl>
 
                 </div>
             </div>
-
         </div>
 
         <!-- ZONE CARD -->
         <div class="col-md-6">
-
             <div class="card shadow-sm mb-4">
 
                 <div class="card-header bg-success text-white">
@@ -131,12 +122,16 @@
                             @Model.Zone.CreatedAt.ToString("yyyy-MM-dd HH:mm")
                         </dd>
 
+                        <dt class="col-sm-4">Zone Category</dt>
+                        <dd class="col-sm-8">
+                            @Model.Zone.ZoneCategoryId
+                        </dd>
+
                     </dl>
 
                 </div>
 
             </div>
-
         </div>
 
     </div>

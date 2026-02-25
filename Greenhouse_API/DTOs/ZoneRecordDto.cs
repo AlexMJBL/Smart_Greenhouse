@@ -63,11 +63,5 @@ namespace Greenhouse_API.DTOs
         [Range(1, int.MaxValue)]
         public int SensorId { get; set; }
 
-        /// <summary>
-        /// Type of sensor that produced the record
-        /// </summary>
-        [Required]
-        [EnumDataType(typeof(SensorType))]
-        public SensorType Type { get; set; }
     }
 }

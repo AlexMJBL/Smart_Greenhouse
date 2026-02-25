@@ -74,14 +74,14 @@ namespace Greenhouse_API.Services
             var sensor = await _sensorService.GetByIdAsync(dto.SensorId);
             if (sensor == null)
             {
-                _logger.LogWarning("Sensor with ID: {SensorId} not found for pressure record creation", dto.SensorId);
-                throw new NotFoundException("Zone not found");
+                _logger.LogWarning("Sensor with ID: {SensorId} not found for record creation", dto.SensorId);
+                throw new NotFoundException("Sensor not found");
             }
 
             var zone = await _zoneService.GetByIdAsync(sensor.ZoneId);
             if (zone == null)
             {
-                _logger.LogWarning("Zone with ID: {ZoneId} not found for pressure record creation", sensor.ZoneId);
+                _logger.LogWarning("Zone with ID: {ZoneId} not found for record creation", sensor.ZoneId);
                 throw new NotFoundException("Zone not found");
             }
 
@@ -90,7 +90,7 @@ namespace Greenhouse_API.Services
                 Record = dto.Record,
                 ZoneId = sensor.ZoneId,
                 SensorId = dto.SensorId,
-                Type = dto.Type,
+                Type = sensor.Type,
                 CreatedAt = DateTime.UtcNow
             };
 
