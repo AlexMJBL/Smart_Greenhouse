@@ -1,83 +1,83 @@
-﻿@model Greenhouse_Ressource_MVC.ViewModel.WateringDetailViewModel;
+﻿@model Greenhouse_Ressource_MVC.ViewModel.WateringDetailViewModel
+
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Watering Details";
 }
 
-<h1>Details</h1>
+<div class="container-page">
 
-<div>
-    <h4>Watering</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Watering.Id)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Watering.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Watering.HumPctBefore)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Watering.HumPctBefore)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Watering.HumPctAfter)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Watering.HumPctAfter)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Watering.WaterQuantityMl)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Watering.WaterQuantityMl)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Watering.CreatedAt)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Watering.CreatedAt)
-        </dd>
-    </dl>
-</div>
-<div>
-    <h4>Plant</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Plant.Id)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Plant.Id)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Plant.MomId)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Plant.MomId)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Plant.Description)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Plant.Description)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Plant.IsActive)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Plant.IsActive)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Plant.CreatedAt)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Plant.CreatedAt)
-        </dd>
-    </dl>
-</div>
-<div>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Watering.Id }) |
-    <a asp-action="Index">Back to List</a>
+    <div class="page-header">
+        <h1>Watering Details</h1>
+        <a asp-action="Index" class="btn btn-secondary">Back to list</a>
+    </div>
+
+    <!-- 🌱 WATERING -->
+    <div class="form-card">
+
+        <h4 class="section-title">Watering</h4>
+
+        <div class="details-grid">
+
+            <div class="details-label">Id</div>
+            <div class="details-value">@Model.Watering.Id</div>
+
+            <div class="details-label">Humidity before</div>
+            <div class="details-value">@Model.Watering.HumPctBefore %</div>
+
+            <div class="details-label">Humidity after</div>
+            <div class="details-value">@Model.Watering.HumPctAfter %</div>
+
+            <div class="details-label">Water quantity</div>
+            <div class="details-value">@Model.Watering.WaterQuantityMl ml</div>
+
+            <div class="details-label">Created</div>
+            <div class="details-value">
+                @Model.Watering.CreatedAt.ToString("yyyy-MM-dd HH:mm")
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- 🌿 PLANT -->
+    <div class="form-card">
+
+        <h4 class="section-title">Plant</h4>
+
+        <div class="details-grid">
+
+            <div class="details-label">Id</div>
+            <div class="details-value">@Model.Plant.Id</div>
+
+            <div class="details-label">Mom Id</div>
+            <div class="details-value">@Model.Plant.MomId</div>
+
+            <div class="details-label">Description</div>
+            <div class="details-value">@Model.Plant.Description</div>
+
+            <div class="details-label">Status</div>
+            <div class="details-value">
+                <span class="badge @(Model.Plant.IsActive ? "bg-success" : "bg-secondary")">
+                    @(Model.Plant.IsActive ? "Active" : "Inactive")
+                </span>
+            </div>
+
+            <div class="details-label">Created</div>
+            <div class="details-value">
+                @Model.Plant.CreatedAt.ToString("yyyy-MM-dd HH:mm")
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="form-actions">
+        <a asp-action="Edit" asp-route-id="@Model.Watering.Id" class="btn btn-primary">
+            Edit
+        </a>
+        <a asp-action="Index" class="btn btn-outline">
+            Back to list
+        </a>
+    </div>
+
 </div>

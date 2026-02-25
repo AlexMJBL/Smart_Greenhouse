@@ -1,78 +1,86 @@
 ﻿@model Greenhouse_Ressource_MVC.ViewModel.ObservationDetailViewModel;
 
 @{
-    ViewData["Title"] = "Details"; 
+    ViewData["Title"] = "Observation Details";
 }
 
-<h1>Detail</h1>
+<div class="container">
 
-<div>
-    <h4>ObservationDto</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Observation.Id)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Observation.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Observation.Rating)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Observation.Rating)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Observation.Comments)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Observation.Comments)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Observation.CreatedAt)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Observation.CreatedAt)
-        </dd>
-    </dl>
-</div>
-<div>
-    <h4>Plant</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Plant.Id)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Plant.Id)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Plant.MomId)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Plant.MomId)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Plant.Description)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Plant.Description)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Plant.IsActive)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Plant.IsActive)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Plant.CreatedAt)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Plant.CreatedAt)
-        </dd>
-    </dl>
-</div>
-<div>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Observation.Id }) |
-    <a asp-action="Index">Back to List</a>
+    <h2 class="mb-4 text-success">🔍 Observation Details</h2>
+
+    <!-- 🌱 Observation -->
+    <div class="card shadow-sm border-success mb-4">
+
+        <div class="card-header bg-success text-white fw-semibold">
+            Observation Information
+        </div>
+
+        <div class="card-body">
+
+            <dl class="row mb-0">
+
+                <dt class="col-sm-3">Id</dt>
+                <dd class="col-sm-9">@Model.Observation.Id</dd>
+
+                <dt class="col-sm-3">Rating</dt>
+                <dd class="col-sm-9">@Model.Observation.Rating</dd>
+
+                <dt class="col-sm-3">Comments</dt>
+                <dd class="col-sm-9">@Model.Observation.Comments</dd>
+
+                <dt class="col-sm-3">Created</dt>
+                <dd class="col-sm-9">@Model.Observation.CreatedAt</dd>
+
+            </dl>
+
+        </div>
+    </div>
+
+    <!-- 🌿 Plant -->
+    <div class="card shadow-sm border-success mb-4">
+
+        <div class="card-header bg-success text-white fw-semibold">
+            Plant Information
+        </div>
+
+        <div class="card-body">
+
+            <dl class="row mb-0">
+
+                <dt class="col-sm-3">Id</dt>
+                <dd class="col-sm-9">@Model.Plant.Id</dd>
+
+                <dt class="col-sm-3">Mom Id</dt>
+                <dd class="col-sm-9">@Model.Plant.MomId</dd>
+
+                <dt class="col-sm-3">Description</dt>
+                <dd class="col-sm-9">@Model.Plant.Description</dd>
+
+                <dt class="col-sm-3">Active</dt>
+                <dd class="col-sm-9">
+                    @(Model.Plant.IsActive ? "✅ Yes" : "❌ No")
+                </dd>
+
+                <dt class="col-sm-3">Created</dt>
+                <dd class="col-sm-9">@Model.Plant.CreatedAt</dd>
+
+            </dl>
+
+        </div>
+    </div>
+
+    <!-- 🔘 Buttons -->
+    <div class="d-flex gap-2">
+
+        <a asp-action="Edit" asp-route-id="@Model.Observation.Id"
+           class="btn btn-success">
+            ✏️ Edit
+        </a>
+
+        <a asp-action="Index" class="btn btn-outline-secondary">
+            ⬅ Back to List
+        </a>
+
+    </div>
+
 </div>

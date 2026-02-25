@@ -9,69 +9,102 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Greenhouse_Ressource_MVC.styles.css" asp-append-version="true" />
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Greenhouse_Ressource_MVC</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Fertilizer" asp-action="Index">Fertilizer</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Observation" asp-action="Index">Observation</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Plant" asp-action="Index">Plant</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Sensor" asp-action="Index">Sensor</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="SoilHumidityCategory" asp-action="Index">Soil Humidity Cat.</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Specimen" asp-action="Index">Specimen</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Watering" asp-action="Index">Watering</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Zone" asp-action="Index">Zone</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="ZoneCategory" asp-action="Index">Zone Cat.</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+<body class="d-flex flex-column min-vh-100">
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - Greenhouse_Ressource_MVC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+<header>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-success shadow-sm mb-4">
+        <div class="container-fluid">
+
+            <a class="navbar-brand fw-bold text-white"
+               asp-controller="Home" asp-action="Index">
+                🌿 Smart Greenhouse
+            </a>
+
+            <button class="navbar-toggler" type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target=".navbar-collapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+
+                <ul class="navbar-nav flex-grow-1 gap-2">
+
+                    <li class="nav-item">
+                        <a class="nav-link text-white"
+                           asp-controller="Home" asp-action="Index">Home</a>
+                    </li>
+
+                    <!-- 🌱 PLANT CARE -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" data-bs-toggle="dropdown">
+                            🌱 Plant Care
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" asp-controller="Plant" asp-action="Index">Plant</a></li>
+                            <li><a class="dropdown-item" asp-controller="Specimen" asp-action="Index">Specimen</a></li>
+                            <li><a class="dropdown-item" asp-controller="Observation" asp-action="Index">Observation</a></li>
+                            <li><a class="dropdown-item" asp-controller="Fertilizer" asp-action="Index">Fertilizer</a></li>
+                            <li><a class="dropdown-item" asp-controller="Watering" asp-action="Index">Watering</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- 🌍 ZONES -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" data-bs-toggle="dropdown">
+                            🌍 Zones
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" asp-controller="Zone" asp-action="Index">Zone</a></li>
+                            <li><a class="dropdown-item" asp-controller="ZoneCategory" asp-action="Index">Zone Category</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- 📡 SENSORS -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" data-bs-toggle="dropdown">
+                            📡 Sensors
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" asp-controller="Sensor" asp-action="Index">Sensor</a></li>
+                            <li><a class="dropdown-item" asp-controller="SoilHumidityCategory" asp-action="Index">
+                                Soil Humidity Cat.
+                            </a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link text-white"
+                           asp-controller="Home" asp-action="Privacy">Privacy</a>
+                    </li>
+
+                </ul>
+
+            </div>
         </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+    </nav>
+</header>
+
+<!-- ✅ CONTENU -->
+<main class="flex-fill">
+    <div class="container dashboard-container pb-3">
+        @RenderBody()
+    </div>
+</main>
+
+<!-- ✅ FOOTER -->
+<footer class="bg-success text-white mt-auto py-3">
+    <div class="container text-center">
+        &copy; 2025 - Smart Greenhouse ·
+        <a class="text-white text-decoration-underline"
+           asp-controller="Home" asp-action="Privacy">Privacy</a>
+    </div>
+</footer>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js"></script>
+@await RenderSectionAsync("Scripts", required: false)
+
 </body>
 </html>

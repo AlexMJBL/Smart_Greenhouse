@@ -1,73 +1,115 @@
 ﻿@model Greenhouse_Ressource_MVC.ViewModel.SpecimenDetailViewModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Specimen details";
 }
 
-<h1>Details</h1>
+<div class="container mt-4">
 
-<div>
-    <h4>Specimen</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Specimen.Id)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Specimen.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Specimen.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Specimen.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Specimen.CreatedAt)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Specimen.CreatedAt)
-        </dd>
-    </dl>
-</div>
-<div>
-    <h4>Soil Humidity Category</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.SoilHumidityCategory.Id)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.SoilHumidityCategory.Id)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.SoilHumidityCategory.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.SoilHumidityCategory.Name)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.SoilHumidityCategory.MinHumidityPct)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.SoilHumidityCategory.MinHumidityPct)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.SoilHumidityCategory.MaxHumidityPct)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.SoilHumidityCategory.MaxHumidityPct)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.SoilHumidityCategory.CreatedAt)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.SoilHumidityCategory.CreatedAt)
-        </dd>
-    </dl>
-</div>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>🧬 Specimen details</h2>
 
-<div>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Specimen.Id }) |
-    <a asp-action="Index">Back to List</a>
+        <div>
+            <a asp-action="Edit" asp-route-id="@Model.Specimen.Id"
+               class="btn btn-warning shadow-sm">
+                ✏️ Edit
+            </a>
+
+            <a asp-action="Index"
+               class="btn btn-outline-secondary">
+                ⬅ Back
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <!-- SPECIMEN CARD -->
+        <div class="col-md-6">
+
+            <div class="card shadow-sm mb-4">
+
+                <div class="card-header bg-success text-white">
+                    Specimen
+                </div>
+
+                <div class="card-body">
+
+                    <h5 class="card-title">
+                        @Model.Specimen.Name
+                    </h5>
+
+                    <hr />
+
+                    <dl class="row">
+
+                        <dt class="col-sm-4">Id</dt>
+                        <dd class="col-sm-8">@Model.Specimen.Id</dd>
+
+                        <dt class="col-sm-4">Created</dt>
+                        <dd class="col-sm-8">
+                            @Model.Specimen.CreatedAt.ToString("yyyy-MM-dd HH:mm")
+                        </dd>
+
+                    </dl>
+
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- SOIL HUMIDITY CATEGORY CARD -->
+        <div class="col-md-6">
+
+            <div class="card shadow-sm mb-4">
+
+                <div class="card-header bg-info text-dark">
+                    Soil humidity category
+                </div>
+
+                <div class="card-body">
+
+                    <h5 class="card-title">
+                        @Model.SoilHumidityCategory.Name
+                    </h5>
+
+                    <hr />
+
+                    <dl class="row">
+
+                        <dt class="col-sm-5">Id</dt>
+                        <dd class="col-sm-7">
+                            @Model.SoilHumidityCategory.Id
+                        </dd>
+
+                        <dt class="col-sm-5">Min humidity</dt>
+                        <dd class="col-sm-7">
+                            <span class="badge bg-primary">
+                                @Model.SoilHumidityCategory.MinHumidityPct %
+                            </span>
+                        </dd>
+
+                        <dt class="col-sm-5">Max humidity</dt>
+                        <dd class="col-sm-7">
+                            <span class="badge bg-primary">
+                                @Model.SoilHumidityCategory.MaxHumidityPct %
+                            </span>
+                        </dd>
+
+                        <dt class="col-sm-5">Created</dt>
+                        <dd class="col-sm-7">
+                            @Model.SoilHumidityCategory.CreatedAt.ToString("yyyy-MM-dd HH:mm")
+                        </dd>
+
+                    </dl>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
 </div>

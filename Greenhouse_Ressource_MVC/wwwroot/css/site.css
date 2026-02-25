@@ -1,31 +1,166 @@
-html {
-  font-size: 14px;
-}
+/* ===============================
+   GLOBAL LAYOUT
+=================================*/
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+html, body {
+  height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+  display: flex;
+  flex-direction: column;
+  background-color: #f5f7fa;
 }
 
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
+.dashboard-container {
+  flex: 1;
+  margin-top: 20px;
 }
 
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+/* ===============================
+   NAVBAR
+=================================*/
+
+.navbar .nav-link:hover {
+  opacity: 0.8;
+}
+
+/* ===============================
+   HERO / BANNER
+=================================*/
+
+.hero {
+  background: linear-gradient(135deg, #28a745, #1e7e34);
+  color: white;
+  padding: 55px 30px;
+  border-radius: 18px;
+  text-align: center;
+  margin-bottom: 40px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.hero h1 {
+  font-weight: 700;
+}
+
+.hero p {
+  opacity: 0.9;
+  margin-top: 10px;
+}
+
+/* ===============================
+   DASHBOARD CARDS
+=================================*/
+
+.dashboard-card {
+  border: none;
+  border-radius: 18px;
+  padding: 25px;
+  background: #ffffff;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+  text-align: center;
+  transition: 0.3s;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.15);
+}
+
+.dashboard-card h4 {
+  color: #198754;
+  margin-bottom: 15px;
+}
+
+/* Dashboard buttons */
+
+.dashboard-btn {
+  background: #e9ecef;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 8px 0;
+  display: block;
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: 0.2s;
+}
+
+.dashboard-btn:hover {
+  background: #d4edda;
+  color: #198754;
+}
+
+/* ===============================
+   TABLES
+=================================*/
+
+.table {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.table thead {
+  background-color: #198754;
+  color: white;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f1fdf4;
+}
+
+/* Scrollable table for large results */
+
+.table-wrapper {
+  max-height: 65vh;
+  overflow-y: auto;
+}
+
+/* ===============================
+   CARDS (CRUD PAGES)
+=================================*/
+
+.card {
+  border-radius: 16px;
+}
+
+/* ===============================
+   BADGES / STATUS
+=================================*/
+
+.badge-active {
+  background-color: #198754;
+}
+
+.badge-inactive {
+  background-color: #6c757d;
+}
+
+/* ===============================
+   BUTTONS
+=================================*/
+
+.btn-success {
+  border-radius: 10px;
+}
+
+.btn-primary {
+  border-radius: 10px;
+}
+
+.btn-danger {
+  border-radius: 10px;
+}
+
+.btn-warning {
+  border-radius: 10px;
+}
+
+/* ===============================
+   FOOTER
+=================================*/
+
+footer {
+  margin-top: auto;
 }

@@ -1,35 +1,54 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Dashboard";
 }
 
-<div class="hero">
-    <h1>🌿 Smart Greenhouse Dashboard</h1>
-    <p>Monitor and manage your greenhouse environment in real time.</p>
+<div class="text-center mb-5">
+    <h1 class="display-5 fw-bold text-success">🌿 Smart Greenhouse</h1>
+    <p class="lead text-muted">Centralized management of your greenhouse resources</p>
 </div>
 
-<div class="card-container">
+<div class="row g-4">
 
-    <!-- 🌱 Fertilizer / Observation / Watering -->
-    <div class="gh-card">
-        <h2>Plant Care</h2>
-        <a asp-controller="Fertilizer" asp-action="Index">Fertilizer</a>
-        <a asp-controller="Observation" asp-action="Index">Observation</a>
-        <a asp-controller="Watering" asp-action="Index">Watering</a>
+    <!-- 🌱 PLANT CARE -->
+    <div class="col-md-4">
+        <div class="card dashboard-card h-100">
+            <div class="card-body text-center">
+                <h4>🌱 Plant Care</h4>
+                <p>Manage plants, specimens and treatments</p>
+
+                <a asp-controller="Plant" asp-action="Index" class="btn btn-success m-1">Plants</a>
+                <a asp-controller="Specimen" asp-action="Index" class="btn btn-outline-success m-1">Specimens</a>
+                <a asp-controller="Observation" asp-action="Index" class="btn btn-outline-success m-1">Observations</a>
+                <a asp-controller="Fertilizer" asp-action="Index" class="btn btn-outline-success m-1">Fertilizers</a>
+                <a asp-controller="Watering" asp-action="Index" class="btn btn-outline-success m-1">Waterings</a>
+            </div>
+        </div>
     </div>
 
-    <!-- 💧 Humidity & Pressure -->
-    <div class="gh-card">
-        <h2>Environmental Records</h2>
-        <a asp-controller="PlantHumidityRecord" asp-action="Index">Plant Humidity</a>
-        <a asp-controller="ZonePressureRecord" asp-action="Index">Zone Pressure</a>
-        <a asp-controller="ZoneRecord" asp-action="Index">Zone Record</a>
+    <!-- 🌍 ZONES -->
+    <div class="col-md-4">
+        <div class="card dashboard-card h-100">
+            <div class="card-body text-center">
+                <h4>🌍 Zones</h4>
+                <p>Organize greenhouse areas</p>
+
+                <a asp-controller="Zone" asp-action="Index" class="btn btn-success m-1">Zones</a>
+                <a asp-controller="ZoneCategory" asp-action="Index" class="btn btn-outline-success m-1">Categories</a>
+            </div>
+        </div>
     </div>
 
-    <!-- 🚨 Alerts -->
-    <div class="gh-card">
-        <h2>Alerts</h2>
-        <a asp-controller="PlantSensorAlert" asp-action="Index">Plant Sensor Alert</a>
-        <a asp-controller="ZoneSensorAlert" asp-action="Index">Zone Sensor Alert</a>
+    <!-- 📡 SENSORS -->
+    <div class="col-md-4">
+        <div class="card dashboard-card h-100">
+            <div class="card-body text-center">
+                <h4>📡 Sensors</h4>
+                <p>Monitor environmental data</p>
+
+                <a asp-controller="Sensor" asp-action="Index" class="btn btn-success m-1">Sensors</a>
+                <a asp-controller="SoilHumidityCategory" asp-action="Index" class="btn btn-outline-success m-1">Soil Humidity</a>
+            </div>
+        </div>
     </div>
 
 </div>

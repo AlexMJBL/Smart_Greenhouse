@@ -1,83 +1,90 @@
 ﻿@model IEnumerable<Greenhouse_Ressource_MVC.Dtos.ZoneCategoryDto>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Zone Categories";
 }
 
-<h1>List of zone categories</h1>
+<div class="dashboard-container">
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HumidityMinPct)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HumidityMaxPct)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LuminosityMinLux)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LuminosityMaxLux)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TemperatureMinC)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TemperatureMaxC)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PressureMinPa)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PressureMaxPa)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HumidityMinPct)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HumidityMaxPct)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LuminosityMinLux)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LuminosityMaxLux)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TemperatureMinC)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TemperatureMaxC)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PressureMinPa)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PressureMaxPa)
-            </td>
-            <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <!-- 🔹 HEADER -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="mb-0">🌱 Zone Categories</h2>
+
+        <a asp-action="Create" class="btn btn-success">
+            ➕ Create New
+        </a>
+    </div>
+
+    <!-- 🔹 CARD -->
+    <div class="card shadow-sm">
+        <div class="card-body p-0">
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle mb-0">
+
+                    <thead class="table-light">
+                        <tr>
+                            <th>Name</th>
+                            <th>Humidity</th>
+                            <th>Luminosity</th>
+                            <th>Temperature</th>
+                            <th>Pressure</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="fw-semibold">
+                                    @item.Name
+                                </td>
+
+                                <td>
+                                    @item.HumidityMinPct – @item.HumidityMaxPct %
+                                </td>
+
+                                <td>
+                                    @item.LuminosityMinLux – @item.LuminosityMaxLux lux
+                                </td>
+
+                                <td>
+                                    @item.TemperatureMinC – @item.TemperatureMaxC °C
+                                </td>
+
+                                <td>
+                                    @item.PressureMinPa – @item.PressureMaxPa Pa
+                                </td>
+
+                                <td class="text-end">
+
+                                    <a asp-action="Edit" asp-route-id="@item.Id"
+                                       class="btn btn-sm btn-outline-primary">
+                                        Edit
+                                    </a>
+
+                                    <a asp-action="Details" asp-route-id="@item.Id"
+                                       class="btn btn-sm btn-outline-info">
+                                        Details
+                                    </a>
+
+                                    <a asp-action="Delete" asp-route-id="@item.Id"
+                                       class="btn btn-sm btn-outline-danger">
+                                        Delete
+                                    </a>
+
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>

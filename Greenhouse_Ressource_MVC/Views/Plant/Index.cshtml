@@ -1,71 +1,100 @@
 ﻿@model IEnumerable<Greenhouse_Ressource_MVC.Dtos.PlantDto>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Plants";
 }
 
-<h1>List of plants</h1>
+<div class="container mt-4">
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SpecimenId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ZoneId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MomId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsActive)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedAt)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SpecimenId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ZoneId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MomId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsActive)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedAt)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>🌿 Plants</h2>
+
+        <a asp-action="Create" class="btn btn-success">
+            ➕ Add new plant
+        </a>
+    </div>
+
+    <div class="card shadow-sm">
+
+        <div class="card-body table-responsive">
+
+            <table class="table table-hover align-middle">
+
+                <thead class="table-light">
+                    <tr>
+                        <th>Id</th>
+                        <th>Specimen</th>
+                        <th>Zone</th>
+                        <th>Mom</th>
+                        <th>Description</th>
+                        <th>Status</th>
+                        <th>Created</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+
+                        <td>@item.Id</td>
+
+                        <td>@item.SpecimenId</td>
+
+                        <td>
+                            <span class="badge bg-info text-dark">
+                                @item.ZoneId
+                            </span>
+                        </td>
+
+                        <td>@item.MomId</td>
+
+                        <td>@item.Description</td>
+
+                        <td>
+                            @if (item.IsActive)
+                            {
+                                <span class="badge bg-success">Active</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">Inactive</span>
+                            }
+                        </td>
+
+                        <td>
+                            @item.CreatedAt.ToString("yyyy-MM-dd")
+                        </td>
+
+                        <td class="text-end">
+
+                            <a asp-action="Edit" asp-route-id="@item.Id"
+                               class="btn btn-sm btn-outline-primary">
+                                ✏️
+                            </a>
+
+                            <a asp-action="Details" asp-route-id="@item.Id"
+                               class="btn btn-sm btn-outline-info">
+                                🔍
+                            </a>
+
+                            <a asp-action="Delete" asp-route-id="@item.Id"
+                               class="btn btn-sm btn-outline-danger">
+                                🗑
+                            </a>
+
+                        </td>
+
+                    </tr>
+                }
+
+                </tbody>
+
+            </table>
+
+        </div>
+    </div>
+
+</div>

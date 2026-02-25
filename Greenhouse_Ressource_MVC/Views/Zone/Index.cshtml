@@ -1,53 +1,88 @@
 ﻿@model IEnumerable<Greenhouse_Ressource_MVC.Dtos.ZoneDto>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Zones";
 }
 
-<h1>List of zones</h1>
+<div class="dashboard-container">
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ZoneCategoryId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedAt)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ZoneCategoryId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedAt)
-            </td>
-            <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <!-- 🔹 HEADER -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+
+        <h2 class="mb-0">🌿 Zones</h2>
+
+        <a asp-action="Create" class="btn btn-success">
+            ➕ Create new
+        </a>
+
+    </div>
+
+    <div class="card shadow-sm">
+
+        <div class="card-body">
+
+            <table class="table table-hover align-middle">
+
+                <thead class="table-dark">
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.Id)</th>
+                        <th>@Html.DisplayNameFor(model => model.Description)</th>
+                        <th>Category</th>
+                        <th>@Html.DisplayNameFor(model => model.CreatedAt)</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+
+                        <td class="fw-semibold">
+                            @item.Description
+                        </td>
+
+                        <td>
+                            <span class="badge bg-info text-dark">
+                                @item.ZoneCategoryId
+                            </span>
+                        </td>
+
+                        <td>
+                            @item.CreatedAt.ToString("yyyy-MM-dd HH:mm")
+                        </td>
+
+                        <td class="text-end">
+
+                            <a asp-action="Edit"
+                               asp-route-id="@item.Id"
+                               class="btn btn-sm btn-outline-primary">
+                                ✏️
+                            </a>
+
+                            <a asp-action="Details"
+                               asp-route-id="@item.Id"
+                               class="btn btn-sm btn-outline-secondary">
+                                🔍
+                            </a>
+
+                            <a asp-action="Delete"
+                               asp-route-id="@item.Id"
+                               class="btn btn-sm btn-outline-danger">
+                                🗑
+                            </a>
+
+                        </td>
+                    </tr>
+                }
+
+                </tbody>
+
+            </table>
+
+        </div>
+    </div>
+
+</div>

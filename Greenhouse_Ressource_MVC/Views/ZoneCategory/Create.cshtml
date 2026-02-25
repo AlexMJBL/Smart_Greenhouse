@@ -1,71 +1,111 @@
 ﻿@model Greenhouse_Ressource_MVC.Dtos.ZoneCategoryWriteDto
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Zone Category";
 }
 
-<h1>Create</h1>
+<div class="dashboard-container">
 
-<h4>Zone Category</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="HumidityMinPct" class="control-label"></label>
-                <input asp-for="HumidityMinPct" class="form-control" />
-                <span asp-validation-for="HumidityMinPct" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="HumidityMaxPct" class="control-label"></label>
-                <input asp-for="HumidityMaxPct" class="form-control" />
-                <span asp-validation-for="HumidityMaxPct" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LuminosityMinLux" class="control-label"></label>
-                <input asp-for="LuminosityMinLux" class="form-control" />
-                <span asp-validation-for="LuminosityMinLux" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LuminosityMaxLux" class="control-label"></label>
-                <input asp-for="LuminosityMaxLux" class="form-control" />
-                <span asp-validation-for="LuminosityMaxLux" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TemperatureMinC" class="control-label"></label>
-                <input asp-for="TemperatureMinC" class="form-control" />
-                <span asp-validation-for="TemperatureMinC" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TemperatureMaxC" class="control-label"></label>
-                <input asp-for="TemperatureMaxC" class="form-control" />
-                <span asp-validation-for="TemperatureMaxC" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PressureMinPa" class="control-label"></label>
-                <input asp-for="PressureMinPa" class="form-control" />
-                <span asp-validation-for="PressureMinPa" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PressureMaxPa" class="control-label"></label>
-                <input asp-for="PressureMaxPa" class="form-control" />
-                <span asp-validation-for="PressureMaxPa" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+    <!-- 🔹 HEADER -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="mb-0">🌱 Create Zone Category</h2>
+
+        <a asp-action="Index" class="btn btn-outline-secondary">
+            ⬅ Back to list
+        </a>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+    <div class="card shadow-sm">
+        <div class="card-body">
+
+            <form asp-action="Create">
+
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="row">
+
+                    <div class="col-md-6">
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Name" class="form-label"></label>
+                            <input asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="HumidityMinPct" class="form-label"></label>
+                            <input asp-for="HumidityMinPct" class="form-control" />
+                            <span asp-validation-for="HumidityMinPct" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="HumidityMaxPct" class="form-label"></label>
+                            <input asp-for="HumidityMaxPct" class="form-control" />
+                            <span asp-validation-for="HumidityMaxPct" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="LuminosityMinLux" class="form-label"></label>
+                            <input asp-for="LuminosityMinLux" class="form-control" />
+                            <span asp-validation-for="LuminosityMinLux" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="LuminosityMaxLux" class="form-label"></label>
+                            <input asp-for="LuminosityMaxLux" class="form-control" />
+                            <span asp-validation-for="LuminosityMaxLux" class="text-danger"></span>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <div class="form-group mb-3">
+                            <label asp-for="TemperatureMinC" class="form-label"></label>
+                            <input asp-for="TemperatureMinC" class="form-control" />
+                            <span asp-validation-for="TemperatureMinC" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="TemperatureMaxC" class="form-label"></label>
+                            <input asp-for="TemperatureMaxC" class="form-control" />
+                            <span asp-validation-for="TemperatureMaxC" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="PressureMinPa" class="form-label"></label>
+                            <input asp-for="PressureMinPa" class="form-control" />
+                            <span asp-validation-for="PressureMinPa" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="PressureMaxPa" class="form-label"></label>
+                            <input asp-for="PressureMaxPa" class="form-control" />
+                            <span asp-validation-for="PressureMaxPa" class="text-danger"></span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- 🔹 ACTIONS -->
+                <div class="d-flex justify-content-end mt-3">
+
+                    <a asp-action="Index" class="btn btn-outline-secondary me-2">
+                        Cancel
+                    </a>
+
+                    <button type="submit" class="btn btn-success">
+                        💾 Create
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
 </div>
 
 @section Scripts {

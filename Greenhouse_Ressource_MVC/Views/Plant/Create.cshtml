@@ -1,58 +1,69 @@
 ﻿@model Greenhouse_Ressource_MVC.Dtos.PlantWriteDto
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Plant";
 }
 
-<h1>Create</h1>
+<div class="container mt-4">
 
-<h4>Plant</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="ZoneId" class="control-label"></label>
-                <select asp-for="ZoneId"
-                        asp-items="ViewBag.Zones"
-                        class="form-control">
-                    <option value="">-- Select a zone --</option>
-                </select>
-                <span asp-validation-for="ZoneId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SpecimenId" class="control-label"></label>
-                <select asp-for="SpecimenId"
-                        asp-items="ViewBag.Specimens"
-                        class="form-control">
-                    <option value="">-- Select a specimen --</option>
-                </select>
-                <span asp-validation-for="SpecimenId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MomId" class="control-label"></label>
-                <select asp-for="MomId"
-                        asp-items="ViewBag.Plants"
-                        class="form-control">
-                    <option value="">-- Select a mom plant if it apply --</option>
-                </select>
-                <span asp-validation-for="MomId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+    <h2 class="mb-4">🌱 Create a new Plant</h2>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+
+            <form asp-action="Create">
+
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <!-- ZONE -->
+                <div class="mb-3">
+                    <label asp-for="ZoneId" class="form-label"></label>
+                    <select asp-for="ZoneId" asp-items="ViewBag.Zones" class="form-select">
+                        <option value="">-- Select a zone --</option>
+                    </select>
+                    <span asp-validation-for="ZoneId" class="text-danger"></span>
+                </div>
+
+                <!-- SPECIMEN -->
+                <div class="mb-3">
+                    <label asp-for="SpecimenId" class="form-label"></label>
+                    <select asp-for="SpecimenId" asp-items="ViewBag.Specimens" class="form-select">
+                        <option value="">-- Select a specimen --</option>
+                    </select>
+                    <span asp-validation-for="SpecimenId" class="text-danger"></span>
+                </div>
+
+                <!-- MOM PLANT -->
+                <div class="mb-3">
+                    <label asp-for="MomId" class="form-label"></label>
+                    <select asp-for="MomId" asp-items="ViewBag.Plants" class="form-select">
+                        <option value="">-- Select a mom plant (optional) --</option>
+                    </select>
+                    <span asp-validation-for="MomId" class="text-danger"></span>
+                </div>
+
+                <!-- DESCRIPTION -->
+                <div class="mb-3">
+                    <label asp-for="Description" class="form-label"></label>
+                    <input asp-for="Description" class="form-control" placeholder="Short description..." />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <!-- BUTTONS -->
+                <div class="d-flex justify-content-between mt-4">
+                    <a asp-action="Index" class="btn btn-outline-secondary">
+                        ⬅ Back to list
+                    </a>
+
+                    <button type="submit" class="btn btn-success">
+                        ✅ Create Plant
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

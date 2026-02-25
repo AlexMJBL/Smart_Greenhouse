@@ -1,41 +1,63 @@
 ﻿@model Greenhouse_Ressource_MVC.Dtos.SoilHumidityCategoryWriteDto
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create soil humidity category";
 }
 
-<h1>Create</h1>
+<div class="container mt-4">
 
-<h4>Soil Humidity Category</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MinHumidityPct" class="control-label"></label>
-                <input asp-for="MinHumidityPct" class="form-control" />
-                <span asp-validation-for="MinHumidityPct" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MaxHumidityPct" class="control-label"></label>
-                <input asp-for="MaxHumidityPct" class="form-control" />
-                <span asp-validation-for="MaxHumidityPct" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+    <h2 class="text-success mb-4">💧 New soil humidity category</h2>
+
+    <div class="card shadow-sm border-success">
+
+        <div class="card-header bg-success text-white fw-semibold">
+            Category information
+        </div>
+
+        <div class="card-body">
+
+            <form asp-action="Create">
+
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <!-- NAME -->
+                <div class="mb-3">
+                    <label asp-for="Name" class="form-label fw-semibold"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <!-- MIN -->
+                <div class="mb-3">
+                    <label asp-for="MinHumidityPct" class="form-label fw-semibold"></label>
+                    <input asp-for="MinHumidityPct" class="form-control" />
+                    <span asp-validation-for="MinHumidityPct" class="text-danger"></span>
+                </div>
+
+                <!-- MAX -->
+                <div class="mb-3">
+                    <label asp-for="MaxHumidityPct" class="form-label fw-semibold"></label>
+                    <input asp-for="MaxHumidityPct" class="form-control" />
+                    <span asp-validation-for="MaxHumidityPct" class="text-danger"></span>
+                </div>
+
+                <!-- BUTTONS -->
+                <div class="d-flex gap-2 mt-4">
+
+                    <button type="submit" class="btn btn-success">
+                        💾 Create
+                    </button>
+
+                    <a asp-action="Index" class="btn btn-outline-secondary">
+                        ⬅ Back to list
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

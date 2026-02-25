@@ -1,123 +1,108 @@
-﻿@model Greenhouse_Ressource_MVC.ViewModel.PlantDetailViewModel;
-
+﻿@model Greenhouse_Ressource_MVC.ViewModel.PlantDetailViewModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Plant details";
 }
 
-<h1>Details</h1>
+<div class="container mt-4">
 
-<div>
-    <h4>Plant</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Plant.Id)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Plant.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Plant.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Plant.Description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Plant.IsActive)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Plant.IsActive)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Plant.CreatedAt)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Plant.CreatedAt)
-        </dd>
-    </dl>
-</div>
-<div>
-    <h4>Specimen</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Specimen.Id)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Specimen.Id)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Specimen.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Specimen.Name)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Specimen.CreatedAt)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Specimen.CreatedAt)
-        </dd>
-    </dl>
-</div>
+    <h2 class="mb-4">🌱 Plant details</h2>
 
-<div>
-    <h4>Zone</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Zone.Id)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Zone.Id)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Zone.Description)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Zone.Description)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Zone.CreatedAt)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Zone.CreatedAt)
-        </dd>
-    </dl>
-</div>
+    <div class="row g-4">
 
-@if (Model.MomPlant != null)
-{
-    <div>
-        <h4>Plante mère</h4>
-        <hr />
-        <dl class="row">
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.MomPlant.Id)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.MomPlant.Id)
-            </dd>
+        <!-- PLANT -->
+        <div class="col-md-6">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-success text-white">
+                    Plant
+                </div>
+                <div class="card-body">
 
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.MomPlant.Description)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.MomPlant.Description)
-            </dd>
+                    <p><strong>Id:</strong> @Model.Plant.Id</p>
+                    <p><strong>Description:</strong> @Model.Plant.Description</p>
 
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.MomPlant.IsActive)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.MomPlant.IsActive)
-            </dd>
-        </dl>
+                    <p>
+                        <strong>Status:</strong>
+                        <span class="badge @(Model.Plant.IsActive ? "bg-success" : "bg-secondary")">
+                            @(Model.Plant.IsActive ? "Active" : "Inactive")
+                        </span>
+                    </p>
+
+                    <p><strong>Created:</strong> @Model.Plant.CreatedAt</p>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- SPECIMEN -->
+        <div class="col-md-6">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-info text-white">
+                    Specimen
+                </div>
+                <div class="card-body">
+
+                    <p><strong>Id:</strong> @Model.Specimen.Id</p>
+                    <p><strong>Name:</strong> @Model.Specimen.Name</p>
+                    <p><strong>Created:</strong> @Model.Specimen.CreatedAt</p>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- ZONE -->
+        <div class="col-md-6">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-warning">
+                    Zone
+                </div>
+                <div class="card-body">
+
+                    <p><strong>Id:</strong> @Model.Zone.Id</p>
+                    <p><strong>Description:</strong> @Model.Zone.Description</p>
+                    <p><strong>Created:</strong> @Model.Zone.CreatedAt</p>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- MOM PLANT -->
+        @if (Model.MomPlant != null)
+        {
+            <div class="col-md-6">
+                <div class="card shadow-sm h-100">
+                    <div class="card-header bg-secondary text-white">
+                        🌿 Mother plant
+                    </div>
+                    <div class="card-body">
+
+                        <p><strong>Id:</strong> @Model.MomPlant.Id</p>
+                        <p><strong>Description:</strong> @Model.MomPlant.Description</p>
+
+                        <p>
+                            <strong>Status:</strong>
+                            <span class="badge @(Model.MomPlant.IsActive ? "bg-success" : "bg-secondary")">
+                                @(Model.MomPlant.IsActive ? "Active" : "Inactive")
+                            </span>
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+        }
+
     </div>
-}
 
-<div>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Plant.Id }) |
-    <a asp-action="Index">Back to List</a>
+    <div class="mt-4 d-flex justify-content-between">
+
+        <a asp-action="Index" class="btn btn-outline-secondary">
+            ⬅ Back to list
+        </a>
+
+        <a asp-action="Edit" asp-route-id="@Model.Plant.Id" class="btn btn-primary">
+            ✏️ Edit
+        </a>
+
+    </div>
+
 </div>
